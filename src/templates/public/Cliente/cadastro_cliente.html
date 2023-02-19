@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Cadastro de clientes</h1>
+
+<form method="POST">
+    <p>Nome:
+        <input type="text" id="nome" name="nome" placeholder="digite seu nome completo"  max="50">
+    </p>
+
+    <p>CPF:
+        <input type="number" id="cpf" name="cpf" placeholder="000.000.000-00">
+    </p>
+    <p>Contato:
+        <input type="text" id="telefone" name="telefone" placeholder="(00) 00000-0000"  max="20">
+    </p>
+    <p>Quantos pets tem:
+        <input type="number" id="numPet" name="numPet" placeholder="0"  max="50">
+    </p>
+
+    <button type="submit" id="btnCadCliente">Cadastrar</button>
+    <button type="reset" id="btnCadCliente">Apagar</button>
+</form>
+
+{% endblock %}

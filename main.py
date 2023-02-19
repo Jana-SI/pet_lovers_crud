@@ -2,7 +2,7 @@ from src.app import app
 
 host = 'localhost'
 port = 4000
-debug = true
+debug = True
 
 if(__name__ == '__main__'):
     app.run(host, port, debug)

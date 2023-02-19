@@ -14,8 +14,12 @@ print("conexão deu bom")
 
 cursor = conn.cursor()
 
-def inserealgo(d1,d2):
-    cursor.execute("insert into tabela (col1, col2) values (%s, %s);",(d1, d2))
+def insereCliente(nome, cpf, telefone, numPet):
+    cursor.execute("insert into cliente (nome, cpf, telefone, numPet) values (%s, %s, %s, %s);",(nome, cpf, telefone, numPet))
+    conn.commit()
+
+def inserePet(nome, nascimento, raca, tipo):
+    cursor.execute("insert into cliente (nome, nascimento, raca, tipo) values (%s, %s, %s, %s);",(nome, nascimento, raca, tipo))
     conn.commit()
 
 #encerra conexao
