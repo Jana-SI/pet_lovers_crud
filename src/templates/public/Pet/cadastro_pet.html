@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Cadastro de Pet</h1>
+
+<form method="POST">
+    <p>Nome:
+        <input type="text" id="nome" name="nome" placeholder="digite o nome do pet"  max="50">
+    </p>
+
+    <p>nascimento:
+        <input type="date" id="nascimento" name="nascimento" placeholder="00/00/0000">
+    </p>
+    <p>raca:
+        <input type="text" id="raca" name="raca" placeholder="digite a raça do pet"  max="50">
+    </p>
+    <p>tipo:
+        <select id="tipo" name="tipo">
+            <option selected>--</option>
+            <option value="ave">Ave</option>
+            <option value="cachorro">Cachorro</option>
+            <option value="chinchila">Chinchila</option>
+            <option value="coelho">Coelho</option>
+            <option value="gato">Gato</option>
+            <option value="Exotico">Exótico</option>
+            <option value="Hamster">Hamster</option>
+            <option value="peixe">Peixe</option>
+            <option value="porquinho-da-india">Porquinho-da-índia</option>
+            <option value="nao-declarado">Não declarado</option>
+        </select>
+    </p>
+
+    <button type="submit" id="btnCadPet">Cadastrar</button>
+    <button type="reset" id="btnCadPet">Apagar</button>
+</form>
+
+{% endblock %}

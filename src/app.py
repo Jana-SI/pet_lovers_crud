@@ -26,3 +26,19 @@ def cadastrarCliente():
   insereCliente(nome, cpf, telefone, numPet)
 
   return "Cadastro realizado com sucesso!"
+
+@app.route('/cadastro_pet')
+def cadastro_pet():
+    return render_template('/public/pet/cadastro_pet.html')
+
+@app.route('/cadastro_pet', methods=['GET', 'POST'])
+def cadastrarPet():
+
+  nome = request.form['nome']
+  nascimento = request.form['nascimento']
+  raca = request.form['raca']
+  tipo = request.form['tipo']
+
+  inserePet(nome, nascimento, raca, tipo)
+
+  return "Cadastro de pet realizado com sucesso!"

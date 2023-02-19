@@ -19,7 +19,7 @@ def insereCliente(nome, cpf, telefone, numPet):
     conn.commit()
 
 def inserePet(nome, nascimento, raca, tipo):
-    cursor.execute("insert into cliente (nome, nascimento, raca, tipo) values (%s, %s, %s, %s);",(nome, nascimento, raca, tipo))
+    cursor.execute("insert into pet (nome, nascimento, raca, tipo) values (%s, %s, %s, %s);",(nome, nascimento, raca, tipo))
     conn.commit()
 
 #encerra conexao
