@@ -1,11 +1,13 @@
 from flask import Flask, request, render_template, redirect
 from src.db import *
+from flask_bootstrap import Bootstrap5
 
 app = Flask(__name__)
+bootstrap = Bootstrap5(app)
 
 @app.errorhandler(404) 
 def not_found(e): 
-  return render_template('/public/404.html')
+  return render_template('/public/error_404.html')
               
 @app.route('/')
 def index():

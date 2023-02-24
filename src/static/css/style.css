@@ -1,0 +1,51 @@
+@import url("cores.css");
+
+/* css geral */
+body{
+    background-image: url(../img/fundo.jpg);
+}
+
+#rowPrincipal {
+    height: 100vh;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+/* input[type=number] {
+    -moz-appearance:textfield; /* Firefox 
+}*/
+
+/* css do cadastro do cliente */
+#colCadCli{
+    background-color: var(--fundo);
+    padding: 20px;
+    color: var(--texto);
+    border: 2px solid var(--texto);
+}
+
+#colCadCli h1{
+    border-bottom: 2px solid var(--texto);
+    margin-bottom: 10px;
+}
+
+#btnCadCliente{
+    background-color: var(--texto);
+    color: var(--fundo);
+    margin-top: 10px;
+}
+
+#colCadCli .input-group{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: 2px solid var(--texto);
+}
+
+#colCadCli span{
+    background-color: var(--texto) !important;
+    color: var(--fundo) !important;
+}
