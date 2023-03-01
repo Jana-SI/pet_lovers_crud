@@ -2,23 +2,22 @@
 {% from 'bootstrap5/utils.html' import render_icon %}
 
 {% block content %}
-<div class="position-relative">
-    <div class="position-absolute top-0 start-0">
-        <button class="btn" id="btnCadCliente"><a href="{{url_for('index')}}">{{render_icon('box2-heart-fill')}} Home</a></button>
-    </div>
+<div class="position-absolute top-0 start-0">
+    <button class="btn btn-lg" id="btnHome"><a href="{{url_for('index')}}">{{render_icon('box2-heart-fill')}} Home</a></button>
 </div>
+
 <div class="row justify-content-center">
     <div id="colCadCli" class="col-8 col-sm-8 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
 
         <h1 class="text-center">{{render_icon('person-hearts')}} Cadastro de clientes</h1>
 
-        <form method="POST">
+        <form name="formCadastro" action="/cadastro_cliente" method="POST">
 
             <div class="input-group">
                 <span class="input-group-text">{{render_icon('person-plus-fill')}}</span>
                 <div class="form-floating">
                     <input class="form-control" type="text" id="nome" name="nome" placeholder="digite seu nome completo"
-                        max="50" required>
+                      min="6"  max="50" required>
                     <label for="nome">Nome</label>
                 </div>
             </div>
@@ -28,8 +27,7 @@
                     <div class="input-group">
                         <span class="input-group-text">{{render_icon('card-text')}}</span>
                         <div class="form-floating">
-                            <input class="form-control" type="text" id="cpf" name="cpf" placeholder="000.000.000-00"
-                                oninput="mascaraCPF(this)" required>
+                            <input class="form-control" type="text" id="cpf" name="cpf" placeholder="000.000.000-00" onfocusout="verificaCpf()" oninput="mascaraCPF(this)" required>
                             <label for="cpf">CPF</label>
                         </div>
                     </div>
@@ -40,8 +38,7 @@
                         <span class="input-group-text">{{render_icon('telephone-fill')}}</span>
                         <div class="form-floating">
                             <input class="form-control" type="tel" id="telefone" name="telefone"
-                                placeholder="(00) 00000-0000" max="20" onkeydown="return mascaraTelefone(event)"
-                                required>
+                                placeholder="(00) 00000-0000" onfocusout="verificaTelefone()" onkeydown="return mascaraTelefone(event)" required>
                             <label for="telefone">Contato</label>
                         </div>
                     </div>
@@ -49,14 +46,18 @@
             </div>
             <div class="row">
                 <div class="col-6">
-                    <div class="input-group has-validation">
+                    <div class="input-group">
                         <span class="input-group-text">{{render_icon('clipboard-heart-fill')}}</span>
-                        <div class="form-floating is-invalid">
+                        <div class="form-floating">
                             <input class="form-control" type="number" id="numPet" name="numPet" placeholder="0" max="50"
                                 required>
                             <label for="numPet">Quantos pets tem</label>
                         </div>
                     </div>
+                </div>
+                <div class="col-6">
+                    <div id="errorCPF"></div>
+                    <div id="errorTelefone"></div>
                 </div>
             </div>
 

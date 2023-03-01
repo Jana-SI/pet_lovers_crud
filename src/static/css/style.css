@@ -9,6 +9,31 @@ body{
     height: 100vh;
 }
 
+#btnHome{
+    background-color: var(--texto);    
+    border: 2px solid var(--fundo);
+    margin-top: 10px;
+    margin-left: 20px;
+}
+
+#btnHome a{
+    text-decoration: none;
+    color: var(--fundo);
+}
+
+#btnHome:hover{
+    background-color: var(--fundo);
+    border: 2px solid var(--texto);
+    color: var(--texto);
+    margin-top: 10px;
+    margin-left: 20px;
+}
+
+#btnHome:hover a{
+    text-decoration: none;
+    color: var(--texto);
+}
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     /* display: none; <- Crashes Chrome on hover */
@@ -19,33 +44,3 @@ input::-webkit-inner-spin-button {
 /* input[type=number] {
     -moz-appearance:textfield; /* Firefox 
 }*/
-
-/* css do cadastro do cliente */
-#colCadCli{
-    background-color: var(--fundo);
-    padding: 20px;
-    color: var(--texto);
-    border: 2px solid var(--texto);
-}
-
-#colCadCli h1{
-    border-bottom: 2px solid var(--texto);
-    margin-bottom: 10px;
-}
-
-#btnCadCliente{
-    background-color: var(--texto);
-    color: var(--fundo);
-    margin-top: 10px;
-}
-
-#colCadCli .input-group{
-    margin-top: 10px;
-    margin-bottom: 10px;
-    border: 2px solid var(--texto);
-}
-
-#colCadCli span{
-    background-color: var(--texto) !important;
-    color: var(--fundo) !important;
-}

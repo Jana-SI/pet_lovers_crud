@@ -1,0 +1,15 @@
+@import url("cores.css");
+
+#colHome{
+    background-color: var(--fundo);
+    padding: 20px;
+    color: var(--texto);
+    border: 2px solid var(--texto);
+}
+
+#colHome .card{
+    margin-top:10px;
+    margin-bottom: 10px;
+    border: 2px solid var(--texto);
+    background-color: var(--fundo2);
+}

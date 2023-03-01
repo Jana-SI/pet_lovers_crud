@@ -1,5 +1,41 @@
 {% extends "base.html" %}
+{% from 'bootstrap5/utils.html' import render_icon %}
 
 {% block content %}
+<div class="row justify-content-center align-items-center card-text">
+    <div id="colHome" class="col-8 col-sm-8 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
+        <div class="row">
+            <div class="col">
+                <h1>Bem vindo ao Pet Lovers</h1>
+            </div>
+            <div class="col">
+                <div class="card card-text">
+                    <div class="card-header">
+                        <h1 class="card-title">Clientes</h1>
+                    </div>
+                    <div class="card-body">
+                        <button class="btn"><a
+                                href="{{url_for('cadastro_cliente')}}">{{render_icon('person-hearts')}}Cadastrar</a></button>
+                        <button class="btn"><a href="">{{render_icon('person-hearts')}} Listar</a></button>
+                        <button class="btn"><a href="">{{render_icon('person-hearts')}}Atualizar</a></button>
+                        <button class="btn"><a href="">{{render_icon('person-hearts')}}Apagar</a></button>
+                    </div>
+                </div>
+                <div class="card card-text">
+                    <div class="card-header">
+                        <h1 class="card-title">Pets</h1>
+                    </div>
+                    <div class="card-body">
+                        <button class="btn"><a href="">{{render_icon('person-hearts')}}Cadastrar</a></button>
+                        <button class="btn"><a href="">{{render_icon('person-hearts')}} Listar</a></button>
+                        <button class="btn"><a href="">{{render_icon('person-hearts')}}Atualizar</a></button>
+                        <button class="btn"><a href="">{{render_icon('person-hearts')}}Apagar</a></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
 
 {% endblock %}
