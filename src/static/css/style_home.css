@@ -13,3 +13,21 @@
     border: 2px solid var(--texto);
     background-color: var(--fundo2);
 }
+
+#colHome .card-header{
+    border-bottom: 2px solid var(--texto);
+}
+
+#colHome a{
+    text-decoration: none;
+    color: var(--texto);
+    font-size: 14pt;
+}
+
+#colHome button{
+    border: 2px solid var(--fundo2);
+}
+
+#colHome button:hover{
+    border: 2px solid var(--texto);
+}
