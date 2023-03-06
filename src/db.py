@@ -15,13 +15,42 @@ print("conexão deu bom")
 cursor = conn.cursor()
 
 def insereCliente(nome, cpf, telefone, numPet):
-    cursor.execute("insert into cliente (nome, cpf, telefone, numPet) values (%s, %s, %s, %s);",(nome, cpf, telefone, numPet))
-    conn.commit()
+
+    try:
+        cursor.execute("insert into cliente (nome, cpf, telefone, numPet) values (%s, %s, %s, %s);",(nome, cpf, telefone, numPet))
+        conn.commit()
+
+    except psycopg2.DatabaseError as error:
+        cursor.execute("ROLLBACK")
+        conn.commit()
+        return (error)   
 
 def inserePet(nome, nascimento, raca, tipo):
-    cursor.execute("insert into pet (nome, nascimento, raca, tipo) values (%s, %s, %s, %s);",(nome, nascimento, raca, tipo))
-    conn.commit()
 
-#encerra conexao
-# cursor.close()
-# conn.close
+    try:
+        cursor.execute("insert into pet (nome, nascimento, raca, tipo) values (%s, %s, %s, %s);",(nome, nascimento, raca, tipo))
+        conn.commit()
+
+    except psycopg2.DatabaseError as error:
+        cursor.execute("ROLLBACK")
+        conn.commit()
+        return (error)
+
+def verificaCPFbanco(cpf):
+
+    try:
+        conn = psycopg2.connect(conn_string)
+        cursor = conn.cursor()
+
+        cursor.execute("select * from cliente where cpf=%s;",(cpf, ))
+        conn.commit()
+        return cursor.fetchone()
+
+    except psycopg2.DatabaseError as error:
+        cursor.execute("ROLLBACK")
+        conn.commit()
+        return error
+
+    finally:
+        cursor.close()
+        conn.close

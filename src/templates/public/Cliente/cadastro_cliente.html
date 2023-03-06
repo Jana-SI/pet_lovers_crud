@@ -11,6 +11,10 @@
 
         <h1 class="text-center">{{render_icon('person-hearts')}} Cadastro de clientes</h1>
 
+        {% if mensagemCadastroSucesso %}
+            <p id="CadCliente" class="alert alert-success text-center" role="alert">{{render_icon('check-circle-fill')}} {{mensagemCadastroSucesso}}</p>
+        {% endif %}
+
         <form name="formCadastro" action="/cadastro_cliente" method="POST">
 
             <div class="input-group">
@@ -23,7 +27,7 @@
             </div>
 
             <div class="row">
-                <div class="col-6">
+                <div class="col-8 col-sm-8 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
                     <div class="input-group">
                         <span class="input-group-text">{{render_icon('card-text')}}</span>
                         <div class="form-floating">
@@ -32,7 +36,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-6">
+                <div class="col-8 col-sm-8 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
 
                     <div class="input-group">
                         <span class="input-group-text">{{render_icon('telephone-fill')}}</span>
@@ -45,7 +49,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-6">
+                <div class="col-8 col-sm-8 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
                     <div class="input-group">
                         <span class="input-group-text">{{render_icon('clipboard-heart-fill')}}</span>
                         <div class="form-floating">
@@ -55,14 +59,14 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-6">
+                <div class="col-8 col-sm-8 col-md-6 col-lg-6 col-xl-6 col-xxl-6 align-self-center">
                     <div id="errorCPF"></div>
                     <div id="errorTelefone"></div>
                 </div>
             </div>
 
             <button class="btn" type="reset" id="btnCadCliente">Apagar</button>
-            <button class="btn float-end" type="submit" id="btnCadCliente">Cadastrar</button>
+            <button class="btn float-end" type="submit" id="btnCadCliente" >Cadastrar</button>
 
         </form>
     </div>
