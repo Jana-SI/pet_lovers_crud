@@ -1,3 +1,7 @@
+<head>
+    <script defer src="{{ url_for('static', filename='js/ValidadorCPF.js') }}"></script>
+</head>
+
 {% extends "base.html" %}
 {% from 'bootstrap5/utils.html' import render_icon %}
 
@@ -7,7 +11,7 @@
 </div>
 
 <div class="row justify-content-center">
-    <div id="colCadCli" class="col-8 col-sm-8 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
+    <div id="colCad" class="col-8 col-sm-8 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
 
         <h1 class="text-center">Cadastro de clientes</h1>
 
@@ -48,25 +52,12 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-8 col-sm-8 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
-                    <div class="input-group">
-                        <span class="input-group-text">{{render_icon('clipboard-heart-fill')}}</span>
-                        <div class="form-floating">
-                            <input class="form-control" type="number" id="numPet" name="numPet" placeholder="0" max="50"
-                                required>
-                            <label for="numPet">Quantos pets tem</label>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-8 col-sm-8 col-md-6 col-lg-6 col-xl-6 col-xxl-6 align-self-center">
-                    <div id="errorCPF"></div>
-                    <div id="errorTelefone"></div>
-                </div>
-            </div>
+            
+            <div class="text-center" id="errorCPF"></div>
+            <div class="text-center" id="errorTelefone"></div>
 
-            <button class="btn" type="reset" id="btnCadCliente">Apagar</button>
-            <button class="btn float-end" type="submit" id="btnCadCliente" >Cadastrar</button>
+            <button class="btn" type="reset" id="btnCadApagar">Apagar</button>
+            <button class="btn float-end" type="submit" id="btnCadCadastrar" >Cadastrar</button>
 
         </form>
     </div>

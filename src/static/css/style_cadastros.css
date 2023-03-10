@@ -1,39 +1,62 @@
 @import url("cores.css");
 
 /* css do cadastro do cliente */
-#colCadCli{
+#colCad{
     background-color: var(--fundo);
     padding: 20px;
     color: var(--texto);
     border: 2px solid var(--texto);
 }
 
-#colCadCli h1{
+#colCad h1{
     border-bottom: 2px solid var(--texto);
     margin-bottom: 20px;
 }
 
-#btnCadCliente{
+#btnCadCadastrar, #btnCadApagar{
     background-color: var(--texto);
     color: var(--fundo);
     border: 2px solid var(--fundo);
     margin-top: 10px;
 }
 
-#btnCadCliente:hover{
+#btnCadCadastrar:hover, #btnCadApagar:hover{
     background-color: var(--fundo);
     color: var(--texto);
     border: 2px solid var(--texto);
     margin-top: 10px;
 }
 
-#colCadCli .input-group{
+#colCad .input-group{
     margin-top: 10px;
     margin-bottom: 10px;
     border: 2px solid var(--texto);
 }
 
-#colCadCli span{
+#colCad span{
     background-color: var(--texto) !important;
     color: var(--fundo) !important;
+}
+
+#colCad #spanImg{
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+}
+
+#colCad span img{
+    padding-left: 6px !important;
+    padding-right: 6px !important;
+}
+
+/* remover icone de calendario do input date */
+input::-webkit-calendar-picker-indicator{
+    display: none;
+}
+
+input[type="date"]::-webkit-input-placeholder{ 
+    visibility: hidden !important;
+}
+
+#ave, #cachorro, #chinchila, #coelho, #gato, #exotico, #hamster, #peixe, #porquinho_da_india{
+    display: none;
 }

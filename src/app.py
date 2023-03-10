@@ -26,25 +26,33 @@ def cadastrarCliente():
   cpfInt = re.sub('[^0-9]', '', cpf)
 
   telefone = request.form['telefone']
-  numPet = request.form['numPet']
 
-  verificado = verificaCPFbanco(cpfInt)
+  insereCliente(nome, cpfInt, telefone)
+
+  return render_template('/public/cliente/cadastro_cliente.html', mensagemCadastroSucesso="Cadastrado com sucesso")
+
+@app.route('/cadastro_cliente_verificando_cpf', methods=['GET', 'POST'])
+def verificaCPF():
+
+  if request.method == "POST":
+
+    cpf = request.get_json()['cpf'].strip()
+    cpfInt = re.sub('[^0-9]', '', cpf)
+
+    verificado = verificaCPFbanco(cpfInt)
 
   if (verificado):
     return jsonify({"cpfValido": "true"})
-    
-    return render_template('/public/cliente/cadastro_cliente.html', mensagemCadastroSucesso="Cadastrado não realizado, CPF já esta cadastrado no sistema!")
 
   else:
     return jsonify({"cpfValido": "false"})
 
-    insereCliente(nome, cpfInt, telefone, numPet)
-
-    return render_template('/public/cliente/cadastro_cliente.html', mensagemCadastroSucesso="Cadastrado com sucesso")
-
 @app.route('/cadastro_pet')
 def cadastro_pet():
-    return render_template('/public/pet/cadastro_pet.html')
+
+  donosPet = pesquisarDonos()
+
+  return render_template('/public/pet/cadastro_pet.html', donosPet = donosPet)
 
 @app.route('/cadastro_pet', methods=['GET', 'POST'])
 def cadastrarPet():
@@ -56,4 +64,20 @@ def cadastrarPet():
   
   inserePet(nome, nascimento, raca, tipo)
 
-  return "Cadastro de pet realizado com sucesso!"
+  return render_template('/public/cliente/cadastro_pet.html', mensagemCadastroSucesso="Cadastrado do Pet realizado com sucesso")
+
+@app.route('/cadastro_pet_verificando_cpf', methods=['GET', 'POST'])
+def verificaDonoPet():
+
+  if request.method == "POST":
+
+    cpf = request.get_json()['cpf'].strip()
+    cpfInt = re.sub('[^0-9]', '', cpf)
+
+    verificado = verificaCPFbanco(cpfInt)
+
+  if (verificado):
+    return jsonify({"cpfValido": "true"})
+
+  else:
+    return jsonify({"cpfValido": "false"})

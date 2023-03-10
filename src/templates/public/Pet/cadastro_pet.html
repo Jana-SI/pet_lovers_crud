@@ -1,38 +1,122 @@
+<head>
+    <script defer src="{{ url_for('static', filename='js/validadorData.js') }}"></script>
+</head>
+
 {% extends "base.html" %}
+{% from 'bootstrap5/utils.html' import render_icon %}
 
 {% block content %}
+<div class="position-absolute top-0 start-0">
+    <button class="btn btn-lg" id="btnHome"><a href="{{url_for('index')}}">{{render_icon('house-heart-fill')}}
+            Home</a></button>
+</div>
 
-<h1>Cadastro de Pet</h1>
+<div class="row justify-content-center">
+    <div id="colCad" class="col-8 col-sm-8 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
 
-<form method="POST">
-    <p>Nome:
-        <input type="text" id="nome" name="nome" placeholder="digite o nome do pet"  max="50">
-    </p>
+        <h1 class="text-center">Cadastro de Pet</h1>
 
-    <p>nascimento:
-        <input type="date" id="nascimento" name="nascimento" placeholder="00/00/0000">
-    </p>
-    <p>raca:
-        <input type="text" id="raca" name="raca" placeholder="digite a raça do pet"  max="50">
-    </p>
-    <p>tipo:
-        <select id="tipo" name="tipo">
-            <option selected>--</option>
-            <option value="ave">Ave</option>
-            <option value="cachorro">Cachorro</option>
-            <option value="chinchila">Chinchila</option>
-            <option value="coelho">Coelho</option>
-            <option value="gato">Gato</option>
-            <option value="Exotico">Exótico</option>
-            <option value="Hamster">Hamster</option>
-            <option value="peixe">Peixe</option>
-            <option value="porquinho-da-india">Porquinho-da-índia</option>
-            <option value="nao-declarado">Não declarado</option>
-        </select>
-    </p>
+        {% if mensagemCadastroSucesso %}
+        <p id="CadPet" class="alert alert-success text-center" role="alert">{{render_icon('check-circle-fill')}}
+            {{mensagemCadastroSucesso}}</p>
+        {% endif %}
 
-    <button type="submit" id="btnCadPet">Cadastrar</button>
-    <button type="reset" id="btnCadPet">Apagar</button>
-</form>
+        <form name="formCadastro" action="/cadastro_pet" method="POST">
+            <div class="input-group">
+                <span id="spanImg" class="input-group-text">
+                    <img src="{{url_for('static', filename='/img/nome-pet.png')}}">
+                </span>
+                <div class="form-floating">
+                    <input class="form-control" type="text" id="nome" name="nome" placeholder="digite o nome do pet"
+                        min="6" max="50" pattern="[a-zA-Z\s]+$" required>
+                    <label for="nome">Nome</label>
+                </div>
+            </div>
 
-{% endblock %}
+            <div class="row">
+                <div class="col-8 col-sm-8 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
+                    <div class="input-group">
+                        <span id="spanImg" class="input-group-text">
+                            <img src="{{url_for('static', filename='/img/tipo-pet.png')}}">
+                        </span>
+                        <div class="form-floating">
+                            <select class="form-select" id="tipo" name="tipo" onchange=" mostraImgTipo(this.options[this.selectedIndex].value)" required>
+                                <option selected>--</option>
+                                <option value="ave">Ave</option>
+                                <option value="cachorro">Cachorro</option>
+                                <option value="chinchila">chinchila</option>
+                                <option value="coelho">Coelho</option>
+                                <option value="gato">Gato</option>
+                                <option value="exotico">Exótico</option>
+                                <option value="hamster">Hamster</option>
+                                <option value="peixe">Peixe</option>
+                                <option value="porquinho_da_india">Porquinho-da-índia</option>
+                                <option value="nao-declarado">Não declarado</option>
+                            </select>
+                            <label for="tipo">Tipo</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 col-xxl-2 align-self-center">
+                    <img id="ave" src="{{url_for('static', filename='/img/ave.png')}}">
+                    <img id="cachorro" src="{{url_for('static', filename='/img/cachorro.png')}}">
+                    <img id="chinchila" src="{{url_for('static', filename='/img/chinchila.png')}}">
+                    <img id="coelho" src="{{url_for('static', filename='/img/coelho.png')}}">
+                    <img id="gato" src="{{url_for('static', filename='/img/gato.png')}}">
+                    <img id="exotico" src="{{url_for('static', filename='/img/exotico.png')}}">
+                    <img id="hamster" src="{{url_for('static', filename='/img/hamster.png')}}">
+                    <img id="peixe" src="{{url_for('static', filename='/img/peixe.png')}}">
+                    <img id="porquinho_da_india" src="{{url_for('static', filename='/img/porquinho_da_india.png')}}">
+                </div>
+            </div>
+
+            <div class="input-group">
+                <span id="spanImg" class="input-group-text">
+                    <img src="{{url_for('static', filename='/img/raca-pet.png')}}">
+                </span>
+                <div class="form-floating">
+                    <input class="form-control" type="text" id="raca" name="raca" placeholder="digite a raça do pet"
+                        min="6" max="50" pattern="[a-zA-Z\s]+$" required>
+                    <label for="raca">Raça</label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-8 col-sm-8 col-md-5 col-lg-5 col-xl-5 col-xxl-5">
+                    <div class="input-group">
+                        <span class="input-group-text">{{render_icon('calendar-check-fill')}}</span>
+                        <div class="form-floating">
+                            <input class="form-control" type="date" id="nascimento" name="nascimento" onfocusout="verificarData()" required>
+                            <label for="nascimento">Nascimento</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-8 col-sm-8 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
+                    <div class="input-group">
+                        <span id="spanImg" class="input-group-text">
+                            <img src="{{url_for('static', filename='/img/dono-pet.png')}}">
+                        </span>
+                        <div class="form-floating">
+                            <input class="form-control" list="datalistOptions" id="donosPet" placeholder="Digitar CPF dono do pet" pattern="[0-9]+$" required>
+                            <datalist id="datalistOptions">
+                                {% if donosPet %}
+                                    {% for dono in donosPet %}
+                                        <option value="{{dono.1}}">{{dono.2}}</option>
+                                    {% endfor %}
+                                {% endif %}
+                            </datalist>
+                            <label for="donosPet" class="form-label">Dono do Pet (CPF)</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn float-end" type="submit" id="btnCadCadastrar">Cadastrar</button>
+            <button class="btn" type="reset" id="btnCadApagar">Apagar</button>
+
+        </form>
+    </div>
+</div>
+    {% endblock %}
