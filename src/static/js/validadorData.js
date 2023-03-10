@@ -35,18 +35,29 @@ function calcularIdade(nascimento){
 const verificarData = async () => {
     
     const nascimento = document.getElementById('nascimento').value;
+    const formCadastro = document.forms["formCadastro"];
+    const nascFormElement = formCadastro['nascimento'];
+    var errorData;
 
     idade = calcularIdade(nascimento);
     
-    if(idade > 100){
-        console.log("data invalida - ",idade)
-    }
+    /* if(idade > 100){
+        errorData = "Data de nascimento inválida!";
+        document.getElementById("errorData").innerHTML = errorData;
+        nascFormElement.setCustomValidity("Data de nascimento inválida!");
+        nascFormElement.reportValidity();
+    } */
 
-    if(idade < 0 ){
-        console.log("data invalida - ",idade)
+    if((idade < 0) || (idade > 100)){
+        errorData = "Data de nascimento inválida!";
+        document.getElementById("errorData").innerHTML = errorData;
+        nascFormElement.setCustomValidity("Data de nascimento inválida!");
+        nascFormElement.reportValidity();
     }
 
     else{
-        console.log(idade)
+        errorData = idade + ' anos';
+        document.getElementById("errorData").innerHTML = errorData;
+        nascFormElement.setCustomValidity("");
     }
 }

@@ -1,5 +1,6 @@
 <head>
     <script defer src="{{ url_for('static', filename='js/validadorData.js') }}"></script>
+    <script defer src="{{ url_for('static', filename='js/FormataCPFsCad.js') }}"></script>
 </head>
 
 {% extends "base.html" %}
@@ -58,7 +59,7 @@
                     </div>
                 </div>
 
-                <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 col-xxl-2 align-self-center">
+                <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 col-xxl-2 align-self-center text-center">
                     <img id="ave" src="{{url_for('static', filename='/img/ave.png')}}">
                     <img id="cachorro" src="{{url_for('static', filename='/img/cachorro.png')}}">
                     <img id="chinchila" src="{{url_for('static', filename='/img/chinchila.png')}}">
@@ -93,14 +94,18 @@
                     </div>
                 </div>
 
+                <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 col-xxl-4 align-self-center">
+                    <div class="text-center" id="errorData"></div>
+                </div>
+
                 <div class="col-8 col-sm-8 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
                     <div class="input-group">
                         <span id="spanImg" class="input-group-text">
                             <img src="{{url_for('static', filename='/img/dono-pet.png')}}">
                         </span>
                         <div class="form-floating">
-                            <input class="form-control" list="datalistOptions" id="donosPet" placeholder="Digitar CPF dono do pet" pattern="[0-9]+$" required>
-                            <datalist id="datalistOptions">
+                            <input class="form-control" list="listaDonos" id="donosPet" placeholder="Digitar CPF dono do pet" oninput="mascaraCPF(this)" maxlength="14" required>
+                            <datalist id="listaDonos">
                                 {% if donosPet %}
                                     {% for dono in donosPet %}
                                         <option value="{{dono.1}}">{{dono.2}}</option>
