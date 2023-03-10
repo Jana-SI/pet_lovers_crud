@@ -45,7 +45,7 @@
                                 <option selected>--</option>
                                 <option value="ave">Ave</option>
                                 <option value="cachorro">Cachorro</option>
-                                <option value="chinchila">chinchila</option>
+                                <option value="chinchila">Chinchila</option>
                                 <option value="coelho">Coelho</option>
                                 <option value="gato">Gato</option>
                                 <option value="exotico">Exótico</option>
@@ -104,7 +104,7 @@
                             <img src="{{url_for('static', filename='/img/dono-pet.png')}}">
                         </span>
                         <div class="form-floating">
-                            <input class="form-control" list="listaDonos" id="donosPet" placeholder="Digitar CPF dono do pet" oninput="mascaraCPF(this)" maxlength="14" required>
+                            <input class="form-control" list="listaDonos" id="donosPet" name="donosPet" placeholder="Digitar CPF dono do pet" oninput="mascaraCPF(this)" maxlength="14" required>
                             <datalist id="listaDonos">
                                 {% if donosPet %}
                                     {% for dono in donosPet %}

@@ -39,7 +39,7 @@ def inserePet(nome, nascimento, raca, tipo):
        conn = psycopg2.connect(conn_string)
        cursor = conn.cursor() 
        
-       cursor.execute("insert into pet (nome, nascimento, raca, tipo) values (%s, %s, %s, %s);",(nome, nascimento, raca, tipo))
+       cursor.execute("insert into pet (nome, nascimento, raca, tipo) values (%s, %s, %s, %s) returning id;",(nome, nascimento, raca, tipo))
        
        conn.commit()
        return cursor.fetchone()
@@ -70,13 +70,13 @@ def verificaCPFbanco(cpf):
         cursor.close()
         conn.close
 
-def adicionaNumPet(idDono):
+def adicionaNumPet(cpfDono):
 
     try:
        conn = psycopg2.connect(conn_string)
        cursor = conn.cursor() 
        
-       cursor.execute("update cliente set numpet = (numpet+1) where id = %s;",(idDono, ))
+       cursor.execute("update cliente set numpet = (numpet+1) where cpf = %s;",(cpfDono, ))
        
        conn.commit()
        return cursor.fetchone()
