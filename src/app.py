@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, redirect,  jsonify
+from flask import Flask, request, render_template, redirect, jsonify
 from src.db import *
 from flask_bootstrap import Bootstrap5
 import re
@@ -61,11 +61,42 @@ def cadastrarPet():
   tipo = request.form['tipo']
   raca = request.form['raca']
   nascimento = request.form['nascimento']
+  
   cpfDono = request.form['donosPet']
   cpfInt = re.sub('[^0-9]', '', cpfDono)
   
-  idPet = inserePet(nome, nascimento, raca, tipo)
-  adicionaNumPet(cpfInt)
-  insereDonoPet(cpfInt, idPet)
+  petJaExiste = verificaPetbanco(nome, nascimento, raca, tipo)
+  
+  if(petJaExiste):
+      return render_template('/public/pet/cadastro_pet.html', erro="Cadastro falhou: o pet já se encontra em nosso sistema.")
+  else:
 
-  return render_template('/public/pet/cadastro_pet.html', mensagemCadastroSucesso="Pet cadastrado com sucesso")
+    idPet = inserePet(nome, nascimento, raca, tipo)
+
+    petComMesmoDono = verificaDonoPetbanco(idPet, cpfInt)
+
+    if(petComMesmoDono):
+        #se usuario se comportar nunca entra neste caso
+        return render_template('/public/pet/cadastro_pet.html', erro="Cadastro falhou: o pet já está associado com este dono.")
+    else:
+    
+      adicionaNumPet(cpfInt)
+      insereDonoPet(cpfInt, idPet)
+
+      return render_template('/public/pet/cadastro_pet.html', sucesso="Pet cadastrado com sucesso")
+
+@app.route('/cadastro_pet_verificando_cpf', methods=['GET', 'POST'])
+def verificaCPFcadPet():
+
+  if request.method == "POST":
+
+    cpf = request.get_json()['cpf'].strip()
+    cpfInt = re.sub('[^0-9]', '', cpf)
+
+    verificado = verificaCPFbanco(cpfInt)
+
+  if (verificado):
+    return jsonify({"cpfValido": "true"})
+
+  else:
+    return jsonify({"cpfValido": "false"})

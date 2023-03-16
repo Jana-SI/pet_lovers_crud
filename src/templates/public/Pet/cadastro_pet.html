@@ -1,6 +1,7 @@
 <head>
     <script defer src="{{ url_for('static', filename='js/validadorData.js') }}"></script>
     <script defer src="{{ url_for('static', filename='js/FormataCPFsCad.js') }}"></script>
+    <script defer src="{{ url_for('static', filename='js/validadorCPFcadPet.js') }}"></script>
 </head>
 
 {% extends "base.html" %}
@@ -17,12 +18,17 @@
 
         <h1 class="text-center">Cadastro de Pet</h1>
 
-        {% if mensagemCadastroSucesso %}
+        {% if sucesso %}
         <p id="CadPet" class="alert alert-success text-center" role="alert">{{render_icon('check-circle-fill')}}
-            {{mensagemCadastroSucesso}}</p>
+            {{sucesso}}</p>
         {% endif %}
 
-        <form name="formCadastro" action="/cadastro_pet" method="POST">
+        {% if erro %}
+        <p id="CadPet" class="alert alert-danger text-center" role="alert">{{render_icon('exclamation-triangle-fill')}}
+            {{erro}}</p>
+        {% endif %}
+
+        <form name="formCadastro" method="POST">
             <div class="input-group">
                 <span id="spanImg" class="input-group-text">
                     <img src="{{url_for('static', filename='/img/nome-pet.png')}}">
@@ -104,7 +110,7 @@
                             <img src="{{url_for('static', filename='/img/dono-pet.png')}}">
                         </span>
                         <div class="form-floating">
-                            <input class="form-control" list="listaDonos" id="donosPet" name="donosPet" placeholder="Digitar CPF dono do pet" oninput="mascaraCPF(this)" maxlength="14" required>
+                            <input class="form-control" list="listaDonos" id="donosPet" name="donosPet" placeholder="Digitar CPF dono do pet" onfocusout="verificaCpf()" oninput="mascaraCPF(this)" maxlength="14" required>
                             <datalist id="listaDonos">
                                 {% if donosPet %}
                                     {% for dono in donosPet %}
@@ -118,7 +124,7 @@
                 </div>
             </div>
 
-            <button class="btn float-end" type="submit" id="btnCadCadastrar">Cadastrar</button>
+            <button class="btn float-end" type="submit" id="btnCadCadastrar" onclick="verificaPetCad()">Cadastrar</button>
             <button class="btn" type="reset" id="btnCadApagar">Apagar</button>
 
         </form>

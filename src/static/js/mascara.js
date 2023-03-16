@@ -3,7 +3,7 @@ function mascaraCPF(numCPF) {
     if (numCPF.value.length <= 11) {
         numCPF.value = mascaraCpf(numCPF.value);
     } else {
-        numCPF.value = mascaraCnpj(numCPF.value);
+        retirarFormatacao(numCPF.value);
     }
 }
 function retirarFormatacao(numCPF) {
@@ -12,12 +12,8 @@ function retirarFormatacao(numCPF) {
 function mascaraCpf(valor) {
     return valor.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/g, "\$1.\$2.\$3\-\$4");
 }
-function mascaraCnpj(valor) {
-    return valor.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/g, "\$1.\$2.\$3\/\$4\-\$5");
-}
 
 // mascara de telefone
-
 function mascaraTelefone(event) {
     let tecla = event.key;
     let telefone = event.target.value.replace(/\D+/g, "");

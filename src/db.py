@@ -91,22 +91,21 @@ def adicionaNumPet(cpfDono):
 
 def insereDonoPet(cpfDono, idPet):
 
-    try:
+    # try:
        conn = psycopg2.connect(conn_string)
        cursor = conn.cursor() 
        
-       cursor.execute("insert into donopet (cpfcliente, idpet) values (%s, %s);",(cpfDono, idPet))
-       
+       cursor.execute("insert into donopet (cpfcliente, idpet) values (%s, %s) returning id;",(cpfDono, idPet))
        conn.commit()
        return cursor.fetchone()
 
-    except psycopg2.DatabaseError as error:
-        cursor.execute("ROLLBACK")
-        conn.commit()
+    # except psycopg2.DatabaseError as error:
+        # cursor.execute("ROLLBACK")
+        # conn.commit()
 
-    finally:
-        cursor.close()
-        conn.close
+    # finally:
+        # cursor.close()
+        # conn.close
 
 def pesquisarDonos():
 
@@ -123,5 +122,44 @@ def pesquisarDonos():
         conn.commit()
 
     finally:
+        cursor.close()
+        conn.close
+
+
+def verificaPetbanco(nome, nascimento, raca, tipo):
+
+    try:
+        conn = psycopg2.connect(conn_string)
+        cursor = conn.cursor()
+
+        cursor.execute("select * from pet where nome=%s and nascimento=%s and raca=%s and tipo=%s;",(nome, nascimento, raca, tipo))
+
+        conn.commit()
+        return cursor.fetchone()
+
+    except psycopg2.DatabaseError as error:
+        cursor.execute("ROLLBACK")
+        conn.commit()
+
+    finally:
+        cursor.close()
+        conn.close    
+
+def verificaDonoPetbanco(idPet, cpfcliente):
+
+    # try:
+        conn = psycopg2.connect(conn_string)
+        cursor = conn.cursor()
+
+        cursor.execute("SELECT * FROM pet INNER JOIN donopet ON pet.id = donopet.idpet where pet.id=%s and donopet.cpfcliente = %s;",(idPet, cpfcliente))
+        
+        conn.commit()
+        return cursor.fetchone()
+
+    # except psycopg2.DatabaseError as error:
+    #     cursor.execute("ROLLBACK")
+    #     conn.commit()
+
+    # finally:
         cursor.close()
         conn.close
