@@ -163,3 +163,40 @@ def verificaDonoPetbanco(idPet, cpfcliente):
     # finally:
         cursor.close()
         conn.close
+
+def pesquisarPets():
+
+    try:
+        conn = psycopg2.connect(conn_string)
+        cursor = conn.cursor()
+
+        cursor.execute("select * from pet;")
+        conn.commit()
+        return cursor.fetchall()
+
+    except psycopg2.DatabaseError as error:
+        cursor.execute("ROLLBACK")
+        conn.commit()
+
+    finally:
+        cursor.close()
+        conn.close
+
+def verificaIdPetbanco(idPet):
+
+    try:
+        conn = psycopg2.connect(conn_string)
+        cursor = conn.cursor()
+
+        cursor.execute("select * from pet where id=%s;",(idPet, ))
+
+        conn.commit()
+        return cursor.fetchone()
+
+    except psycopg2.DatabaseError as error:
+        cursor.execute("ROLLBACK")
+        conn.commit()
+
+    finally:
+        cursor.close()
+        conn.close

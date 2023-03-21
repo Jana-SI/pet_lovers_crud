@@ -1,0 +1,95 @@
+<head>
+    <script defer src="{{ url_for('static', filename='js/validadorData.js') }}"></script>
+    <script defer src="{{ url_for('static', filename='js/FormataCPFsCad.js') }}"></script>
+    <script defer src="{{ url_for('static', filename='js/validadorCPFassociaPet.js') }}"></script>
+    <script defer src="{{ url_for('static', filename='js/exibirDonosPets.js') }}"></script>
+    <script defer src="{{ url_for('static', filename='js/formataData.js') }}"></script>
+    <script defer src="{{ url_for('static', filename='js/validadorIdPet.js') }}"></script>
+</head>
+
+{% extends "base.html" %}
+{% from 'bootstrap5/utils.html' import render_icon %}
+
+{% block content %}
+<div class="position-absolute top-0 start-0">
+    <button class="btn btn-lg" id="btnHome"><a
+            href="{{url_for('index')}}">{{render_icon('house-heart-fill')}}Home</a></button>
+</div>
+<div class="row justify-content-center">
+    <div id="colCad" class="col-8 col-sm-8 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
+
+        <h1 class="text-center">Associar mais um dono</h1>
+
+        {% if sucesso %}
+        <p id="CadPet" class="alert alert-success text-center" role="alert">{{render_icon('check-circle-fill')}}
+            {{sucesso}}
+        </p>
+        {% endif %}
+
+        {% if erro %}
+        <p id="CadPet" class="alert alert-danger text-center" role="alert">{{render_icon('exclamation-triangle-fill')}}
+            {{erro}}</p>
+        {% endif %}
+
+        <form name="formAssociar" method="POST">
+
+            <div class="row">
+                <div class="col-5 col-sm-5 col-md-5 col-lg-5 col-xl-5 col-xxl-5">
+                    <div class="input-group">
+                        <span id="spanImg" class="input-group-text">
+                            <img src="{{url_for('static', filename='/img/tipo-pet.png')}}">
+                        </span>
+                        <div class="form-floating">
+                            <input class="form-control" list="listaPets" id="idPet" name="idPet"
+                                placeholder="Digitar o nome do pet" onfocusout="verificaIdPet()" required>
+                            <datalist id="listaPets">
+                                {% if todosPets %}
+                                    {% for pet in todosPets %}
+                                        <option value="{{pet.0}}">{{pet.1}}, {{pet.4}}, {{pet.3}}, <span id="data">{{pet.2}}</span></option>
+                                    {% endfor %}
+                                {% endif %}
+                            </datalist>
+                            <label for="idPet" class="form-label">id do Pet</label>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col-7 col-sm-7 col-md-7 col-lg-7 col-xl-5 col-xxl-5 align-self-center text-center">
+                    <div id="resultadoPet"></div>
+                </div>
+
+                <div class="col-5 col-sm-5 col-md-5 col-lg-5 col-xl-5 col-xxl-5">
+                    <div class="input-group">
+                        <span id="spanImg" class="input-group-text">
+                            <img src="{{url_for('static', filename='/img/dono-pet.png')}}">
+                        </span>
+                        <div class="form-floating">
+                            <input class="form-control" list="listaDonos" id="donosPet" name="donosPet"
+                                placeholder="Digitar CPF dono do pet" onfocusout="verificaCpf()"
+                                oninput="mascaraCPF(this)" maxlength="14" required>
+                            <datalist id="listaDonos">
+                                {% if donosPet %}
+                                    {% for dono in donosPet %}
+                                        <option value="{{dono.1}}">{{dono.2}}, {{dono.3}}</option>
+                                    {% endfor %}
+                                {% endif %}
+                            </datalist>
+                            <label for="donosPet" class="form-label">CPF do dono</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-7 col-sm-7 col-md-7 col-lg-7 col-xl-7 col-xxl-7 align-self-center text-center">
+                    <div id="resultadoDono"></div>
+                </div>
+
+            </div>
+
+            <button class="btn float-end" type="submit" id="btnCadCadastrar">Cadastrar</button>
+            <button class="btn" type="reset" id="btnCadApagar">Apagar</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
