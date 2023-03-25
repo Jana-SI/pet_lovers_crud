@@ -171,3 +171,26 @@ def verificaIdAssociaPet():
 
   else:
     return jsonify({"idPetValido": "false"})
+
+@app.route('/consultar_cliente')
+def consultar_cliente():
+
+  todosClientes = pesquisarDonos()
+
+  return render_template('/public/cliente/consultar_clientes.html', todosClientes = todosClientes)
+
+@app.route('/consultar_cliente_verificando_cpf', methods=['GET', 'POST'])
+def verificaCPFconsultarCliente():
+
+  if request.method == "POST":
+
+    cpf = request.get_json()['cpf'].strip()
+    cpfInt = re.sub('[^0-9]', '', cpf)
+
+    verificado = verificaCPFbanco(cpfInt)
+
+  if (verificado):
+    return jsonify({"cpfValido": "true"})
+
+  else:
+    return jsonify({"cpfValido": "false"})

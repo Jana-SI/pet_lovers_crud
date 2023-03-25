@@ -1,0 +1,67 @@
+<head>
+    <!-- css -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_consultar.css')}}">
+
+    <!-- js -->
+    <script defer src="{{ url_for('static', filename='js/FormataCPFsLista.js') }}"></script>
+    <script defer src="{{ url_for('static', filename='js/validadorCPFListaCliente.js') }}"></script>
+    <script defer src="{{ url_for('static', filename='js/exibirClienteEsp.js') }}"></script>
+</head>
+
+{% extends "base.html" %}
+{% from 'bootstrap5/utils.html' import render_icon %}
+
+{% block content %}
+<div class="position-absolute top-0 start-0">
+    <button class="btn btn-lg" id="btnHome"><a href="{{url_for('index')}}">{{render_icon('house-heart-fill')}} Home</a></button>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
+        <form id="formListaClientes" method="post">
+            <div class="input-group">
+                <span class="input-group-text">
+                    {{render_icon('person-lines-fill')}}
+                </span>
+                <div class="form-floating">
+                    <input class="form-control" list="listaCliente" id="cliente" name="cliente" placeholder="Digitar CPF do cliente" onfocusout="verificaCpf()" oninput="mascaraCPF(this)" maxlength="14" required>
+                    <datalist id="listaCliente">
+                        {% if todosClientes %}
+                            {% for cliente in todosClientes %}
+                                <option value="{{cliente.1}}">{{cliente.2}}, <span class="formatarCPF">{{cliente.1}}</span>, {{cliente.3}}, {{cliente.4}}</option>
+                            {% endfor %}
+                        {% endif %}
+                    </datalist>
+                    <label for="cliente" class="form-label">Cliente (CPF)</label>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="row justify-content-center">
+    <div id="todosClientes" class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
+        <div class="card-group">
+        {% if todosClientes %}
+            {% for cliente in todosClientes %}
+            <div class="card" id="styleCard">
+                <div class="card-header text-center">
+                    <h5 class="card-title">{{cliente.2}}</h5>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">CPF: <span class="formatarCPF">{{cliente.1}}</span></p>
+                    <p class="card-text">Telefone: {{cliente.3}}</p>
+                    <p class="card-text">Quantidade de pets: {{cliente.4}}</p>
+                </div>
+            </div>  
+            {% endfor %}
+        {% endif %}
+        </div>
+    </div>
+
+    <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
+        <div id="ClienteEsp"></div>
+    </div>
+</div>
+
+{%  endblock %}

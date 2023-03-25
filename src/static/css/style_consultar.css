@@ -1,0 +1,23 @@
+@import url("cores.css");
+
+#styleCard{
+    background-color: var(--fundo2);
+    margin: 20px;
+    color: var(--texto);
+    border: 2px solid var(--texto);
+    border-radius: 10px;
+}
+
+#styleCard .card-header{
+    background-color: var(--texto);
+    color: var(--fundo2);
+}
+
+.input-group{
+    border: 2px solid var(--texto);
+}
+
+.input-group span{
+    background-color: var(--texto) !important;
+    color: var(--fundo) !important;
+}

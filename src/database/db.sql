@@ -1,5 +1,6 @@
 create table if not exists cliente(
-    cpf int primary key not null,
+    id serial primary key not null,
+    cpf varchar(11) unique not null,
     nome varchar(50) not null,
     telefone varchar(20) not null,
     numPet smallint check(numPet>=0) default 0
