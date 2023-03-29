@@ -200,3 +200,41 @@ def verificaIdPetbanco(idPet):
     finally:
         cursor.close()
         conn.close
+
+def pesquisarPetsDonos():
+
+    try:
+        conn = psycopg2.connect(conn_string)
+        cursor = conn.cursor()
+
+        cursor.execute("SELECT pet.id, cliente.nome, cliente.telefone FROM donopet INNER JOIN pet ON donoPet.idpet = pet.id INNER JOIN cliente ON donoPet.cpfcliente = cliente.cpf")
+
+        conn.commit()
+        return cursor.fetchall()
+
+    except psycopg2.DatabaseError as error:
+        cursor.execute("ROLLBACK")
+        conn.commit()
+
+    finally:
+        cursor.close()
+        conn.close
+
+def pesquisarPetDonos(idPet):
+
+    try:
+        conn = psycopg2.connect(conn_string)
+        cursor = conn.cursor()
+
+        cursor.execute("SELECT pet.id, cliente.nome, cliente.telefone FROM donopet INNER JOIN pet ON donoPet.idpet = pet.id INNER JOIN cliente ON donoPet.cpfcliente = cliente.cpf Where pet.id = %s;",(idPet, ))
+
+        conn.commit()
+        return cursor.fetchall()
+
+    except psycopg2.DatabaseError as error:
+        cursor.execute("ROLLBACK")
+        conn.commit()
+
+    finally:
+        cursor.close()
+        conn.close

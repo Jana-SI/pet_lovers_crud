@@ -176,8 +176,9 @@ def verificaIdAssociaPet():
 def consultar_cliente():
 
   todosClientes = pesquisarDonos()
+  todosClientesOption = pesquisarDonos()
 
-  return render_template('/public/cliente/consultar_clientes.html', todosClientes = todosClientes)
+  return render_template('/public/cliente/consultar_clientes.html', todosClientes = todosClientes, todosClientesOption = todosClientesOption)
 
 @app.route('/consultar_cliente_verificando_cpf', methods=['GET', 'POST'])
 def verificaCPFconsultarCliente():
@@ -194,3 +195,69 @@ def verificaCPFconsultarCliente():
 
   else:
     return jsonify({"cpfValido": "false"})
+
+@app.route('/consultar_cliente', methods=['GET', 'POST'])
+def CPFconsultarCliente():
+
+  cpf = request.form['cliente']
+  cpfInt = re.sub('[^0-9]', '', cpf)
+
+  clienteEsp = verificaCPFbanco(cpfInt)
+
+  if (clienteEsp):
+    
+    todosClientesOption = pesquisarDonos()
+
+    return render_template('/public/cliente/consultar_clientes.html', clienteEsp = clienteEsp, todosClientesOption = todosClientesOption)
+
+  else:
+    todosClientes = pesquisarDonos()
+    todosClientesOption = pesquisarDonos()
+
+    return render_template('/public/cliente/consultar_clientes.html', todosClientes = todosClientes, todosClientesOption = todosClientesOption, erro="Cliente não encontrado no sistema, tente novamente!")
+
+@app.route('/consultar_pet')
+def consultar_pet():
+
+  todosPets = pesquisarPets()
+  todosPetsOption = pesquisarPets()
+  donos = pesquisarPetsDonos()
+
+  return render_template('/public/pet/consultar_pets.html', todosPets = todosPets, donos = donos, todosPetsOption = todosPetsOption)
+
+@app.route('/consultar_pet_verificando_id', methods=['GET', 'POST'])
+def verificaIdConsultarPet():
+
+  if request.method == "POST":
+
+    idpet = request.get_json()['idPet'].strip()
+
+    verificado = verificaIdPetbanco(idpet)
+
+  if (verificado):
+    return jsonify({"idPetValido": "true"})
+
+  else:
+    return jsonify({"idPetValido": "false"})
+
+@app.route('/consultar_pet', methods=['GET', 'POST'])
+def IDconsultar_pet():
+
+  idPet = request.form['idPet']
+
+  petEsp = verificaIdPetbanco(idPet)
+
+  if(petEsp):
+
+    donosPetEsp = pesquisarPetDonos(idPet)
+    todosPetsOption = pesquisarPets()
+
+    return render_template('/public/pet/consultar_pets.html', petEsp = petEsp, donosPetEsp = donosPetEsp, todosPetsOption = todosPetsOption)
+
+  else:
+
+    todosPets = pesquisarPets()
+    todosPetsOption = pesquisarPets()
+    donos = pesquisarPetsDonos()
+
+    return render_template('/public/pet/consultar_pets.html', todosPets = todosPets, donos = donos, todosPetsOption = todosPetsOption, erro="Pet não encontrado no sistema, tente novamente!")

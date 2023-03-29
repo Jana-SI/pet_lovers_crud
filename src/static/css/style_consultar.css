@@ -21,3 +21,22 @@
     background-color: var(--texto) !important;
     color: var(--fundo) !important;
 }
+
+#styleCard hr{
+    border: 2px solid var(--texto) !important;
+}
+
+#btnMostraTodos a{
+    text-decoration: none;
+    color: var(--fundo);
+}
+
+#btnPesquisar, #btnMostraTodos{
+    background-color: var(--texto);
+    color: var(--fundo);
+}
+
+#btnPesquisar:hover, #btnMostraTodos:hover, #btnMostraTodos:hover a{
+    background-color: var(--fundo);
+    color: var(--texto);
+}
