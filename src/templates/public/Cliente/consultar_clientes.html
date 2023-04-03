@@ -17,7 +17,7 @@
 
 <div class="row justify-content-center">
     <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
-        <form id="formListaClientes" method="post">
+        <form id="formListaClientes" action="/consultar_cliente" method="post">
             <div class="input-group">
                 <span class="input-group-text">
                     {{render_icon('search')}}
@@ -43,6 +43,10 @@
             {{erro}}</p>
         {% endif %}
 
+        {% if sucesso %}
+            <p class="alert alert-success text-center" role="alert">{{render_icon('check-circle-fill')}} {{sucesso}}</p>
+        {% endif %}
+
     </div>
 </div>
 
@@ -61,6 +65,11 @@
                         <p class="card-text">Telefone: {{cliente.3}}</p>
                         <p class="card-text">Quantidade de pets: {{cliente.4}}</p>
                     </div>
+                    <div class="card-footer text-center">
+                        <form action="/consultar_cliente/{{cliente.0}}" method="POST">
+                            <button id="btnDeletar" class="btn btn-lg" type="submit">{{render_icon('trash3-fill')}}</button>
+                        </form>
+                    </div>
                 </div>  
             </div>
             {% endfor %}
@@ -78,6 +87,11 @@
                 <p class="card-text">CPF: <span class="formatarCPF">{{clienteEsp.1}}</span></p>
                 <p class="card-text">Telefone: {{clienteEsp.3}}</p>
                 <p class="card-text">Quantidade de pets: {{clienteEsp.4}}</p>
+            </div>
+            <div class="card-footer text-center">
+                <form action="/consultar_cliente/{{clienteEsp.0}}" method="POST">
+                    <button id="btnDeletar" class="btn btn-lg" type="submit">{{render_icon('trash3-fill')}}</button>
+                </form>
             </div>
         </div>
     </div>

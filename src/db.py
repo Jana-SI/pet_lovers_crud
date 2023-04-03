@@ -238,3 +238,40 @@ def pesquisarPetDonos(idPet):
     finally:
         cursor.close()
         conn.close
+
+def deletarCliente(id):
+
+    try:
+        conn = psycopg2.connect(conn_string)
+        cursor = conn.cursor()
+
+        cursor.execute("delete from cliente where id=%s returning nome;",(id, ))
+
+        conn.commit()
+        return cursor.fetchone()
+
+    except psycopg2.DatabaseError as error:
+        cursor.execute("ROLLBACK")
+        conn.commit()
+
+    finally:
+        cursor.close()
+        conn.close
+
+def verificaIdCliente(id):
+
+    try:
+        conn = psycopg2.connect(conn_string)
+        cursor = conn.cursor()
+
+        cursor.execute("select * from cliente where id=%s;",(id, ))
+        conn.commit()
+        return cursor.fetchone()
+
+    except psycopg2.DatabaseError as error:
+        cursor.execute("ROLLBACK")
+        conn.commit()
+
+    finally:
+        cursor.close()
+        conn.close

@@ -40,3 +40,27 @@
     background-color: var(--fundo);
     color: var(--texto);
 }
+
+#btnDeletar{
+    margin-top: 7px !important;
+    margin-bottom: 7px !important;
+    background-color: var(--fundo2);
+    color: var(--texto);
+    border-color: 2px solid var(--texto) !important;
+}
+
+#btnDeletar:hover{
+    margin-top: 7px !important;
+    margin-bottom: 7px !important;
+    background-color: var(--fundo2);
+    color: #aa0000;
+    border-color: 2px solid #aa0000 !important;
+}
+
+.card-footer form{
+    padding: 0px !important;
+}
+
+.card-footer form{
+    margin: 0px !important;
+}

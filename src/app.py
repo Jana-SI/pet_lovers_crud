@@ -216,6 +216,36 @@ def CPFconsultarCliente():
 
     return render_template('/public/cliente/consultar_clientes.html', todosClientes = todosClientes, todosClientesOption = todosClientesOption, erro="Cliente não encontrado no sistema, tente novamente!")
 
+@app.route('/consultar_cliente/<idCliente>', methods=['GET', 'POST'])
+def deletar_cliente(idCliente):
+
+  todosClientes = pesquisarDonos()
+  todosClientesOption = pesquisarDonos()
+  verifica = verificaIdCliente(idCliente)
+
+  if(verifica):
+
+    if(verifica[4] > 0):
+      
+      erro = "O cliente %s está associado a %s pets" % (verifica[2],  verifica[4])
+
+      return render_template('/public/cliente/consultar_clientes.html', erro = erro, todosClientesOption = todosClientesOption, todosClientes = todosClientes)
+
+    else:
+      nome = deletarCliente(idCliente)
+      todosClientes = pesquisarDonos()
+      todosClientesOption = pesquisarDonos()
+
+      sucesso = "O cliente %s foi deletado com sucesso!" % (nome)
+
+      return render_template('/public/cliente/consultar_clientes.html', sucesso = sucesso, todosClientesOption = todosClientesOption, todosClientes = todosClientes)
+
+  else:
+
+    erro = "Não foi possivel deletar, cliente não se encontra no sistema!"
+
+    return render_template('/public/cliente/consultar_clientes.html', erro = erro, todosClientesOption = todosClientesOption, todosClientes = todosClientes)
+
 @app.route('/consultar_pet')
 def consultar_pet():
 
