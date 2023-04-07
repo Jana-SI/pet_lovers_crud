@@ -329,3 +329,60 @@ def pesquisaNomeCliente(id):
     finally:
         cursor.close()
         conn.close
+
+def desvincularDonoPet(idpet):
+
+    #try:
+        conn = psycopg2.connect(conn_string)
+        cursor = conn.cursor()
+
+        cursor.execute("delete from donopet where idpet=%s returning cpfcliente;",(idpet, ))
+
+        conn.commit()
+        return cursor.fetchone()
+
+    #except psycopg2.DatabaseError as error:
+    #    cursor.execute("ROLLBACK")
+    #    conn.commit()
+
+    #finally:
+    #    cursor.close()
+    #    conn.close
+
+def deletarPet(id):
+
+   # try:
+        conn = psycopg2.connect(conn_string)
+        cursor = conn.cursor()
+
+        cursor.execute("delete from pet where id=%s returning nome;",(id, ))
+
+        conn.commit()
+        return cursor.fetchone()
+
+    #except psycopg2.DatabaseError as error:
+    #    cursor.execute("ROLLBACK")
+    #    conn.commit()
+
+    #finally:
+    #    cursor.close()
+    #    conn.close
+
+def removeNumPet(cpfDono):
+
+    #try:
+       conn = psycopg2.connect(conn_string)
+       cursor = conn.cursor() 
+       
+       cursor.execute("update cliente set numpet = (numpet-1) where cpf = %s;",(cpfDono, ))
+       
+       conn.commit()
+       #return cursor.fetchone()
+
+   # except psycopg2.DatabaseError as error:
+        #cursor.execute("ROLLBACK")
+        #conn.commit()
+
+    #finally:
+        #cursor.close()
+        #conn.close

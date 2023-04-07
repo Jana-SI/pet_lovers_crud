@@ -47,13 +47,18 @@
         <p class="alert alert-danger text-center" role="alert">{{render_icon('exclamation-triangle-fill')}}
             {{erro}}</p>
         {% endif %}
+
+        {% if sucesso %}
+            <p class="alert alert-success text-center" role="alert">{{render_icon('check-circle-fill')}} {{sucesso}}</p>
+        {% endif %}
+
     </div>
 </div>
 
 <div class="row justify-content-center">
     {% if todosPets %}
     <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
-        <div class="row row-cols-1 row-cols-md-3 g-4">
+        <div class="row row-cols-1 row-cols-md-2 g-4">
                 {% for pet in todosPets %}
             <div class="col">
                 <div class="card" id="styleCard">
@@ -75,6 +80,12 @@
                         <p class="card-text">Contato: {{dono.2}}</p>
                             {% endif %}
                         {% endfor %}
+                    </div>
+                    
+                    <div class="card-footer text-center">
+                        <form action="/consultar_pet_deletar/{{pet.0}}" method="POST">
+                            <button id="btnDeletar" class="btn btn-lg" type="submit">{{render_icon('trash3-fill')}}</button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -104,6 +115,12 @@
                 <p class="card-text">Contato: {{dono.2}}</p>
                     {% endif %}
                 {% endfor %}
+            </div>
+                    
+            <div class="card-footer text-center">
+                <form action="/consultar_pet_deletar/{{petEsp.0}}" method="POST">
+                    <button id="btnDeletar" class="btn btn-lg" type="submit">{{render_icon('trash3-fill')}}</button>
+                </form>
             </div>
         </div>
     </div>

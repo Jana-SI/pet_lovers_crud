@@ -302,7 +302,7 @@ def consultar_pet():
   todosPetsOption = pesquisarPets()
   donos = pesquisarPetsDonos()
 
-  return render_template('/public/pet/consultar_pets.html', todosPets = todosPets, donos = donos, todosPetsOption = todosPetsOption)
+  return render_template('/public/pet/consultar_deletar_atualizar_pets.html', todosPets = todosPets, donos = donos, todosPetsOption = todosPetsOption)
 
 @app.route('/consultar_pet_verificando_id', methods=['GET', 'POST'])
 def verificaIdConsultarPet():
@@ -331,7 +331,7 @@ def IDconsultar_pet():
     donosPetEsp = pesquisarPetDonos(idPet)
     todosPetsOption = pesquisarPets()
 
-    return render_template('/public/pet/consultar_pets.html', petEsp = petEsp, donosPetEsp = donosPetEsp, todosPetsOption = todosPetsOption)
+    return render_template('/public/pet/consultar_deletar_atualizar_pets.html', petEsp = petEsp, donosPetEsp = donosPetEsp, todosPetsOption = todosPetsOption)
 
   else:
 
@@ -339,4 +339,36 @@ def IDconsultar_pet():
     todosPetsOption = pesquisarPets()
     donos = pesquisarPetsDonos()
 
-    return render_template('/public/pet/consultar_pets.html', todosPets = todosPets, donos = donos, todosPetsOption = todosPetsOption, erro="Pet não encontrado no sistema, tente novamente!")
+    return render_template('/public/pet/consultar_deletar_atualizar_pets.html', todosPets = todosPets, donos = donos, todosPetsOption = todosPetsOption, erro="Pet não encontrado no sistema, tente novamente!")
+
+@app.route('/consultar_pet_deletar/<idPet>', methods=['GET', 'POST'])
+def deletar_pet(idPet):
+
+  verifica = verificaIdPetbanco(idPet)
+
+  if(verifica):
+
+    cpfDonos = desvincularDonoPet(idPet)
+
+    nomePet = deletarPet(idPet)
+
+    for cpfDono in cpfDonos:
+      removeNumPet(cpfDono)
+
+    sucesso = "O pet %s foi deletado com sucesso!" % (nomePet)
+
+    todosPets = pesquisarPets()
+    todosPetsOption = pesquisarPets()
+    donos = pesquisarPetsDonos()
+
+    return render_template('/public/pet/consultar_deletar_atualizar_pets.html', sucesso = sucesso, todosPets = todosPets, donos = donos, todosPetsOption = todosPetsOption)
+
+  else:
+
+    erro = "Não foi possivel deletar, o pet não se encontra no sistema!"
+
+    todosPets = pesquisarPets()
+    todosPetsOption = pesquisarPets()
+    donos = pesquisarPetsDonos()
+
+    return render_template('/public/pet/consultar_deletar_atualizar_pets.html', erros = erro, todosPets = todosPets, donos = donos, todosPetsOption = todosPetsOption)
