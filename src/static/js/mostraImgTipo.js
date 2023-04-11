@@ -108,7 +108,7 @@ function mostraImgTipo(tipo) {
         document.getElementById('porquinho_da_india').style.display = 'inline-block';
     }
 
-    if(tipo == "" || tipo == "nao-declarado"){
+    /* if(tipo == "" || tipo == "nao-declarado"){
         document.getElementById('ave').style.display='none';
         document.getElementById('cachorro').style.display = 'none';
         document.getElementById('chinchila').style.display = 'none';
@@ -118,5 +118,5 @@ function mostraImgTipo(tipo) {
         document.getElementById('hamster').style.display = 'none';
         document.getElementById('peixe').style.display = 'none';
         document.getElementById('porquinho_da_india').style.display = 'none';
-    }
+    } */
 }

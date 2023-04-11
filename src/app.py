@@ -352,8 +352,9 @@ def deletar_pet(idPet):
 
     nomePet = deletarPet(idPet)
 
-    for cpfDono in cpfDonos:
-      removeNumPet(cpfDono)
+    if(cpfDonos):
+      for cpfDono in cpfDonos:
+        removeNumPet(cpfDono)
 
     sucesso = "O pet %s foi deletado com sucesso!" % (nomePet)
 
@@ -366,6 +367,114 @@ def deletar_pet(idPet):
   else:
 
     erro = "Não foi possivel deletar, o pet não se encontra no sistema!"
+
+    todosPets = pesquisarPets()
+    todosPetsOption = pesquisarPets()
+    donos = pesquisarPetsDonos()
+
+    return render_template('/public/pet/consultar_deletar_atualizar_pets.html', erros = erro, todosPets = todosPets, donos = donos, todosPetsOption = todosPetsOption)
+  
+@app.route('/consultar_pet_deletar_dono/<idPet>/<cpfDono>', methods=['GET', 'POST'])
+def deletar_dono_pet(idPet, cpfDono):
+
+  verifica = verificaIdPetbanco(idPet)
+
+  if(verifica):
+
+    desvincularUmDonoPet(idPet, cpfDono)
+    removeNumPet(cpfDono)
+
+    sucesso = "O pet %s foi desassociado ao dono com sucesso!" % (verifica[1])
+
+    todosPets = pesquisarPets()
+    todosPetsOption = pesquisarPets()
+    donos = pesquisarPetsDonos()
+
+    return render_template('/public/pet/consultar_deletar_atualizar_pets.html', sucesso = sucesso, todosPets = todosPets, donos = donos, todosPetsOption = todosPetsOption)
+
+  else:
+
+    erro = "Não foi possivel desassociar o dono do pet, pet não se encontra no sistema!"
+
+    todosPets = pesquisarPets()
+    todosPetsOption = pesquisarPets()
+    donos = pesquisarPetsDonos()
+
+    return render_template('/public/pet/consultar_deletar_atualizar_pets.html', erros = erro, todosPets = todosPets, donos = donos, todosPetsOption = todosPetsOption)
+
+@app.route('/consultar_pet_atualizar_nome/<idPet>', methods=['GET', 'POST'])
+def atualizar_pet_nome(idPet):
+
+  if(request.form['nome']):
+
+    nome = request.form['nome']
+    nomeAntigo = pesquisaNomePet(idPet)
+    
+    atualizaNomePet(nome, idPet)
+    
+    sucesso = "O nome do pet %s foi atualizado para %s com sucesso!" % (nomeAntigo[0], nome)
+
+    todosPets = pesquisarPets()
+    todosPetsOption = pesquisarPets()
+    donos = pesquisarPetsDonos()
+
+    return render_template('/public/pet/consultar_deletar_atualizar_pets.html', sucesso = sucesso, todosPets = todosPets, donos = donos, todosPetsOption = todosPetsOption)
+
+  else:
+    erro = "Não foi possivel atualizar o nome do pet, tente novamente!"
+
+    todosPets = pesquisarPets()
+    todosPetsOption = pesquisarPets()
+    donos = pesquisarPetsDonos()
+
+    return render_template('/public/pet/consultar_deletar_atualizar_pets.html', erros = erro, todosPets = todosPets, donos = donos, todosPetsOption = todosPetsOption)
+
+@app.route('/consultar_pet_atualizar_tipo_raca/<idPet>', methods=['GET', 'POST'])
+def atualizar_pet_tipo_raca(idPet):
+
+  if(request.form['tipo'] and request.form['raca']):
+
+    tipo = request.form['tipo'].strip()
+    raca = request.form['raca'].strip()
+    
+    nome = atualizaTipoRacaPet(tipo, raca, idPet)
+    
+    sucesso = "O tipo e a raça do pet %s foram atualizados com sucesso!" % (nome)
+
+    todosPets = pesquisarPets()
+    todosPetsOption = pesquisarPets()
+    donos = pesquisarPetsDonos()
+ 
+    return render_template('/public/pet/consultar_deletar_atualizar_pets.html', sucesso = sucesso, todosPets = todosPets, donos = donos, todosPetsOption = todosPetsOption)
+
+  else:
+    erro = "Não foi possivel atualizar o tipo e a raça do pet, preencha ambos os campos!"
+
+    todosPets = pesquisarPets()
+    todosPetsOption = pesquisarPets()
+    donos = pesquisarPetsDonos()
+
+    return render_template('/public/pet/consultar_deletar_atualizar_pets.html', erros = erro, todosPets = todosPets, donos = donos, todosPetsOption = todosPetsOption)
+
+@app.route('/consultar_pet_atualizar_data/<idPet>', methods=['GET', 'POST'])
+def atualizar_pet_data(idPet):
+
+  if(request.form['nascimento']):
+
+    nascimento = request.form['nascimento']
+    
+    nome = atualizaDataPet(nascimento, idPet)
+    
+    sucesso = "A data de nascimento do pet %s foi atualiza com sucesso!" % (nome)
+
+    todosPets = pesquisarPets()
+    todosPetsOption = pesquisarPets()
+    donos = pesquisarPetsDonos()
+ 
+    return render_template('/public/pet/consultar_deletar_atualizar_pets.html', sucesso = sucesso, todosPets = todosPets, donos = donos, todosPetsOption = todosPetsOption)
+
+  else:
+    erro = "Não foi possivel atualizar a data de nascimento do pet, preencha os campos!"
 
     todosPets = pesquisarPets()
     todosPetsOption = pesquisarPets()

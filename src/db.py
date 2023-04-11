@@ -91,7 +91,7 @@ def adicionaNumPet(cpfDono):
 
 def insereDonoPet(cpfDono, idPet):
 
-    # try:
+    try:
        conn = psycopg2.connect(conn_string)
        cursor = conn.cursor() 
        
@@ -99,13 +99,13 @@ def insereDonoPet(cpfDono, idPet):
        conn.commit()
        return cursor.fetchone()
 
-    # except psycopg2.DatabaseError as error:
-        # cursor.execute("ROLLBACK")
-        # conn.commit()
+    except psycopg2.DatabaseError as error:
+        cursor.execute("ROLLBACK")
+        conn.commit()
 
-    # finally:
-        # cursor.close()
-        # conn.close
+    finally:
+        cursor.close()
+        conn.close
 
 def pesquisarDonos():
 
@@ -113,7 +113,7 @@ def pesquisarDonos():
         conn = psycopg2.connect(conn_string)
         cursor = conn.cursor()
 
-        cursor.execute("select * from cliente;")
+        cursor.execute("select * from cliente order by id;")
         conn.commit()
         return cursor.fetchall()
 
@@ -147,7 +147,7 @@ def verificaPetbanco(nome, nascimento, raca, tipo):
 
 def verificaDonoPetbanco(idPet, cpfcliente):
 
-    # try:
+    try:
         conn = psycopg2.connect(conn_string)
         cursor = conn.cursor()
 
@@ -156,11 +156,11 @@ def verificaDonoPetbanco(idPet, cpfcliente):
         conn.commit()
         return cursor.fetchone()
 
-    # except psycopg2.DatabaseError as error:
-    #     cursor.execute("ROLLBACK")
-    #     conn.commit()
+    except psycopg2.DatabaseError as error:
+        cursor.execute("ROLLBACK")
+        conn.commit()
 
-    # finally:
+    finally:
         cursor.close()
         conn.close
 
@@ -170,7 +170,7 @@ def pesquisarPets():
         conn = psycopg2.connect(conn_string)
         cursor = conn.cursor()
 
-        cursor.execute("select * from pet;")
+        cursor.execute("select * from pet order by id;")
         conn.commit()
         return cursor.fetchall()
 
@@ -207,7 +207,7 @@ def pesquisarPetsDonos():
         conn = psycopg2.connect(conn_string)
         cursor = conn.cursor()
 
-        cursor.execute("SELECT pet.id, cliente.nome, cliente.telefone FROM donopet INNER JOIN pet ON donoPet.idpet = pet.id INNER JOIN cliente ON donoPet.cpfcliente = cliente.cpf")
+        cursor.execute("SELECT pet.id, cliente.nome, cliente.telefone, cliente.cpf FROM donopet INNER JOIN pet ON donoPet.idpet = pet.id INNER JOIN cliente ON donoPet.cpfcliente = cliente.cpf")
 
         conn.commit()
         return cursor.fetchall()
@@ -332,7 +332,7 @@ def pesquisaNomeCliente(id):
 
 def desvincularDonoPet(idpet):
 
-    #try:
+    try:
         conn = psycopg2.connect(conn_string)
         cursor = conn.cursor()
 
@@ -341,17 +341,17 @@ def desvincularDonoPet(idpet):
         conn.commit()
         return cursor.fetchone()
 
-    #except psycopg2.DatabaseError as error:
-    #    cursor.execute("ROLLBACK")
-    #    conn.commit()
+    except psycopg2.DatabaseError as error:
+        cursor.execute("ROLLBACK")
+        conn.commit()
 
-    #finally:
-    #    cursor.close()
-    #    conn.close
+    finally:
+        cursor.close()
+        conn.close
 
 def deletarPet(id):
 
-   # try:
+    try:
         conn = psycopg2.connect(conn_string)
         cursor = conn.cursor()
 
@@ -360,29 +360,119 @@ def deletarPet(id):
         conn.commit()
         return cursor.fetchone()
 
-    #except psycopg2.DatabaseError as error:
-    #    cursor.execute("ROLLBACK")
-    #    conn.commit()
+    except psycopg2.DatabaseError as error:
+        cursor.execute("ROLLBACK")
+        conn.commit()
 
-    #finally:
-    #    cursor.close()
-    #    conn.close
+    finally:
+        cursor.close()
+        conn.close
 
 def removeNumPet(cpfDono):
 
-    #try:
+    try:
        conn = psycopg2.connect(conn_string)
        cursor = conn.cursor() 
        
        cursor.execute("update cliente set numpet = (numpet-1) where cpf = %s;",(cpfDono, ))
        
        conn.commit()
-       #return cursor.fetchone()
+       return cursor.fetchone()
 
-   # except psycopg2.DatabaseError as error:
-        #cursor.execute("ROLLBACK")
-        #conn.commit()
+    except psycopg2.DatabaseError as error:
+        cursor.execute("ROLLBACK")
+        conn.commit()
 
-    #finally:
-        #cursor.close()
-        #conn.close
+    finally:
+        cursor.close()
+        conn.close
+
+def desvincularUmDonoPet(idpet, cpf):
+
+    try:
+        conn = psycopg2.connect(conn_string)
+        cursor = conn.cursor()
+
+        cursor.execute("delete from donopet where idpet=%s and cpfcliente=%s;",(idpet, cpf))
+
+        conn.commit()
+
+    except psycopg2.DatabaseError as error:
+        cursor.execute("ROLLBACK")
+        conn.commit()
+
+    finally:
+        cursor.close()
+        conn.close
+
+def atualizaNomePet(nome, id):
+
+    try:
+        conn = psycopg2.connect(conn_string)
+        cursor = conn.cursor()
+
+        cursor.execute("update pet set nome = %s where id = %s",(nome, id))
+        conn.commit()
+        return cursor.fetchone()
+
+    except psycopg2.DatabaseError as error:
+        cursor.execute("ROLLBACK")
+        conn.commit()
+
+    finally:
+        cursor.close()
+        conn.close
+
+def pesquisaNomePet(id):
+
+    try:
+        conn = psycopg2.connect(conn_string)
+        cursor = conn.cursor()
+
+        cursor.execute("select nome from pet where id=%s",(id, ))
+        conn.commit()
+        return cursor.fetchone()
+
+    except psycopg2.DatabaseError as error:
+        cursor.execute("ROLLBACK")
+        conn.commit()
+
+    finally:
+        cursor.close()
+        conn.close
+
+def atualizaTipoRacaPet(tipo, raca, id):
+
+    try:
+        conn = psycopg2.connect(conn_string)
+        cursor = conn.cursor()
+
+        cursor.execute("update pet set tipo = %s, raca = %s where id = %s returning nome;",(tipo, raca, id))
+        conn.commit()
+        return cursor.fetchone()
+
+    except psycopg2.DatabaseError as error:
+        cursor.execute("ROLLBACK")
+        conn.commit()
+
+    finally:
+        cursor.close()
+        conn.close
+
+def atualizaDataPet(nascimento, id):
+
+    try:
+        conn = psycopg2.connect(conn_string)
+        cursor = conn.cursor()
+
+        cursor.execute("update pet set nascimento = %s where id = %s returning nome;",(nascimento, id))
+        conn.commit()
+        return cursor.fetchone()
+
+    except psycopg2.DatabaseError as error:
+        cursor.execute("ROLLBACK")
+        conn.commit()
+
+    finally:
+        cursor.close()
+        conn.close
