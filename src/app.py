@@ -172,16 +172,16 @@ def verificaIdAssociaPet():
   else:
     return jsonify({"idPetValido": "false"})
 
-@app.route('/consultar_cliente')
-def consultar_cliente():
+@app.route('/listar_cliente')
+def listar_cliente():
 
   todosClientes = pesquisarDonos()
   todosClientesOption = pesquisarDonos()
 
-  return render_template('/public/cliente/consultar_deletar_atualizar_clientes.html', todosClientes = todosClientes, todosClientesOption = todosClientesOption)
+  return render_template('/public/cliente/listar_deletar_atualizar_clientes.html', todosClientes = todosClientes, todosClientesOption = todosClientesOption)
 
-@app.route('/consultar_cliente_verificando_cpf', methods=['GET', 'POST'])
-def verificaCPFconsultarCliente():
+@app.route('/listar_cliente_verificando_cpf', methods=['GET', 'POST'])
+def verificaCPFListarCliente():
 
   if request.method == "POST":
 
@@ -196,8 +196,8 @@ def verificaCPFconsultarCliente():
   else:
     return jsonify({"cpfValido": "false"})
 
-@app.route('/consultar_cliente', methods=['GET', 'POST'])
-def CPFconsultarCliente():
+@app.route('/listar_cliente', methods=['GET', 'POST'])
+def CPFListarCliente():
 
   cpf = request.form['cliente']
   cpfInt = re.sub('[^0-9]', '', cpf)
@@ -208,15 +208,15 @@ def CPFconsultarCliente():
     
     todosClientesOption = pesquisarDonos()
 
-    return render_template('/public/cliente/consultar_deletar_atualizar_clientes.html', clienteEsp = clienteEsp, todosClientesOption = todosClientesOption)
+    return render_template('/public/cliente/listar_deletar_atualizar_clientes.html', clienteEsp = clienteEsp, todosClientesOption = todosClientesOption)
 
   else:
     todosClientes = pesquisarDonos()
     todosClientesOption = pesquisarDonos()
 
-    return render_template('/public/cliente/consultar_deletar_atualizar_clientes.html', todosClientes = todosClientes, todosClientesOption = todosClientesOption, erro="Cliente não encontrado no sistema, tente novamente!")
+    return render_template('/public/cliente/listar_deletar_atualizar_clientes.html', todosClientes = todosClientes, todosClientesOption = todosClientesOption, erro="Cliente não encontrado no sistema, tente novamente!")
 
-@app.route('/consultar_cliente_deletar/<idCliente>', methods=['GET', 'POST'])
+@app.route('/listar_cliente_deletar/<idCliente>', methods=['GET', 'POST'])
 def deletar_cliente(idCliente):
 
   todosClientes = pesquisarDonos()
@@ -229,7 +229,7 @@ def deletar_cliente(idCliente):
       
       erro = "O cliente %s está associado a %s pets" % (verifica[2],  verifica[4])
 
-      return render_template('/public/cliente/consultar_deletar_atualizar_clientes.html', erro = erro, todosClientesOption = todosClientesOption, todosClientes = todosClientes)
+      return render_template('/public/cliente/listar_deletar_atualizar_clientes.html', erro = erro, todosClientesOption = todosClientesOption, todosClientes = todosClientes)
 
     else:
       nome = deletarCliente(idCliente)
@@ -238,15 +238,15 @@ def deletar_cliente(idCliente):
 
       sucesso = "O cliente %s foi deletado com sucesso!" % (nome)
 
-      return render_template('/public/cliente/consultar_deletar_atualizar_clientes.html', sucesso = sucesso, todosClientesOption = todosClientesOption, todosClientes = todosClientes)
+      return render_template('/public/cliente/listar_deletar_atualizar_clientes.html', sucesso = sucesso, todosClientesOption = todosClientesOption, todosClientes = todosClientes)
 
   else:
 
     erro = "Não foi possivel deletar, cliente não se encontra no sistema!"
 
-    return render_template('/public/cliente/consultar_deletar_atualizar_clientes.html', erro = erro, todosClientesOption = todosClientesOption, todosClientes = todosClientes)
+    return render_template('/public/cliente/listar_deletar_atualizar_clientes.html', erro = erro, todosClientesOption = todosClientesOption, todosClientes = todosClientes)
 
-@app.route('/consultar_cliente_atualizar_nome/<idCliente>', methods=['GET', 'POST'])
+@app.route('/listar_cliente_atualizar_nome/<idCliente>', methods=['GET', 'POST'])
 def atualizar_cliente_nome(idCliente):
 
   if(request.form['nome']):
@@ -261,7 +261,7 @@ def atualizar_cliente_nome(idCliente):
     todosClientes = pesquisarDonos()
     todosClientesOption = pesquisarDonos()
 
-    return render_template('/public/cliente/consultar_deletar_atualizar_clientes.html', sucesso = sucesso, todosClientesOption = todosClientesOption, todosClientes = todosClientes)
+    return render_template('/public/cliente/listar_deletar_atualizar_clientes.html', sucesso = sucesso, todosClientesOption = todosClientesOption, todosClientes = todosClientes)
 
   else:
     erro = "Não foi possivel atualizar o nome do cliente, tente novamente!"
@@ -269,9 +269,9 @@ def atualizar_cliente_nome(idCliente):
     todosClientes = pesquisarDonos()
     todosClientesOption = pesquisarDonos()
 
-    return render_template('/public/cliente/consultar_deletar_atualizar_clientes.html', erro = erro, todosClientesOption = todosClientesOption, todosClientes = todosClientes)
+    return render_template('/public/cliente/listar_deletar_atualizar_clientes.html', erro = erro, todosClientesOption = todosClientesOption, todosClientes = todosClientes)
 
-@app.route('/consultar_cliente_atualizar_telefone/<idCliente>', methods=['GET', 'POST'])
+@app.route('/listar_cliente_atualizar_telefone/<idCliente>', methods=['GET', 'POST'])
 def atualizar_cliente_telefone(idCliente):
 
   if(request.form['telefone']):
@@ -285,7 +285,7 @@ def atualizar_cliente_telefone(idCliente):
     todosClientes = pesquisarDonos()
     todosClientesOption = pesquisarDonos()
 
-    return render_template('/public/cliente/consultar_deletar_atualizar_clientes.html', sucesso = sucesso, todosClientesOption = todosClientesOption, todosClientes = todosClientes)
+    return render_template('/public/cliente/listar_deletar_atualizar_clientes.html', sucesso = sucesso, todosClientesOption = todosClientesOption, todosClientes = todosClientes)
 
   else:
     erro = "Não foi possivel atualizar o telefone do cliente, tente novamente!"
@@ -293,19 +293,19 @@ def atualizar_cliente_telefone(idCliente):
     todosClientes = pesquisarDonos()
     todosClientesOption = pesquisarDonos()
 
-    return render_template('/public/cliente/consultar_deletar_atualizar_clientes.html', erro = erro, todosClientesOption = todosClientesOption, todosClientes = todosClientes)
+    return render_template('/public/cliente/listar_deletar_atualizar_clientes.html', erro = erro, todosClientesOption = todosClientesOption, todosClientes = todosClientes)
 
-@app.route('/consultar_pet')
-def consultar_pet():
+@app.route('/listar_pet')
+def listar_pet():
 
   todosPets = pesquisarPets()
   todosPetsOption = pesquisarPets()
   donos = pesquisarPetsDonos()
 
-  return render_template('/public/pet/consultar_deletar_atualizar_pets.html', todosPets = todosPets, donos = donos, todosPetsOption = todosPetsOption)
+  return render_template('/public/pet/listar_deletar_atualizar_pets.html', todosPets = todosPets, donos = donos, todosPetsOption = todosPetsOption)
 
-@app.route('/consultar_pet_verificando_id', methods=['GET', 'POST'])
-def verificaIdConsultarPet():
+@app.route('/listar_pet_verificando_id', methods=['GET', 'POST'])
+def verificaIdListarPet():
 
   if request.method == "POST":
 
@@ -319,8 +319,8 @@ def verificaIdConsultarPet():
   else:
     return jsonify({"idPetValido": "false"})
 
-@app.route('/consultar_pet', methods=['GET', 'POST'])
-def IDconsultar_pet():
+@app.route('/listar_pet', methods=['GET', 'POST'])
+def IDListar_pet():
 
   idPet = request.form['idPet']
 
@@ -331,7 +331,7 @@ def IDconsultar_pet():
     donosPetEsp = pesquisarPetDonos(idPet)
     todosPetsOption = pesquisarPets()
 
-    return render_template('/public/pet/consultar_deletar_atualizar_pets.html', petEsp = petEsp, donosPetEsp = donosPetEsp, todosPetsOption = todosPetsOption)
+    return render_template('/public/pet/listar_deletar_atualizar_pets.html', petEsp = petEsp, donosPetEsp = donosPetEsp, todosPetsOption = todosPetsOption)
 
   else:
 
@@ -339,9 +339,9 @@ def IDconsultar_pet():
     todosPetsOption = pesquisarPets()
     donos = pesquisarPetsDonos()
 
-    return render_template('/public/pet/consultar_deletar_atualizar_pets.html', todosPets = todosPets, donos = donos, todosPetsOption = todosPetsOption, erro="Pet não encontrado no sistema, tente novamente!")
+    return render_template('/public/pet/listar_deletar_atualizar_pets.html', todosPets = todosPets, donos = donos, todosPetsOption = todosPetsOption, erro="Pet não encontrado no sistema, tente novamente!")
 
-@app.route('/consultar_pet_deletar/<idPet>', methods=['GET', 'POST'])
+@app.route('/listar_pet_deletar/<idPet>', methods=['GET', 'POST'])
 def deletar_pet(idPet):
 
   verifica = verificaIdPetbanco(idPet)
@@ -362,7 +362,7 @@ def deletar_pet(idPet):
     todosPetsOption = pesquisarPets()
     donos = pesquisarPetsDonos()
 
-    return render_template('/public/pet/consultar_deletar_atualizar_pets.html', sucesso = sucesso, todosPets = todosPets, donos = donos, todosPetsOption = todosPetsOption)
+    return render_template('/public/pet/listar_deletar_atualizar_pets.html', sucesso = sucesso, todosPets = todosPets, donos = donos, todosPetsOption = todosPetsOption)
 
   else:
 
@@ -372,9 +372,9 @@ def deletar_pet(idPet):
     todosPetsOption = pesquisarPets()
     donos = pesquisarPetsDonos()
 
-    return render_template('/public/pet/consultar_deletar_atualizar_pets.html', erros = erro, todosPets = todosPets, donos = donos, todosPetsOption = todosPetsOption)
+    return render_template('/public/pet/listar_deletar_atualizar_pets.html', erros = erro, todosPets = todosPets, donos = donos, todosPetsOption = todosPetsOption)
   
-@app.route('/consultar_pet_deletar_dono/<idPet>/<cpfDono>', methods=['GET', 'POST'])
+@app.route('/listar_pet_deletar_dono/<idPet>/<cpfDono>', methods=['GET', 'POST'])
 def deletar_dono_pet(idPet, cpfDono):
 
   verifica = verificaIdPetbanco(idPet)
@@ -390,7 +390,7 @@ def deletar_dono_pet(idPet, cpfDono):
     todosPetsOption = pesquisarPets()
     donos = pesquisarPetsDonos()
 
-    return render_template('/public/pet/consultar_deletar_atualizar_pets.html', sucesso = sucesso, todosPets = todosPets, donos = donos, todosPetsOption = todosPetsOption)
+    return render_template('/public/pet/listar_deletar_atualizar_pets.html', sucesso = sucesso, todosPets = todosPets, donos = donos, todosPetsOption = todosPetsOption)
 
   else:
 
@@ -400,9 +400,9 @@ def deletar_dono_pet(idPet, cpfDono):
     todosPetsOption = pesquisarPets()
     donos = pesquisarPetsDonos()
 
-    return render_template('/public/pet/consultar_deletar_atualizar_pets.html', erros = erro, todosPets = todosPets, donos = donos, todosPetsOption = todosPetsOption)
+    return render_template('/public/pet/listar_deletar_atualizar_pets.html', erros = erro, todosPets = todosPets, donos = donos, todosPetsOption = todosPetsOption)
 
-@app.route('/consultar_pet_atualizar_nome/<idPet>', methods=['GET', 'POST'])
+@app.route('/listar_pet_atualizar_nome/<idPet>', methods=['GET', 'POST'])
 def atualizar_pet_nome(idPet):
 
   if(request.form['nome']):
@@ -418,7 +418,7 @@ def atualizar_pet_nome(idPet):
     todosPetsOption = pesquisarPets()
     donos = pesquisarPetsDonos()
 
-    return render_template('/public/pet/consultar_deletar_atualizar_pets.html', sucesso = sucesso, todosPets = todosPets, donos = donos, todosPetsOption = todosPetsOption)
+    return render_template('/public/pet/listar_deletar_atualizar_pets.html', sucesso = sucesso, todosPets = todosPets, donos = donos, todosPetsOption = todosPetsOption)
 
   else:
     erro = "Não foi possivel atualizar o nome do pet, tente novamente!"
@@ -427,9 +427,9 @@ def atualizar_pet_nome(idPet):
     todosPetsOption = pesquisarPets()
     donos = pesquisarPetsDonos()
 
-    return render_template('/public/pet/consultar_deletar_atualizar_pets.html', erros = erro, todosPets = todosPets, donos = donos, todosPetsOption = todosPetsOption)
+    return render_template('/public/pet/listar_deletar_atualizar_pets.html', erros = erro, todosPets = todosPets, donos = donos, todosPetsOption = todosPetsOption)
 
-@app.route('/consultar_pet_atualizar_tipo_raca/<idPet>', methods=['GET', 'POST'])
+@app.route('/listar_pet_atualizar_tipo_raca/<idPet>', methods=['GET', 'POST'])
 def atualizar_pet_tipo_raca(idPet):
 
   if(request.form['tipo'] and request.form['raca']):
@@ -445,7 +445,7 @@ def atualizar_pet_tipo_raca(idPet):
     todosPetsOption = pesquisarPets()
     donos = pesquisarPetsDonos()
  
-    return render_template('/public/pet/consultar_deletar_atualizar_pets.html', sucesso = sucesso, todosPets = todosPets, donos = donos, todosPetsOption = todosPetsOption)
+    return render_template('/public/pet/listar_deletar_atualizar_pets.html', sucesso = sucesso, todosPets = todosPets, donos = donos, todosPetsOption = todosPetsOption)
 
   else:
     erro = "Não foi possivel atualizar o tipo e a raça do pet, preencha ambos os campos!"
@@ -454,9 +454,9 @@ def atualizar_pet_tipo_raca(idPet):
     todosPetsOption = pesquisarPets()
     donos = pesquisarPetsDonos()
 
-    return render_template('/public/pet/consultar_deletar_atualizar_pets.html', erros = erro, todosPets = todosPets, donos = donos, todosPetsOption = todosPetsOption)
+    return render_template('/public/pet/listar_deletar_atualizar_pets.html', erros = erro, todosPets = todosPets, donos = donos, todosPetsOption = todosPetsOption)
 
-@app.route('/consultar_pet_atualizar_data/<idPet>', methods=['GET', 'POST'])
+@app.route('/listar_pet_atualizar_data/<idPet>', methods=['GET', 'POST'])
 def atualizar_pet_data(idPet):
 
   if(request.form['nascimento']):
@@ -471,7 +471,7 @@ def atualizar_pet_data(idPet):
     todosPetsOption = pesquisarPets()
     donos = pesquisarPetsDonos()
  
-    return render_template('/public/pet/consultar_deletar_atualizar_pets.html', sucesso = sucesso, todosPets = todosPets, donos = donos, todosPetsOption = todosPetsOption)
+    return render_template('/public/pet/listar_deletar_atualizar_pets.html', sucesso = sucesso, todosPets = todosPets, donos = donos, todosPetsOption = todosPetsOption)
 
   else:
     erro = "Não foi possivel atualizar a data de nascimento do pet, preencha os campos!"
@@ -480,4 +480,4 @@ def atualizar_pet_data(idPet):
     todosPetsOption = pesquisarPets()
     donos = pesquisarPetsDonos()
 
-    return render_template('/public/pet/consultar_deletar_atualizar_pets.html', erros = erro, todosPets = todosPets, donos = donos, todosPetsOption = todosPetsOption)
+    return render_template('/public/pet/listar_deletar_atualizar_pets.html', erros = erro, todosPets = todosPets, donos = donos, todosPetsOption = todosPetsOption)

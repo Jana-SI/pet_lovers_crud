@@ -94,7 +94,7 @@
     border-color: 2px solid var(--fundo) !important;
 }
 
-#formListaPets{
+#formListaPets, #formListaClientes{
     margin-top: 20px !important;
 }
 

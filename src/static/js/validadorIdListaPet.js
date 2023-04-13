@@ -6,7 +6,7 @@ const verificaIdPet = async () => {
 
     //codigo de comunicação js->flask pra fazer verificação se campo inserido ja tem no sistema
 
-    axios.post('/consultar_pet_verificando_id', {
+    axios.post('/listar_pet_verificando_id', {
             idPet: idPet
         }).then((response) => {
                 if (response.data.idPetValido == "true") {

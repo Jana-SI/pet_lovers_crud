@@ -1,6 +1,6 @@
 <head>
     <!-- css -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_consultar.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_listar.css')}}">
 
     <!-- js -->
     <script defer src="{{ url_for('static', filename='js/formataDataLista.js') }}"></script>
@@ -45,7 +45,7 @@
                     <label for="idPet" class="form-label">id do Pet</label>
                 </div>
                 <button class="btn" type="submit" id="btnPesquisar" >Pesquisar</button>
-                <button class="btn" id="btnMostraTodos"><a href="{{url_for("consultar_pet")}}">Mostrar todos</a></button>
+                <button class="btn" id="btnMostraTodos"><a href="{{url_for("listar_pet")}}">Mostrar todos</a></button>
             </div>
         </form>
 
@@ -93,7 +93,7 @@
                             </div>
                             
                             <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
-                                <form action="/consultar_pet_deletar_dono/{{pet.0}}/{{dono.3}}" method="POST">
+                                <form action="/listar_pet_deletar_dono/{{pet.0}}/{{dono.3}}" method="POST">
                                     <button id="btnDeletar" class="btn btn-lg float-end" type="submit">{{render_icon('trash3-fill')}}</button>
                                 </form>
                             </div>
@@ -103,7 +103,7 @@
                     </div>
                     
                     <div class="card-footer text-center">
-                        <form action="/consultar_pet_deletar/{{pet.0}}" method="POST">
+                        <form action="/listar_pet_deletar/{{pet.0}}" method="POST">
                             <button id="btnDeletar" class="btn btn-lg" type="submit">{{render_icon('trash3-fill')}}</button>
                         </form>
                     </div>
@@ -125,7 +125,7 @@
                     </button>
                 </h5>
                 <div style="display: none;" id="{{petEsp.1}}">
-                    <form action="/consultar_pet_atualizar_nome/{{petEsp.0}}" method="POST">
+                    <form action="/listar_pet_atualizar_nome/{{petEsp.0}}" method="POST">
 
                         <div class="input-group">
                             <span id="spanImg" class="input-group-text">
@@ -162,7 +162,7 @@
                 <div style="display: none;" id="{{petEsp.4}}">
                     <div id="formRacaTipo" class="row">
                         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
-                            <form action="/consultar_pet_atualizar_tipo_raca/{{petEsp.0}}" method="POST">
+                            <form action="/listar_pet_atualizar_tipo_raca/{{petEsp.0}}" method="POST">
 
                                 <div class="row">
                                     <div class="col-10 col-sm-10 col-md-10 col-lg-10 col-xl-10 col-xxl-10">
@@ -224,7 +224,7 @@
                 <div class="row">
                     <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
                         <div style="display: none;" id="{{petEsp.2}}">
-                            <form  name="formAtualiza" action="/consultar_pet_atualizar_data/{{petEsp.0}}" method="POST">
+                            <form  name="formAtualiza" action="/listar_pet_atualizar_data/{{petEsp.0}}" method="POST">
 
                                 <div class="row">
                                     <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
@@ -261,7 +261,7 @@
                         </div>
                         
                         <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
-                            <form action="/consultar_pet_deletar_dono/{{petEsp.0}}/{{dono.3}}" method="POST">
+                            <form action="/listar_pet_deletar_dono/{{petEsp.0}}/{{dono.3}}" method="POST">
                                 <button id="btnDeletar" class="btn btn-lg float-end" type="submit">{{render_icon('trash3-fill')}}</button>
                             </form>
                         </div>
@@ -271,7 +271,7 @@
             </div>
                     
             <div class="card-footer text-center">
-                <form action="/consultar_pet_deletar/{{petEsp.0}}" method="POST">
+                <form action="/listar_pet_deletar/{{petEsp.0}}" method="POST">
                     <button id="btnDeletar" class="btn btn-lg" type="submit">{{render_icon('trash3-fill')}}</button>
                 </form>
             </div>

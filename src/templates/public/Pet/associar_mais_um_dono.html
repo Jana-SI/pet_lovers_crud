@@ -1,4 +1,8 @@
 <head>
+    <!-- css -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_cadastros.css')}}">
+
+    <!-- js -->
     <script defer src="{{ url_for('static', filename='js/validadorData.js') }}"></script>
     <script defer src="{{ url_for('static', filename='js/FormataCPFsCad.js') }}"></script>
     <script defer src="{{ url_for('static', filename='js/validadorCPFassociaPet.js') }}"></script>
@@ -34,7 +38,7 @@
         <form name="formAssociar" method="POST">
 
             <div class="row">
-                <div class="col-5 col-sm-5 col-md-5 col-lg-5 col-xl-5 col-xxl-5">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-5 col-xl-5 col-xxl-5">
                     <div class="input-group">
                         <span id="spanImg" class="input-group-text">
                             <img src="{{url_for('static', filename='/img/tipo-pet.png')}}">
@@ -55,11 +59,11 @@
 
                 </div>
 
-                <div class="col-7 col-sm-7 col-md-7 col-lg-7 col-xl-5 col-xxl-5 align-self-center text-center">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-7 col-xl-5 col-xxl-5 align-self-center text-center">
                     <div id="resultadoPet"></div>
                 </div>
 
-                <div class="col-5 col-sm-5 col-md-5 col-lg-5 col-xl-5 col-xxl-5">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-5 col-xl-5 col-xxl-5">
                     <div class="input-group">
                         <span id="spanImg" class="input-group-text">
                             <img src="{{url_for('static', filename='/img/dono-pet.png')}}">
@@ -80,7 +84,7 @@
                     </div>
                 </div>
 
-                <div class="col-7 col-sm-7 col-md-7 col-lg-7 col-xl-7 col-xxl-7 align-self-center text-center">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-7 col-xl-7 col-xxl-7 align-self-center text-center">
                     <div id="resultadoDono"></div>
                 </div>
 

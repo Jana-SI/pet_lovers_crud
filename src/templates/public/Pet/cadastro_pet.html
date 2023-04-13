@@ -1,19 +1,26 @@
 <head>
+    <!-- css -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_cadastros.css')}}">
+
+    <!-- js -->
     <script defer src="{{ url_for('static', filename='js/validadorData.js') }}"></script>
     <script defer src="{{ url_for('static', filename='js/FormataCPFsCad.js') }}"></script>
     <script defer src="{{ url_for('static', filename='js/validadorCPFcadPet.js') }}"></script>
+    <script defer src="{{ url_for('static', filename='js/mostraImgTipo.js') }}"></script>
 </head>
 
 {% extends "base.html" %}
 {% from 'bootstrap5/utils.html' import render_icon %}
 
 {% block content %}
-<div class="position-absolute top-0 start-0">
-    <button class="btn btn-lg" id="btnHome"><a href="{{url_for('index')}}">{{render_icon('house-heart-fill')}}Home</a></button>
+<div class="row">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
+        <button class="btn btn-lg" id="btnHome"><a href="{{url_for('index')}}">{{render_icon('house-heart-fill')}}Home</a></button>
+    </div>
 </div>
 
 <div class="row justify-content-center">
-    <div id="colCad" class="col-8 col-sm-8 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
+    <div id="colCad" class="col-10 col-sm-10 col-md-10 col-lg-6 col-xl-6 col-xxl-6">
 
         <h1 class="text-center">Cadastro de Pet</h1>
 

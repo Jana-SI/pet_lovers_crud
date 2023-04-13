@@ -60,7 +60,7 @@ const verificaCpf = async () => {
     //codigo de comunicação js->flask pra fazer verificação se campo inserido ja tem no sistema
 
     if(resp){
-        axios.post('/consultar_cliente_verificando_cpf', {
+        axios.post('/listar_cliente_verificando_cpf', {
             cpf: cpf
         }).then((response) => {
                 if (response.data.cpfValido == "true") {

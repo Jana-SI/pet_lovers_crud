@@ -1,6 +1,6 @@
 <head>
     <!-- css -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_consultar.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_listar.css')}}">
 
     <!-- js -->
     <script defer src="{{ url_for('static', filename='js/FormataCPFsLista.js') }}"></script>
@@ -12,13 +12,15 @@
 {% from 'bootstrap5/utils.html' import render_icon %}
 
 {% block content %}
-<div class="position-absolute top-0 start-0">
-    <button class="btn btn-lg" id="btnHome"><a href="{{url_for('index')}}">{{render_icon('house-heart-fill')}} Home</a></button>
+<div class="row">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
+        <button class="btn btn-lg" id="btnHome"><a href="{{url_for('index')}}">{{render_icon('house-heart-fill')}} Home</a></button>
+    </div>
 </div>
 
 <div class="row justify-content-center">
-    <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
-        <form id="formListaClientes" action="/consultar_cliente" method="post">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 col-xxl-6">
+        <form id="formListaClientes" action="/listar_cliente" method="post">
             <div class="input-group">
                 <span class="input-group-text">
                     {{render_icon('search')}}
@@ -35,7 +37,7 @@
                     <label for="cliente" class="form-label">Cliente (CPF)</label>
                 </div>
                 <button class="btn" type="submit" id="btnPesquisar" >Pesquisar</button>
-                <button class="btn" id="btnMostraTodos"><a href="{{url_for("consultar_cliente")}}">Mostrar todos</a></button>
+                <button class="btn" id="btnMostraTodos"><a href="{{url_for("listar_cliente")}}">Mostrar todos</a></button>
             </div>
         </form>
 
@@ -59,67 +61,17 @@
             <div class="col">
                 <div class="card" id="styleCard">
                     <div class="card-header text-center">
-                        <h5 class="card-title">
-                            {{cliente.2}}
-
-                            <button class="btn float-end" onclick="toggleVisibility('{{cliente.2}}')">
-                                {{render_icon('pencil-square')}}
-                            </button>
-                        </h5>
-                        <div style="display: none;" id="{{cliente.2}}">
-                            <form action="/consultar_cliente_atualizar_nome/{{cliente.0}}" method="POST">
-
-                                <div class="input-group">
-                                    <span class="input-group-text">{{render_icon('person-plus-fill')}}</span>
-                                    <div class="form-floating">
-                                        <input class="form-control" type="text" id="nome" name="nome" placeholder="digite seu nome completo"
-                                        min="6"  max="50" required>
-                                        <label for="nome">Nome</label>
-                                    </div>
-                                </div>
-
-                                <button class="btn float-start" type="reset" id="btnCadApagar">Apagar</button>
-                                <button class="btn float-end" type="submit" id="btnCadCadastrar">Atualizar</button>
-                            </form>
-                        </div>
-
+                        <h5 class="card-title">{{cliente.2}}</h5>
                     </div>
                     <div class="card-body">
                         <p class="card-text">CPF: <span class="formatarCPF">{{cliente.1}}</span></p>
 
-                        <p class="card-text">
-                            Telefone: {{cliente.3}}
-
-                            <button class="btn float-end" onclick="toggleVisibility('{{cliente.3}}')">
-                                {{render_icon('pencil-square')}}
-                            </button>
-                        </p>
-                        <div class="row">
-                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
-                                <div style="display: none;" id="{{cliente.3}}">
-
-                                    <form action="/consultar_cliente_atualizar_telefone/{{cliente.0}}" method="POST">
-        
-                                        <div class="input-group">
-                                            <span class="input-group-text">{{render_icon('telephone-fill')}}</span>
-                                            <div class="form-floating">
-                                                <input class="form-control" type="tel" id="telefone" name="telefone"
-                                                    placeholder="(00) 00000-0000" onfocusout="verificaTelefone()" onkeydown="return mascaraTelefone(event)" required>
-                                                <label for="telefone">Contato</label>
-                                            </div>
-                                        </div>
-        
-                                        <button class="btn float-start" type="reset" id="btnCadApagar">Apagar</button>
-                                        <button class="btn float-end" type="submit" id="btnCadCadastrar">Atualizar</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
+                        <p class="card-text">Telefone: {{cliente.3}}</p>
                         
                         <p class="card-text">Quantidade de pets: {{cliente.4}}</p>
                     </div>
                     <div class="card-footer text-center">
-                        <form action="/consultar_cliente_deletar/{{cliente.0}}" method="POST">
+                        <form action="/listar_cliente_deletar/{{cliente.0}}" method="POST">
                             <button id="btnDeletar" class="btn btn-lg" type="submit">{{render_icon('trash3-fill')}}</button>
                         </form>
                     </div>
@@ -131,7 +83,7 @@
     {% endif %}
 
     {% if clienteEsp %}
-    <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 col-xxl-6">
         <div class="card" id="styleCard">
             <div class="card-header text-center">
                 <h5 class="card-title">
@@ -143,7 +95,7 @@
                 </h5>
                 <div style="display: none;" id="{{clienteEsp.2}}">
 
-                    <form action="/consultar_cliente_atualizar_nome/{{clienteEsp.0}}" method="POST">
+                    <form action="/listar_cliente_atualizar_nome/{{clienteEsp.0}}" method="POST">
 
                         <div class="input-group">
                             <span class="input-group-text">{{render_icon('person-plus-fill')}}</span>
@@ -173,7 +125,7 @@
                     <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
                         <div style="display: none;" id="{{clienteEsp.3}}">
 
-                            <form action="/consultar_cliente_atualizar_telefone/{{clienteEsp.0}}" method="POST">
+                            <form action="/listar_cliente_atualizar_telefone/{{clienteEsp.0}}" method="POST">
 
                                 <div class="input-group">
                                     <span class="input-group-text">{{render_icon('telephone-fill')}}</span>
@@ -194,7 +146,7 @@
                 <p class="card-text">Quantidade de pets: {{clienteEsp.4}}</p>
             </div>
             <div class="card-footer text-center">
-                <form action="/consultar_cliente_deletar/{{clienteEsp.0}}" method="POST">
+                <form action="/listar_cliente_deletar/{{clienteEsp.0}}" method="POST">
                     <button id="btnDeletar" class="btn btn-lg" type="submit">{{render_icon('trash3-fill')}}</button>
                 </form>
             </div>
