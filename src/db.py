@@ -476,3 +476,58 @@ def atualizaDataPet(nascimento, id):
     finally:
         cursor.close()
         conn.close
+
+def agendarConsultaPet(idDonoPet, dataHora):
+    
+    try:
+        conn = psycopg2.connect(conn_string)
+        cursor = conn.cursor() 
+
+        cursor.execute("insert into consulta (idDonoPet, data) values (%s, %s);",(idDonoPet, dataHora))
+
+        conn.commit()
+        return cursor.fetchone()
+
+    except psycopg2.DatabaseError as error:
+        cursor.execute("ROLLBACK")
+        conn.commit()
+
+    finally:
+        cursor.close()
+        conn.close
+
+def listarConsulta():
+
+    try:
+        conn = psycopg2.connect(conn_string)
+        cursor = conn.cursor()
+
+        cursor.execute("select * from consultas order by data")
+        conn.commit()
+        return cursor.fetchone()
+
+    except psycopg2.DatabaseError as error:
+        cursor.execute("ROLLBACK")
+        conn.commit()
+
+    finally:
+        cursor.close()
+        conn.close
+
+def listarConsultaData():
+
+    try:
+        conn = psycopg2.connect(conn_string)
+        cursor = conn.cursor()
+
+        cursor.execute("select data from consulta order by data")
+        conn.commit()
+        return cursor.fetchone()
+
+    except psycopg2.DatabaseError as error:
+        cursor.execute("ROLLBACK")
+        conn.commit()
+
+    finally:
+        cursor.close()
+        conn.close

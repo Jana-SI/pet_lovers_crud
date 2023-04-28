@@ -5,75 +5,75 @@
 <div class="row justify-content-center align-items-center text-center">
     <div id="colHome" class="col-10 col-sm-10 col-md-10 col-lg-8 col-xl-8 col-xxl-8">
         <div class="row">
-            <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 col-xxl-6 align-self-center">
+            <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6 align-self-center">
                 <h1>Bem vindo<br>ao<br>Pet Lovers</h1>
                 <img id="logo" class="img-fluid" src="{{url_for('static', filename='/img/logo.png')}}">
             </div>
-            <div class="row row-cols-1 row-cols-md-2 g-4">
-                <div class="col">
-                    <div class="card card-text">
-                        <div class="card-header">
-                            <h1 class="card-title">Clientes</h1>
-                        </div>
-                        <div class="card-body">
-                            <button class="btn">
-                                <a href="{{url_for('cadastro_cliente')}}">
-                                    {{render_icon('plus-circle-fill')}} Cadastrar
-                                </a>
-                            </button>
-    
-                            <button class="btn" 
-    title="Ao listar aparecerá a opção de
-    atualizar campos individualmente
-    ou deletar o cliente">
-                                <a href="{{url_for("listar_cliente")}}">
-                                    {{render_icon('list-stars')}} Listar
-                                </a>
-                            </button>
-                        </div>
+            <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
+                <div class="card card-text">
+                    <div class="card-header">
+                        <h1 class="card-title">Clientes</h1>
+                    </div>
+                    <div class="card-body">
+                        <button class="btn">
+                            <a href="{{url_for('cadastro_cliente')}}">
+                                {{render_icon('plus-circle-fill')}} Cadastrar
+                            </a>
+                        </button>
+
+                        <button class="btn" 
+title="Ao listar aparecerá a opção de
+atualizar campos individualmente
+ou deletar o cliente">
+                            <a href="{{url_for("listar_cliente")}}">
+                                {{render_icon('list-stars')}} Listar
+                            </a>
+                        </button>
                     </div>
                 </div>
-                <div class="col">
-                    <div class="card card-text">
-                        <div class="card-header">
-                            <h1 class="card-title">Pets</h1>
-                        </div>
-                        <div class="card-body">
-                            <button class="btn">
-                                <a href="{{url_for("cadastro_pet")}}">
-                                    {{render_icon('plus-circle-fill')}}Cadastrar
-                                </a>
-                            </button>
-                            <button class="btn" 
-    title="Ao listar aparecerá a opção de
-    atualizar campos individualmente
-    ou deletar o cliente">
-                                <a href="{{url_for("listar_pet")}}">
-                                    {{render_icon('list-stars')}} Listar
-                                </a>
-                            </button>
-                            <button class="btn">
-                                <a href="{{url_for("associar_mais_um_dono_pet")}}">
-                                    <img src="{{url_for('static', filename='/img/dono-pet-1.png')}}"> Associar mais um dono
-                                </a>
-                            </button>
-                        </div>
+                <div class="card card-text">
+                    <div class="card-header">
+                        <h1 class="card-title">Pets</h1>
+                    </div>
+                    <div class="card-body">
+                        <button class="btn">
+                            <a href="{{url_for("cadastro_pet")}}">
+                                {{render_icon('plus-circle-fill')}}Cadastrar
+                            </a>
+                        </button>
+                        <button class="btn" 
+title="Ao listar aparecerá a opção de
+atualizar campos individualmente
+ou deletar o cliente">
+                            <a href="{{url_for("listar_pet")}}">
+                                {{render_icon('list-stars')}} Listar
+                            </a>
+                        </button>
+                        <button class="btn">
+                            <a href="{{url_for("associar_mais_um_dono_pet")}}">
+                                <img src="{{url_for('static', filename='/img/dono-pet-1.png')}}"> Associar mais um dono
+                            </a>
+                        </button>
                     </div>
                 </div>
-                <div class="col">
-                    <div class="card card-text">
-                        <div class="card-header">
-                            <h1 class="card-title">Consultas</h1>
-                        </div>
-                        <div class="card-body">
-                            <p class="card-text">Em breve</p>
-                        </div>
+                <div class="card card-text">
+                    <div class="card-header">
+                        <h1 class="card-title">Consultas</h1>
+                    </div>
+                    <div class="card-body">
+                        <button class="btn">
+                            <a href="{{url_for('agendar_consulta')}}">Agendar</a>
+                        </button>
+                        <button class="btn" 
+title="em breve">
+                            <a href="{{url_for('listar_consulta')}}">Listar
+                            </a>
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 </div>
 
 {% endblock %}

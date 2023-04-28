@@ -16,12 +16,12 @@ create table if not exists pet(
 
 create table if not exists donoPet(
     id serial primary key not null,
-    cpfCliente int references cliente(cpf),
+    cpfCliente varchar(11) references cliente(cpf),
     idPet int references pet(id) 
 );
 
 create table if not exists Consulta(
     id serial primary key not null,
     idDonoPet int references donoPet(id),
-    data date not null
+    data timestamp not null
 );

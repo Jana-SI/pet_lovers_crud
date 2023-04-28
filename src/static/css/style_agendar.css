@@ -1,0 +1,49 @@
+@import url("cores.css");
+
+#colAgendar{
+    margin-top: 20px !important;
+    background-color: var(--fundo);
+    padding: 20px;
+    color: var(--texto);
+    border: 2px solid var(--texto);
+}
+
+#colAgendar h1{
+    border-bottom: 2px solid var(--texto);
+    margin-bottom: 20px;
+}
+
+#btnAgendar, #btnApagar{
+    background-color: var(--texto);
+    color: var(--fundo);
+    border: 2px solid var(--fundo);
+    margin-top: 10px;
+}
+
+#btnAgendar:hover, #btnApagar:hover{
+    background-color: var(--fundo);
+    color: var(--texto);
+    border: 2px solid var(--texto);
+    margin-top: 10px;
+}
+
+#colAgendar .input-group{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: 2px solid var(--texto);
+}
+
+#colAgendar span{
+    background-color: var(--texto) !important;
+    color: var(--fundo) !important;
+}
+
+/* #colAgendar #spanImg{
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+}
+
+#colAgendar span img{
+    padding-left: 6px !important;
+    padding-right: 6px !important;
+} */

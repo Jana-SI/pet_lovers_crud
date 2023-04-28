@@ -1,7 +1,9 @@
 from flask import Flask, request, render_template, redirect, jsonify
 from src.db import *
-from flask_bootstrap import Bootstrap5
+from datetime import datetime, time
 import re
+
+from flask_bootstrap import Bootstrap5
 
 app = Flask(__name__)
 bootstrap = Bootstrap5(app)
@@ -481,3 +483,52 @@ def atualizar_pet_data(idPet):
     donos = pesquisarPetsDonos()
 
     return render_template('/public/pet/listar_deletar_atualizar_pets.html', erros = erro, todosPets = todosPets, donos = donos, todosPetsOption = todosPetsOption)
+  
+@app.route('/agendar_consulta')
+def agendar_consulta():
+
+  todosPets = pesquisarPets()
+  donos = pesquisarPetsDonos()
+
+  return render_template('/public/consulta/agendar.html', todosPets = todosPets, donos = donos)
+
+@app.route('/agendar_consulta', methods=['GET', 'POST'])
+def agendarConsulta():
+
+    idDonoPet = request.form['dono']
+    data_hora_str = request.form.get('dataHora')
+    data_hora = datetime.strptime(data_hora_str, '%Y-%m-%dT%H:%M')
+    
+    # Verifica se a data selecionada é um dia útil (segunda a sexta-feira)
+    if data_hora.weekday() < 0 or data_hora.weekday() > 4:
+      return render_template('/public/consulta/agendar.html', falha = "Data informada não é dia util.")
+        # Verifica se o horário selecionado não tem minutos
+
+    if data_hora.minute != 0:
+      return render_template('/public/consulta/agendar.html', falha = "Horario inválido, consideramos que cada consulta dura exatemente 1 hora e não aceita minutos alem de H:00.")
+
+    agora_str = datetime.now().strftime('%Y-%m-%dT%H:%M')
+    
+    if data_hora_str <= agora_str:
+      return render_template('/public/consulta/agendar.html', falha = "Horario inválido, agendamento precede o dia e hora deste momento.")
+
+    agendados = listarConsultaData()
+    print()
+    print(data_hora)
+    print(agendados)
+    print()
+    
+    if agendados != None:
+      if data_hora in agendados:
+        return render_template('/public/consulta/agendar.html', falha = "Horario já ocupado.")
+
+    if time(8, 0) <= data_hora.time() <= time(17, 0):
+
+      agendarConsultaPet(idDonoPet, data_hora)
+
+      return render_template('/public/consulta/agendar.html', sucesso = "Agendamento concluido")
+
+@app.route('/listar_consulta')
+def listar_consulta():
+
+  return render_template('/public/consulta/listar.html')

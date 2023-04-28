@@ -41,7 +41,7 @@
                     <div class="input-group">
                         <span class="input-group-text">{{render_icon('card-text')}}</span>
                         <div class="form-floating">
-                            <input class="form-control" type="text" id="cpf" name="cpf" placeholder="000.000.000-00" oninput="" onfocusout="verificaCpf()" oninput="mascaraCPF(this)" required>
+                            <input class="form-control" type="text" id="cpf" name="cpf" placeholder="000.000.000-00" onfocusout="verificaCpf()" oninput="mascaraCPF(this); setCustomValidity('')" required>
                             <label for="cpf">CPF</label>
                         </div>
                     </div>
@@ -52,7 +52,7 @@
                         <span class="input-group-text">{{render_icon('telephone-fill')}}</span>
                         <div class="form-floating">
                             <input class="form-control" type="tel" id="telefone" name="telefone"
-                                placeholder="(00) 00000-0000" oninput="" onfocusout="verificaTelefone()" onkeydown="return mascaraTelefone(event)" required>
+                                placeholder="(00) 00000-0000" onfocusout="verificaTelefone()" oninput="setCustomValidity('')" onkeydown="return mascaraTelefone(event)" required>
                             <label for="telefone">Contato</label>
                         </div>
                     </div>

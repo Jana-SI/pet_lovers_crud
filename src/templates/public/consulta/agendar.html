@@ -1,0 +1,83 @@
+<head>
+    <!-- css -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_agendar.css')}}">
+
+    <!-- js -->
+</head>
+
+
+{% extends "base.html" %}
+{% from 'bootstrap5/utils.html' import render_icon %}
+
+{% block content %}
+
+<div class="position-absolute top-0 start-0">
+    <button class="btn btn-lg" id="btnHome"><a
+            href="{{url_for('index')}}">{{render_icon('house-heart-fill')}}Home</a></button>
+</div>
+
+<div class="row justify-content-center">
+    <div id="colAgendar" class="col-8 col-sm-8 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
+
+        <h1>Agendar Consulta</h1>
+
+        {% if sucesso %}
+            <p class="alert alert-success text-center" role="alert">{{render_icon('check-circle-fill')}} {{sucesso}}</p>
+        {% endif %}
+        
+        {% if falha %}
+            <p class="alert alert-success text-center" role="alert">{{render_icon('check-circle-fill')}} {{falha}}</p>
+        {% endif %}
+        <form method="post">
+    
+            <div class="input-group">
+                <span class="input-group-text">
+                    {{render_icon('search')}}
+                </span>
+                <div class="form-floating">
+                    <input class="form-control" list="donos" id="dono" name="dono" placeholder="Digitar id do dono" required>
+                    <datalist id="donos">
+                        {% if donos %}
+                            {% for dono in donos %}
+                                <option value="{{dono.0}}">
+                                    {{dono.0}} - {{dono.1}}, 
+        
+                                    {% if todosPets %}
+                                        {% for pet in todosPets %}
+                                        
+                                            {% if pet.0 == dono.0 %}
+        
+                                                {{pet}}
+        
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endif %}
+                                </option>
+                                
+                            {% endfor %}
+                        {% endif %}
+                    </datalist>
+                    <label for="dono" class="form-label">id do dono</label>
+                </div>
+            </div>
+        
+            <div id="resultado"></div>
+        
+            <div class="input-group">
+                <span class="input-group-text">{{render_icon('calendar-check-fill')}}</span>
+                <div class="form-floating">
+                    <input class="form-control" type="datetime-local" id="dataHora" name="dataHora" required>
+                    <label for="dataHora">Data e Hora</label>
+                </div>
+            </div>
+        
+        
+            <button class="btn float-end" type="submit" id="btnAgendar">Agendar</button>
+            <button class="btn" type="reset" id="btnApagar">Apagar</button>
+        
+        </form>
+
+    </div>
+</div>
+
+{% endblock %}

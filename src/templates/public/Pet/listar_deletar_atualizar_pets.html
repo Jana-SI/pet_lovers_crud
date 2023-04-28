@@ -31,7 +31,7 @@
                 </span>
                 <div class="form-floating">
                     <input class="form-control" list="listaPets" id="idPet" name="idPet"
-                                placeholder="Digitar o nome do pet" onfocusout="verificaIdPet()" required>
+                                placeholder="Digitar o nome do pet" onfocusout="verificaIdPet()" oninput="setCustomValidity('')" required>
                     <datalist id="listaPets">
                         {% if todosPetsOption %}
                             {% for pet in todosPetsOption %}
@@ -231,7 +231,7 @@
                                         <div class="input-group">
                                             <span class="input-group-text">{{render_icon('calendar-check-fill')}}</span>
                                             <div class="form-floating">
-                                                <input class="form-control" type="date" id="nascimento" name="nascimento" onfocusout="verificarData()" required>
+                                                <input class="form-control" type="date" id="nascimento" name="nascimento" onfocusout="verificarData()" oninput="setCustomValidity('')" required>
                                                 <label for="nascimento">Nascimento</label>
                                             </div>
                                         </div>

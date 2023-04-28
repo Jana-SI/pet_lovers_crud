@@ -100,7 +100,7 @@
                     <div class="input-group">
                         <span class="input-group-text">{{render_icon('calendar-check-fill')}}</span>
                         <div class="form-floating">
-                            <input class="form-control" type="date" id="nascimento" name="nascimento" onfocusout="verificarData()" required>
+                            <input class="form-control" type="date" id="nascimento" name="nascimento" onfocusout="verificarData()" oninput="setCustomValidity('')" required>
                             <label for="nascimento">Nascimento</label>
                         </div>
                     </div>
@@ -116,7 +116,7 @@
                             <img src="{{url_for('static', filename='/img/dono-pet.png')}}">
                         </span>
                         <div class="form-floating">
-                            <input class="form-control" list="listaDonos" id="donosPet" name="donosPet" placeholder="Digitar CPF dono do pet" onfocusout="verificaCpf()" oninput="mascaraCPF(this)" maxlength="14" required>
+                            <input class="form-control" list="listaDonos" id="donosPet" name="donosPet" placeholder="Digitar CPF dono do pet" onfocusout="verificaCpf()" oninput="mascaraCPF(this); setCustomValidity('')" maxlength="14" required>
                             <datalist id="listaDonos">
                                 {% if donosPet %}
                                     {% for dono in donosPet %}
