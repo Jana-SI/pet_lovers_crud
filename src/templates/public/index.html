@@ -25,7 +25,7 @@
 title="Ao listar aparecerá a opção de
 atualizar campos individualmente
 ou deletar o cliente">
-                            <a href="{{url_for("listar_cliente")}}">
+                            <a href="{{url_for('listar_cliente')}}">
                                 {{render_icon('list-stars')}} Listar
                             </a>
                         </button>
@@ -37,7 +37,7 @@ ou deletar o cliente">
                     </div>
                     <div class="card-body">
                         <button class="btn">
-                            <a href="{{url_for("cadastro_pet")}}">
+                            <a href="{{url_for('cadastro_pet')}}">
                                 {{render_icon('plus-circle-fill')}}Cadastrar
                             </a>
                         </button>
@@ -45,12 +45,12 @@ ou deletar o cliente">
 title="Ao listar aparecerá a opção de
 atualizar campos individualmente
 ou deletar o cliente">
-                            <a href="{{url_for("listar_pet")}}">
+                            <a href="{{url_for('listar_pet')}}">
                                 {{render_icon('list-stars')}} Listar
                             </a>
                         </button>
                         <button class="btn">
-                            <a href="{{url_for("associar_mais_um_dono_pet")}}">
+                            <a href="{{url_for('associar_mais_um_dono_pet')}}">
                                 <img src="{{url_for('static', filename='/img/dono-pet-1.png')}}"> Associar mais um dono
                             </a>
                         </button>
@@ -62,11 +62,11 @@ ou deletar o cliente">
                     </div>
                     <div class="card-body">
                         <button class="btn">
-                            <a href="{{url_for('agendar_consulta')}}">Agendar</a>
+                            <a href="{{url_for('agendar_consulta')}}">{{render_icon('calendar-heart-fill')}} Agendar</a>
                         </button>
                         <button class="btn" 
 title="em breve">
-                            <a href="{{url_for('listar_consulta')}}">Listar
+                            <a href="{{url_for('listar_consulta')}}">{{render_icon('list-stars')}} Listar
                             </a>
                         </button>
                     </div>

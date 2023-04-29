@@ -496,6 +496,25 @@ def agendarConsultaPet(idDonoPet, dataHora):
         cursor.close()
         conn.close
 
+def verificaIdDonobanco(idDono):
+
+    try:
+        conn = psycopg2.connect(conn_string)
+        cursor = conn.cursor()
+
+        cursor.execute("select * from donopet where id=%s;",(idDono, ))
+
+        conn.commit()
+        return cursor.fetchone()
+
+    except psycopg2.DatabaseError as error:
+        cursor.execute("ROLLBACK")
+        conn.commit()
+
+    finally:
+        cursor.close()
+        conn.close
+
 def listarConsulta():
 
     try:

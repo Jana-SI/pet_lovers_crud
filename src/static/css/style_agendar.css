@@ -38,7 +38,7 @@
     color: var(--fundo) !important;
 }
 
-/* #colAgendar #spanImg{
+#colAgendar #spanImg{
     padding-left: 0px !important;
     padding-right: 0px !important;
 }
@@ -46,4 +46,4 @@
 #colAgendar span img{
     padding-left: 6px !important;
     padding-right: 6px !important;
-} */
+}

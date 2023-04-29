@@ -2,6 +2,7 @@ from flask import Flask, request, render_template, redirect, jsonify
 from src.db import *
 from datetime import datetime, time
 import re
+import holidays
 
 from flask_bootstrap import Bootstrap5
 
@@ -495,38 +496,60 @@ def agendar_consulta():
 @app.route('/agendar_consulta', methods=['GET', 'POST'])
 def agendarConsulta():
 
-    idDonoPet = request.form['dono']
+    # obtém os feriados do ano atual no RS, Brasil
+    feriados = holidays.Brazil(state='RS')
+
+    idDonoPet = request.form['idDono']
     data_hora_str = request.form.get('dataHora')
     data_hora = datetime.strptime(data_hora_str, '%Y-%m-%dT%H:%M')
+    todosPets = pesquisarPets()
+    donos = pesquisarPetsDonos()
     
+    if data_hora in feriados:
+      return render_template('/public/consulta/agendar.html', todosPets = todosPets, donos = donos, falha = "Data informada é feriado") 
+
     # Verifica se a data selecionada é um dia útil (segunda a sexta-feira)
     if data_hora.weekday() < 0 or data_hora.weekday() > 4:
-      return render_template('/public/consulta/agendar.html', falha = "Data informada não é dia util.")
+      return render_template('/public/consulta/agendar.html', todosPets = todosPets, donos = donos, falha = "Data informada não é dia util.")
         # Verifica se o horário selecionado não tem minutos
 
     if data_hora.minute != 0:
-      return render_template('/public/consulta/agendar.html', falha = "Horario inválido, consideramos que cada consulta dura exatemente 1 hora e não aceita minutos alem de H:00.")
+      return render_template('/public/consulta/agendar.html', todosPets = todosPets, donos = donos, falha = "Horario inválido, consideramos que cada consulta dura exatemente 1 hora e não aceita minutos alem de H:00.")
 
     agora_str = datetime.now().strftime('%Y-%m-%dT%H:%M')
     
     if data_hora_str <= agora_str:
-      return render_template('/public/consulta/agendar.html', falha = "Horario inválido, agendamento precede o dia e hora deste momento.")
+      return render_template('/public/consulta/agendar.html', todosPets = todosPets, donos = donos, falha = "Horario inválido, agendamento precede o dia e hora deste momento.")
 
     agendados = listarConsultaData()
-    print()
-    print(data_hora)
-    print(agendados)
-    print()
-    
+
     if agendados != None:
       if data_hora in agendados:
-        return render_template('/public/consulta/agendar.html', falha = "Horario já ocupado.")
+        return render_template('/public/consulta/agendar.html', todosPets = todosPets, donos = donos, falha = "Horario já ocupado.")
 
     if time(8, 0) <= data_hora.time() <= time(17, 0):
 
       agendarConsultaPet(idDonoPet, data_hora)
 
-      return render_template('/public/consulta/agendar.html', sucesso = "Agendamento concluido")
+      return render_template('/public/consulta/agendar.html', todosPets = todosPets, donos = donos, sucesso = "Agendamento concluido")
+    
+    else:
+      return render_template('/public/consulta/agendar.html', todosPets = todosPets, donos = donos, falha = "Fora de horario de serviço.")
+    
+@app.route('/agendar_consulta_verificando_id', methods=['GET', 'POST'])
+def verificaIdagendarConsulta():
+
+  if request.method == "POST":
+
+    idDono = request.get_json()['idDono'].strip()
+
+    verificado = verificaIdDonobanco(idDono)
+
+  if (verificado):
+    return jsonify({"idDonoValido": "true"})
+
+  else:
+    return jsonify({"idDonoValido": "false"})
 
 @app.route('/listar_consulta')
 def listar_consulta():
