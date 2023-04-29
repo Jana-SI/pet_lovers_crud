@@ -1,10 +1,76 @@
 <head>
+    <!-- css -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_listar_consulta.css')}}">
 
+    <!-- js -->
+    <script defer src="{{ url_for('static', filename='js/formataDataListaConsulta.js') }}"></script>
+    <script defer src="{{ url_for('static', filename='js/mostraImgTipoLista.js') }}"></script>
 </head>
 
 
 {% extends "base.html" %}
 {% from 'bootstrap5/utils.html' import render_icon %}
-teste
+
 {% block content %}
+
+<div class="row">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
+        <button class="btn btn-lg" id="btnHome"><a href="{{url_for('index')}}">{{render_icon('house-heart-fill')}}
+                Home</a></button>
+    </div>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 col-xxl-6">
+
+        pesquisar consulta especifica
+
+        exbir consusltas do dia
+
+        exibir historico de consultas
+
+
+    </div>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-10 col-sm-10 col-md-10 col-lg-10 col-xl-10 col-xxl-10">
+
+        {% if consultasHoje %}
+        <table id="tabConsultas" class="table caption-top text-center">
+            <thead>
+                <tr><td colspan="9"><h1>Consultas de Hoje</h1></td></tr>
+                <tr>
+                    <td>Data</td>
+                    <td>Hora</td>
+                    <td>Dono do pet</td>
+                    <td>Contato</td>
+                    <td>Nome do Pet</td>
+                    <td>Tipo</td>
+                    <td>Raça</td>
+                    <td>Data de nascimento</td>
+                    <td>Idade</td>
+                </tr>
+            </thead>
+            <tbody class="table-group-divider">
+                {% for consulta in consultasHoje %}
+                <tr>
+                    <td><span class="data">{{consulta.1}}</span></td>
+                    <td>{{consulta.0.strftime("%H:%M")}}</td>
+                    <td>{{consulta.2}}</td>
+                    <td>{{consulta.3}}</td>
+                    <td>{{consulta.4}}</td>
+                    <td><span class="tipo">{{consulta.5}}</span><img class="imgTipo" src=""></td>
+                    <td>{{consulta.6}}</td>
+                    <td><span class="nascimento">{{consulta.7}}</span></td>
+                    <td><span class="idade"></span></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+
+    </div>
+
+</div>
 {% endblock %}

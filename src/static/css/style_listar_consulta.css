@@ -1,0 +1,18 @@
+@import url("cores.css");
+
+#tabConsultas{
+    background-color: var(--fundo2);
+    color: var(--texto);
+    border: 2px solid var(--texto);
+    border-radius: 10px;
+}
+
+#tabConsultas thead{
+    background-color: var(--texto);
+    color: var(--fundo2);
+    border: 2px solid var(--fundo2);
+}
+
+.tipo{
+    display: none;
+}

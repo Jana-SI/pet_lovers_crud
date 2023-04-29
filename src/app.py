@@ -554,4 +554,6 @@ def verificaIdagendarConsulta():
 @app.route('/listar_consulta')
 def listar_consulta():
 
-  return render_template('/public/consulta/listar.html')
+  consultasHoje = listarConsultaAtual()
+
+  return render_template('/public/consulta/listar.html',consultasHoje = consultasHoje)

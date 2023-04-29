@@ -515,13 +515,13 @@ def verificaIdDonobanco(idDono):
         cursor.close()
         conn.close
 
-def listarConsulta():
+def listarConsultaData():
 
     try:
         conn = psycopg2.connect(conn_string)
         cursor = conn.cursor()
 
-        cursor.execute("select * from consultas order by data")
+        cursor.execute("select data from consulta order by data")
         conn.commit()
         return cursor.fetchone()
 
@@ -533,15 +533,15 @@ def listarConsulta():
         cursor.close()
         conn.close
 
-def listarConsultaData():
+def listarConsultaAtual():
 
     try:
         conn = psycopg2.connect(conn_string)
         cursor = conn.cursor()
 
-        cursor.execute("select data from consulta order by data")
+        cursor.execute("SELECT cast(consulta.data as time), cast(consulta.data as date), cliente.nome, cliente.telefone, pet.nome, pet.tipo, pet.raca, pet.nascimento FROM consulta INNER JOIN donopet on donopet.id = consulta.iddonopet INNER JOIN pet on pet.id = donopet.idpet INNER JOIN cliente ON donopet.cpfcliente = cliente.cpf where consulta.data::date = CURRENT_DATE")
         conn.commit()
-        return cursor.fetchone()
+        return cursor.fetchall()
 
     except psycopg2.DatabaseError as error:
         cursor.execute("ROLLBACK")
