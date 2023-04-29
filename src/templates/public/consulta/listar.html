@@ -22,14 +22,32 @@
 
 <div class="row justify-content-center">
     <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 col-xxl-6">
+        
+        pesquisar consultas Pet
+        
+        {% if consultasHoje %}
+        <button><a href="{{url_for('listar_consulta_futura')}}">Proximas consultas</a></button>
+        <button><a href="{{url_for('listar_consulta_passada')}}">Historico de consultas</a></button>
+        {% endif %}
 
-        pesquisar consulta especifica
+        {% if consultasFuturas %}
+        <button><a href="{{url_for('listar_consulta')}}">Consultas de Hoje</a></button>
+        <button><a href="{{url_for('listar_consulta_passada')}}">Historico de consultas</a></button>
+        {% endif %}
 
-        exbir consusltas do dia
+        {% if hitoricoConsultas %}
+        <button><a href="{{url_for('listar_consulta')}}">Consultas de Hoje</a></button>
+        <button><a href="{{url_for('listar_consulta_futura')}}">Proximas consultas</a></button>
+        {% endif %}
 
-        exibir historico de consultas
+        {% if erro %}
+        <p class="alert alert-danger text-center" role="alert">{{render_icon('exclamation-triangle-fill')}}
+            {{erro}}</p>
+        {% endif %}
 
-
+        {% if dados %}
+            <p class="alert alert-success text-center" role="alert">{{render_icon('check-circle-fill')}} A consulta do pet {{dados.1}}, dono {{dados.0}} foi cancelada com sucesso!</p>
+        {% endif %}
     </div>
 </div>
 
@@ -39,7 +57,7 @@
         {% if consultasHoje %}
         <table id="tabConsultas" class="table caption-top text-center">
             <thead>
-                <tr><td colspan="9"><h1>Consultas de Hoje</h1></td></tr>
+                <tr><td colspan="10"><h1>Consultas de Hoje</h1></td></tr>
                 <tr>
                     <td>Data</td>
                     <td>Hora</td>
@@ -55,21 +73,94 @@
             <tbody class="table-group-divider">
                 {% for consulta in consultasHoje %}
                 <tr>
-                    <td><span class="data">{{consulta.1}}</span></td>
-                    <td>{{consulta.0.strftime("%H:%M")}}</td>
-                    <td>{{consulta.2}}</td>
+                    <td><span class="data">{{consulta.2}}</span></td>
+                    <td>{{consulta.1.strftime("%H:%M")}}</td>
                     <td>{{consulta.3}}</td>
                     <td>{{consulta.4}}</td>
-                    <td><span class="tipo">{{consulta.5}}</span><img class="imgTipo" src=""></td>
-                    <td>{{consulta.6}}</td>
-                    <td><span class="nascimento">{{consulta.7}}</span></td>
+                    <td>{{consulta.5}}</td>
+                    <td><span class="tipo">{{consulta.6}}</span><img class="imgTipo" src=""></td>
+                    <td>{{consulta.7}}</td>
+                    <td><span class="nascimento">{{consulta.8}}</span></td>
                     <td><span class="idade"></span></td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
         {% endif %}
+        
+        {% if consultasFuturas %}
+        <table id="tabConsultas" class="table caption-top text-center">
+            <thead>
+                <tr><td colspan="10"><h1>Proximas consultas</h1></td></tr>
+                <tr>
+                    <td>Data</td>
+                    <td>Hora</td>
+                    <td>Dono do pet</td>
+                    <td>Contato</td>
+                    <td>Nome do Pet</td>
+                    <td>Tipo</td>
+                    <td>Raça</td>
+                    <td>Data de nascimento</td>
+                    <td>Idade</td>
+                    <td>Deletar</td>
+                </tr>
+            </thead>
+            <tbody class="table-group-divider">
+                {% for consulta in consultasFuturas %}
+                <tr>
+                    <td><span class="data">{{consulta.2}}</span></td>
+                    <td>{{consulta.1.strftime("%H:%M")}}</td>
+                    <td>{{consulta.3}}</td>
+                    <td>{{consulta.4}}</td>
+                    <td>{{consulta.5}}</td>
+                    <td><span class="tipo">{{consulta.6}}</span><img class="imgTipo" src=""></td>
+                    <td>{{consulta.7}}</td>
+                    <td><span class="nascimento">{{consulta.8}}</span></td>
+                    <td><span class="idade"></span></td>
+                    <td>
+                        <form action="/listar_consulta_deletar/{{consulta.0}}" method="POST">
+                            <button id="btnDeletar" class="btn btn-lg" type="submit">{{render_icon('trash3-fill')}}</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
 
+        {% if hitoricoConsultas %}
+        <table id="tabConsultas" class="table caption-top text-center">
+            <thead>
+                <tr><td colspan="10"><h1>Historico de consultas</h1></td></tr>
+                <tr>
+                    <td>Data</td>
+                    <td>Hora</td>
+                    <td>Dono do pet</td>
+                    <td>Contato</td>
+                    <td>Nome do Pet</td>
+                    <td>Tipo</td>
+                    <td>Raça</td>
+                    <td>Data de nascimento</td>
+                    <td>Idade</td>
+                </tr>
+            </thead>
+            <tbody class="table-group-divider">
+                {% for consulta in hitoricoConsultas %}
+                <tr>
+                    <td><span class="data">{{consulta.2}}</span></td>
+                    <td>{{consulta.1.strftime("%H:%M")}}</td>
+                    <td>{{consulta.3}}</td>
+                    <td>{{consulta.4}}</td>
+                    <td>{{consulta.5}}</td>
+                    <td><span class="tipo">{{consulta.6}}</span><img class="imgTipo" src=""></td>
+                    <td>{{consulta.7}}</td>
+                    <td><span class="nascimento">{{consulta.8}}</span></td>
+                    <td><span class="idade"></span></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
     </div>
 
 </div>

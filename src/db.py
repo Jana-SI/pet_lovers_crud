@@ -539,9 +539,102 @@ def listarConsultaAtual():
         conn = psycopg2.connect(conn_string)
         cursor = conn.cursor()
 
-        cursor.execute("SELECT cast(consulta.data as time), cast(consulta.data as date), cliente.nome, cliente.telefone, pet.nome, pet.tipo, pet.raca, pet.nascimento FROM consulta INNER JOIN donopet on donopet.id = consulta.iddonopet INNER JOIN pet on pet.id = donopet.idpet INNER JOIN cliente ON donopet.cpfcliente = cliente.cpf where consulta.data::date = CURRENT_DATE")
+        cursor.execute("SELECT consulta.id, cast(consulta.data as time), cast(consulta.data as date), cliente.nome, cliente.telefone, pet.nome, pet.tipo, pet.raca, pet.nascimento FROM consulta INNER JOIN donopet on donopet.id = consulta.iddonopet INNER JOIN pet on pet.id = donopet.idpet INNER JOIN cliente ON donopet.cpfcliente = cliente.cpf where consulta.data::date = CURRENT_DATE order by consulta.data")
         conn.commit()
         return cursor.fetchall()
+
+    except psycopg2.DatabaseError as error:
+        cursor.execute("ROLLBACK")
+        conn.commit()
+
+    finally:
+        cursor.close()
+        conn.close
+
+def listarConsultaFutura():
+
+    try:
+        conn = psycopg2.connect(conn_string)
+        cursor = conn.cursor()
+
+        cursor.execute("SELECT consulta.id, cast(consulta.data as time), cast(consulta.data as date), cliente.nome, cliente.telefone, pet.nome, pet.tipo, pet.raca, pet.nascimento FROM consulta INNER JOIN donopet on donopet.id = consulta.iddonopet INNER JOIN pet on pet.id = donopet.idpet INNER JOIN cliente ON donopet.cpfcliente = cliente.cpf where consulta.data::date > CURRENT_DATE order by consulta.data")
+        conn.commit()
+        return cursor.fetchall()
+
+    except psycopg2.DatabaseError as error:
+        cursor.execute("ROLLBACK")
+        conn.commit()
+
+    finally:
+        cursor.close()
+        conn.close
+
+def listarConsultaPassada():
+
+    try:
+        conn = psycopg2.connect(conn_string)
+        cursor = conn.cursor()
+
+        cursor.execute("SELECT consulta.id, cast(consulta.data as time), cast(consulta.data as date), cliente.nome, cliente.telefone, pet.nome, pet.tipo, pet.raca, pet.nascimento FROM consulta INNER JOIN donopet on donopet.id = consulta.iddonopet INNER JOIN pet on pet.id = donopet.idpet INNER JOIN cliente ON donopet.cpfcliente = cliente.cpf where consulta.data::date < CURRENT_DATE order by consulta.data")
+        conn.commit()
+        return cursor.fetchall()
+
+    except psycopg2.DatabaseError as error:
+        cursor.execute("ROLLBACK")
+        conn.commit()
+
+    finally:
+        cursor.close()
+        conn.close
+
+def verificaIdConsulta(idConsulta):
+
+    try:
+        conn = psycopg2.connect(conn_string)
+        cursor = conn.cursor()
+
+        cursor.execute("select * from consulta where id=%s;",(idConsulta, ))
+
+        conn.commit()
+        return cursor.fetchone()
+
+    except psycopg2.DatabaseError as error:
+        cursor.execute("ROLLBACK")
+        conn.commit()
+
+    finally:
+        cursor.close()
+        conn.close
+
+def deletarConsulta(idConsulta):
+
+    try:
+        conn = psycopg2.connect(conn_string)
+        cursor = conn.cursor()
+
+        cursor.execute("delete from consulta where id=%s returning iddonopet;",(idConsulta, ))
+
+        conn.commit()
+        return cursor.fetchone()
+
+    except psycopg2.DatabaseError as error:
+        cursor.execute("ROLLBACK")
+        conn.commit()
+
+    finally:
+        cursor.close()
+        conn.close
+
+def dadosDepoisDeleteConsulta(idDono):
+
+    try:
+        conn = psycopg2.connect(conn_string)
+        cursor = conn.cursor()
+
+        cursor.execute("SELECT cliente.nome, pet.nome FROM donopet INNER JOIN pet on pet.id = donopet.idpet INNER JOIN cliente ON donopet.cpfcliente = cliente.cpf where donopet.id = %s;",(idDono, ))
+
+        conn.commit()
+        return cursor.fetchone()
 
     except psycopg2.DatabaseError as error:
         cursor.execute("ROLLBACK")

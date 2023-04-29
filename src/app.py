@@ -556,4 +556,41 @@ def listar_consulta():
 
   consultasHoje = listarConsultaAtual()
 
-  return render_template('/public/consulta/listar.html',consultasHoje = consultasHoje)
+  return render_template('/public/consulta/listar.html', consultasHoje = consultasHoje)
+
+@app.route('/listar_consulta_futura')
+def listar_consulta_futura():
+
+  consultasFuturas = listarConsultaFutura()
+
+  return render_template('/public/consulta/listar.html', consultasFuturas = consultasFuturas)
+
+@app.route('/listar_consulta_historico')
+def listar_consulta_passada():
+
+  hitoricoConsultas = listarConsultaPassada()
+
+  return render_template('/public/consulta/listar.html', hitoricoConsultas = hitoricoConsultas)
+
+@app.route('/listar_consulta_deletar/<idConsulta>', methods=['GET', 'POST'])
+def deletar_consulta(idConsulta):
+
+  verifica = verificaIdConsulta(idConsulta)
+
+  if(verifica):
+
+    idDono = deletarConsulta(idConsulta)
+
+    dados = dadosDepoisDeleteConsulta(idDono)
+
+    consultasFuturas = listarConsultaFutura()
+
+    return render_template('/public/consulta/listar.html', dados = dados, consultasFuturas = consultasFuturas)
+
+  else:
+
+    consultasFuturas = listarConsultaFutura()
+
+    erro = "Não foi possivel deletar, a consulta não se encontra no sistema!"
+
+    return render_template('/public/consulta/listar.html', erros = erro, consultasFuturas = consultasFuturas)
