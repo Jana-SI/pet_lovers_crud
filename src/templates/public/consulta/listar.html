@@ -5,40 +5,56 @@
     <!-- js -->
     <script defer src="{{ url_for('static', filename='js/formataDataListaConsulta.js') }}"></script>
     <script defer src="{{ url_for('static', filename='js/mostraImgTipoLista.js') }}"></script>
+    <script defer src="{{ url_for('static', filename='js/hideShow.js') }}"></script>
+    <script defer src="{{ url_for('static', filename='js/validadorIdPetListaConsulta.js') }}"></script>
 </head>
-
 
 {% extends "base.html" %}
 {% from 'bootstrap5/utils.html' import render_icon %}
 
 {% block content %}
-
 <div class="row">
     <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
-        <button class="btn btn-lg" id="btnHome"><a href="{{url_for('index')}}">{{render_icon('house-heart-fill')}}
-                Home</a></button>
+        <button class="btn btn-lg" id="btnHome"><a
+                href="{{url_for('index')}}">{{render_icon('house-heart-fill')}}Home</a></button>
     </div>
 </div>
 
 <div class="row justify-content-center">
     <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 col-xxl-6">
-        
-        pesquisar consultas Pet
-        
-        {% if consultasHoje %}
+
+        <form id="formConsultaPets" action="/listar_consulta" method="post">
+            <div class="input-group">
+                <span class="input-group-text">
+                    {{render_icon('search')}}
+                </span>
+                <div class="form-floating">
+                    <input class="form-control" list="listaPets" id="idPet" name="idPet" placeholder="Digitar o nome do pet" onfocusout="verificaIdPet()" oninput="setCustomValidity('')" required>
+                    <datalist id="listaPets">
+                        {% if todosPetsOption %}
+                            {% for pet in todosPetsOption %}
+                        <option value="{{pet.0}}">
+                                {{pet.0}} - {{pet.1}}, Donos: 
+
+                                {% if donos %}
+                                    {% for dono in donos %}
+                                        {% if pet.0 == dono.0 %}
+                                            {{dono.1}}, 
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif%}
+                            {% endfor %}
+                        {% endif %}
+                    </datalist>
+                    <label for="idPet" class="form-label">id do Pet</label>
+                </div>
+                <button class="btn" type="submit" id="btnPesquisar" >Pesquisar</button>
+            </div>
+        </form>
+
+        <button><a href="{{url_for('listar_consulta')}}">Consultas de Hoje</a></button>
         <button><a href="{{url_for('listar_consulta_futura')}}">Proximas consultas</a></button>
         <button><a href="{{url_for('listar_consulta_passada')}}">Historico de consultas</a></button>
-        {% endif %}
-
-        {% if consultasFuturas %}
-        <button><a href="{{url_for('listar_consulta')}}">Consultas de Hoje</a></button>
-        <button><a href="{{url_for('listar_consulta_passada')}}">Historico de consultas</a></button>
-        {% endif %}
-
-        {% if hitoricoConsultas %}
-        <button><a href="{{url_for('listar_consulta')}}">Consultas de Hoje</a></button>
-        <button><a href="{{url_for('listar_consulta_futura')}}">Proximas consultas</a></button>
-        {% endif %}
 
         {% if erro %}
         <p class="alert alert-danger text-center" role="alert">{{render_icon('exclamation-triangle-fill')}}
@@ -46,7 +62,13 @@
         {% endif %}
 
         {% if dados %}
-            <p class="alert alert-success text-center" role="alert">{{render_icon('check-circle-fill')}} A consulta do pet {{dados.1}}, dono {{dados.0}} foi cancelada com sucesso!</p>
+        <p class="alert alert-success text-center" role="alert">{{render_icon('check-circle-fill')}} A consulta do pet
+            {{dados.1}}, dono {{dados.0}} foi cancelada com sucesso!</p>
+        {% endif %}
+
+        {% if dadosAtualiza %}
+        <p class="alert alert-success text-center" role="alert">{{render_icon('check-circle-fill')}} A consulta do pet
+            {{dadosAtualiza.1}}, dono {{dadosAtualiza.0}} foi atualizada com sucesso!</p>
         {% endif %}
     </div>
 </div>
@@ -55,9 +77,13 @@
     <div class="col-10 col-sm-10 col-md-10 col-lg-10 col-xl-10 col-xxl-10">
 
         {% if consultasHoje %}
-        <table id="tabConsultas" class="table caption-top text-center">
+        <table id="tabConsultas" class="table align-middle text-center">
             <thead>
-                <tr><td colspan="10"><h1>Consultas de Hoje</h1></td></tr>
+                <tr>
+                    <td colspan="10">
+                        <h1>Consultas de Hoje</h1>
+                    </td>
+                </tr>
                 <tr>
                     <td>Data</td>
                     <td>Hora</td>
@@ -87,11 +113,15 @@
             </tbody>
         </table>
         {% endif %}
-        
+
         {% if consultasFuturas %}
-        <table id="tabConsultas" class="table caption-top text-center">
+        <table id="tabConsultas" class="table align-middle text-center">
             <thead>
-                <tr><td colspan="10"><h1>Proximas consultas</h1></td></tr>
+                <tr>
+                    <td colspan="10">
+                        <h1>Proximas consultas</h1>
+                    </td>
+                </tr>
                 <tr>
                     <td>Data</td>
                     <td>Hora</td>
@@ -102,14 +132,16 @@
                     <td>Raça</td>
                     <td>Data de nascimento</td>
                     <td>Idade</td>
-                    <td>Deletar</td>
+                    <td>Açoes</td>
                 </tr>
             </thead>
-            <tbody class="table-group-divider">
+            <tbody>
                 {% for consulta in consultasFuturas %}
                 <tr>
                     <td><span class="data">{{consulta.2}}</span></td>
-                    <td>{{consulta.1.strftime("%H:%M")}}</td>
+                    <td>{{consulta.1.strftime("%H:%M")}}
+                        
+                    </td>
                     <td>{{consulta.3}}</td>
                     <td>{{consulta.4}}</td>
                     <td>{{consulta.5}}</td>
@@ -118,9 +150,35 @@
                     <td><span class="nascimento">{{consulta.8}}</span></td>
                     <td><span class="idade"></span></td>
                     <td>
-                        <form action="/listar_consulta_deletar/{{consulta.0}}" method="POST">
-                            <button id="btnDeletar" class="btn btn-lg" type="submit">{{render_icon('trash3-fill')}}</button>
-                        </form>
+                        <div class="row justify-content-center align-items-center">
+                            <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
+                                <button id="btnEditar" class="btn btn-lg" onclick="toggleVisibility('{{consulta.0}}')">
+                                    {{render_icon('pencil-square')}}
+                                </button>
+                            </div>
+                            <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
+                                <form id="formDeletar" action="/listar_consulta_deletar/{{consulta.0}}" method="POST">
+                                    <button id="btnDeletar" class="btn btn-lg"
+                                        type="submit">{{render_icon('trash3-fill')}}</button>
+                                </form>
+                            </div>
+                            <div class="col-8 col-sm-8 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
+                                <div style="display: none;" id="{{consulta.0}}">
+                                    <form id="formAtualizar" action="/listar_consulta_atualizar/{{consulta.0}}" method="POST">
+                                        <div class="input-group">
+                                            <span class="input-group-text">{{render_icon('calendar-check-fill')}}</span>
+                                            <div class="form-floating">
+                                                <input class="form-control" type="datetime-local" id="dataHora" name="dataHora"
+                                                    required>
+                                                <label for="dataHora">Data e Hora</label>
+                                            </div>
+                                        </div>
+                                        <button class="btn float-end" type="submit" id="btnAgendar">Agendar</button>
+                                        <button class="btn float-start" type="reset" id="btnApagar">Redefinir</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                     </td>
                 </tr>
                 {% endfor %}
@@ -129,9 +187,13 @@
         {% endif %}
 
         {% if hitoricoConsultas %}
-        <table id="tabConsultas" class="table caption-top text-center">
+        <table id="tabConsultas" class="table align-middle text-center">
             <thead>
-                <tr><td colspan="10"><h1>Historico de consultas</h1></td></tr>
+                <tr>
+                    <td colspan="10">
+                        <h1>Historico de consultas</h1>
+                    </td>
+                </tr>
                 <tr>
                     <td>Data</td>
                     <td>Hora</td>
@@ -144,7 +206,7 @@
                     <td>Idade</td>
                 </tr>
             </thead>
-            <tbody class="table-group-divider">
+            <tbody>
                 {% for consulta in hitoricoConsultas %}
                 <tr>
                     <td><span class="data">{{consulta.2}}</span></td>
@@ -161,6 +223,12 @@
             </tbody>
         </table>
         {% endif %}
+
+        {% if consultaPetEsp %}
+            {% for consulta in consultaPetEsp%}
+                {{consulta}}
+            {% endfor %}
+        {% endif%}
     </div>
 
 </div>

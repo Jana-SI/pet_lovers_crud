@@ -625,7 +625,7 @@ def deletarConsulta(idConsulta):
         cursor.close()
         conn.close
 
-def dadosDepoisDeleteConsulta(idDono):
+def pesquisarDadosConsulta(idDono):
 
     try:
         conn = psycopg2.connect(conn_string)
@@ -635,6 +635,42 @@ def dadosDepoisDeleteConsulta(idDono):
 
         conn.commit()
         return cursor.fetchone()
+
+    except psycopg2.DatabaseError as error:
+        cursor.execute("ROLLBACK")
+        conn.commit()
+
+    finally:
+        cursor.close()
+        conn.close
+
+def atualizaConsulta(dataHora, id):
+
+    try:
+        conn = psycopg2.connect(conn_string)
+        cursor = conn.cursor()
+
+        cursor.execute("update consulta set data = %s where id = %s returning iddonopet;",(dataHora, id))
+        conn.commit()
+        return cursor.fetchone()
+
+    except psycopg2.DatabaseError as error:
+        cursor.execute("ROLLBACK")
+        conn.commit()
+
+    finally:
+        cursor.close()
+        conn.close
+
+def pesquisaConsultaPetESp(idPet):
+
+    try:
+        conn = psycopg2.connect(conn_string)
+        cursor = conn.cursor()
+
+        cursor.execute("SELECT consulta.id, cast(consulta.data as time), cast(consulta.data as date), cliente.nome, cliente.telefone, pet.nome, pet.tipo, pet.raca, pet.nascimento FROM consulta INNER JOIN donopet on donopet.id = consulta.iddonopet INNER JOIN pet on pet.id = donopet.idpet INNER JOIN cliente ON donopet.cpfcliente = cliente.cpf where pet.id = %s;",(idPet, ))
+        conn.commit()
+        return cursor.fetchall()
 
     except psycopg2.DatabaseError as error:
         cursor.execute("ROLLBACK")

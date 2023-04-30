@@ -16,3 +16,49 @@
 .tipo{
     display: none;
 }
+
+#btnDeletar{
+    background-color: var(--fundo2);
+    color: var(--texto);
+    border-color: 2px solid var(--texto) !important;
+}
+
+#btnDeletar:hover{
+    background-color: var(--fundo2);
+    color: #aa0000;
+    border-color: 2px solid #aa0000 !important;
+}
+
+#btnEditar{
+    background-color: var(--fundo2);
+    color: var(--texto);
+    border-color: 2px solid var(--texto) !important;
+}
+
+#btnEditar:hover{
+    background-color: var(--texto);
+    color: var(--fundo);
+    border-color: 2px solid var(--fundo) !important;
+}
+
+#btnAgendar, #btnApagar{
+    background-color: var(--texto);
+    color: var(--fundo);
+    border: 2px solid var(--fundo);
+    margin-top: 10px;
+}
+
+#btnAgendar:hover, #btnApagar:hover{
+    background-color: var(--fundo);
+    color: var(--texto);
+    border: 2px solid var(--texto);
+    margin-top: 10px;
+}
+
+#formDeletar{
+    margin-bottom: 0px !important;
+}
+
+#formAtualizar{
+    margin-top: 10px !important;
+}
