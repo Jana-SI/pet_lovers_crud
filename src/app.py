@@ -558,7 +558,12 @@ def listar_consulta():
   todosPetsOption = pesquisarPets()
   donos = pesquisarPetsDonos()
 
-  return render_template('/public/consulta/listar_deletar_atualizar_consulta.html', todosPetsOption = todosPetsOption, donos = donos, consultasHoje = consultasHoje)
+  if(consultasHoje):
+    return render_template('/public/consulta/listar_deletar_atualizar_consulta.html', todosPetsOption = todosPetsOption, donos = donos, consultasHoje = consultasHoje)
+
+  else:
+    msg = "Não tem consultas hoje!"
+    return render_template('/public/consulta/listar_deletar_atualizar_consulta.html', todosPetsOption = todosPetsOption, donos = donos, msg=msg)
 
 @app.route('/listar_consulta_futura')
 def listar_consulta_futura():
@@ -567,7 +572,12 @@ def listar_consulta_futura():
   todosPetsOption = pesquisarPets()
   donos = pesquisarPetsDonos()
 
-  return render_template('/public/consulta/listar_deletar_atualizar_consulta.html', todosPetsOption = todosPetsOption, donos = donos, consultasFuturas = consultasFuturas)
+  if(consultasFuturas):
+    return render_template('/public/consulta/listar_deletar_atualizar_consulta.html', todosPetsOption = todosPetsOption, donos = donos, consultasFuturas = consultasFuturas)
+  
+  else:
+    msg = "Não tem consultas agendadas!"
+    return render_template('/public/consulta/listar_deletar_atualizar_consulta.html', todosPetsOption = todosPetsOption, donos = donos, msg=msg)
 
 @app.route('/listar_consulta_historico')
 def listar_consulta_passada():
@@ -576,7 +586,12 @@ def listar_consulta_passada():
   todosPetsOption = pesquisarPets()
   donos = pesquisarPetsDonos()
 
-  return render_template('/public/consulta/listar_deletar_atualizar_consulta.html', todosPetsOption = todosPetsOption, donos = donos, hitoricoConsultas = hitoricoConsultas)
+  if(hitoricoConsultas):
+    return render_template('/public/consulta/listar_deletar_atualizar_consulta.html', todosPetsOption = todosPetsOption, donos = donos, hitoricoConsultas = hitoricoConsultas)
+  
+  else:
+    msg = "Não tem historico de consultas!"
+    return render_template('/public/consulta/listar_deletar_atualizar_consulta.html', todosPetsOption = todosPetsOption, donos = donos, msg=msg)
 
 @app.route('/listar_consulta_deletar/<idConsulta>', methods=['GET', 'POST'])
 def deletar_consulta(idConsulta):
@@ -593,7 +608,12 @@ def deletar_consulta(idConsulta):
     todosPetsOption = pesquisarPets()
     donos = pesquisarPetsDonos()
 
-    return render_template('/public/consulta/listar_deletar_atualizar_consulta.html', todosPetsOption = todosPetsOption, donos = donos, dados = dados, consultasFuturas = consultasFuturas)
+    if(consultasFuturas):
+      return render_template('/public/consulta/listar_deletar_atualizar_consulta.html', todosPetsOption = todosPetsOption, donos = donos, dados = dados, consultasFuturas = consultasFuturas)
+
+    else:
+      msg = "Não tem consultas agendadas!"
+      return render_template('/public/consulta/listar_deletar_atualizar_consulta.html', todosPetsOption = todosPetsOption, donos = donos, msg=msg)
 
   else:
 
@@ -603,7 +623,12 @@ def deletar_consulta(idConsulta):
 
     erro = "Não foi possivel deletar, a consulta não se encontra no sistema!"
 
-    return render_template('/public/consulta/listar_deletar_atualizar_consulta.html', todosPetsOption = todosPetsOption, donos = donos, erro = erro, consultasFuturas = consultasFuturas)
+    if(consultasFuturas):
+      return render_template('/public/consulta/listar_deletar_atualizar_consulta.html', todosPetsOption = todosPetsOption, donos = donos, erro = erro, consultasFuturas = consultasFuturas)
+    
+    else:
+      msg = "Não tem consultas agendadas!"
+      return render_template('/public/consulta/listar_deletar_atualizar_consulta.html', todosPetsOption = todosPetsOption, donos = donos, erro = erro, msg=msg)
   
 @app.route('/listar_consulta_atualizar/<idConsulta>', methods=['GET', 'POST'])
 def atualizar_consulta(idConsulta):
@@ -663,8 +688,12 @@ def atualizar_consulta(idConsulta):
     
     erro = "Não foi possivel atualizar, a consulta não se encontra no sistema!"
 
-    return render_template('/public/consulta/listar_deletar_atualizar_consulta.html', todosPetsOption = todosPetsOption, erros = erro, donos = donos, consultasFuturas = consultasFuturas)
-  
+    if(consultasFuturas):
+      return render_template('/public/consulta/listar_deletar_atualizar_consulta.html', todosPetsOption = todosPetsOption, erros = erro, donos = donos, consultasFuturas = consultasFuturas)
+    
+    else:
+      msg = "Não tem consultas agendadas!"
+      return render_template('/public/consulta/listar_deletar_atualizar_consulta.html', todosPetsOption = todosPetsOption, donos = donos, msg=msg)
 
 @app.route('/listar_consulta', methods=['GET', 'POST'])
 def listar_consulta_pet():
@@ -688,7 +717,12 @@ def listar_consulta_pet():
     consultasHoje = listarConsultaAtual()
     donos = pesquisarPetsDonos()
 
-    return render_template('/public/consulta/listar_deletar_atualizar_consulta.html', consultasHoje = consultasHoje, todosPetsOption = todosPetsOption, donos = donos, erro="Pet não encontrado no sistema, tente novamente!")
+    if(consultasHoje):
+      return render_template('/public/consulta/listar_deletar_atualizar_consulta.html', consultasHoje = consultasHoje, todosPetsOption = todosPetsOption, donos = donos, erro="Pet não encontrado no sistema, tente novamente!")
+  
+    else:
+      msg = "Não tem consultas hoje!"
+      return render_template('/public/consulta/listar_deletar_atualizar_consulta.html', todosPetsOption = todosPetsOption, donos = donos, erro="Pet não encontrado no sistema, tente novamente!", msg=msg)
   
 @app.route('/listar_consulta_pet_verificando_id', methods=['GET', 'POST'])
 def verificaIdPetConsulta():

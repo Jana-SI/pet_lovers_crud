@@ -67,12 +67,19 @@
         <p class="alert alert-success text-center" role="alert">{{render_icon('check-circle-fill')}} A consulta do pet
             {{dadosAtualiza.1}}, dono {{dadosAtualiza.0}} foi atualizada com sucesso!</p>
         {% endif %}
+
+        {% if msg %}
+        <p id="atencao" class="alert alert-primary text-center" role="alert">
+            {{render_icon('info-circle')}}
+            {{msg}}
+        </p>
+        {% endif %}
+
     </div>
 </div>
 
 <div class="row justify-content-center">
     <div class="col-10 col-sm-10 col-md-10 col-lg-10 col-xl-10 col-xxl-10">
-
         {% if consultasHoje %}
         <table id="tabConsultas" class="table align-middle text-center">
             <thead>

@@ -120,6 +120,5 @@
 }
 
 #btnHoje:hover a, #btnProxima:hover a, #btnHistorica:hover a{
-    background-color: var(--fundo);
     color: var(--texto);
 }
