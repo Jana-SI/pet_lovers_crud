@@ -558,7 +558,7 @@ def listar_consulta():
   todosPetsOption = pesquisarPets()
   donos = pesquisarPetsDonos()
 
-  return render_template('/public/consulta/listar.html', todosPetsOption = todosPetsOption, donos = donos, consultasHoje = consultasHoje)
+  return render_template('/public/consulta/listar_deletar_atualizar_consulta.html', todosPetsOption = todosPetsOption, donos = donos, consultasHoje = consultasHoje)
 
 @app.route('/listar_consulta_futura')
 def listar_consulta_futura():
@@ -567,7 +567,7 @@ def listar_consulta_futura():
   todosPetsOption = pesquisarPets()
   donos = pesquisarPetsDonos()
 
-  return render_template('/public/consulta/listar.html', todosPetsOption = todosPetsOption, donos = donos, consultasFuturas = consultasFuturas)
+  return render_template('/public/consulta/listar_deletar_atualizar_consulta.html', todosPetsOption = todosPetsOption, donos = donos, consultasFuturas = consultasFuturas)
 
 @app.route('/listar_consulta_historico')
 def listar_consulta_passada():
@@ -576,7 +576,7 @@ def listar_consulta_passada():
   todosPetsOption = pesquisarPets()
   donos = pesquisarPetsDonos()
 
-  return render_template('/public/consulta/listar.html', todosPetsOption = todosPetsOption, donos = donos, hitoricoConsultas = hitoricoConsultas)
+  return render_template('/public/consulta/listar_deletar_atualizar_consulta.html', todosPetsOption = todosPetsOption, donos = donos, hitoricoConsultas = hitoricoConsultas)
 
 @app.route('/listar_consulta_deletar/<idConsulta>', methods=['GET', 'POST'])
 def deletar_consulta(idConsulta):
@@ -593,7 +593,7 @@ def deletar_consulta(idConsulta):
     todosPetsOption = pesquisarPets()
     donos = pesquisarPetsDonos()
 
-    return render_template('/public/consulta/listar.html', todosPetsOption = todosPetsOption, donos = donos, dados = dados, consultasFuturas = consultasFuturas)
+    return render_template('/public/consulta/listar_deletar_atualizar_consulta.html', todosPetsOption = todosPetsOption, donos = donos, dados = dados, consultasFuturas = consultasFuturas)
 
   else:
 
@@ -603,7 +603,7 @@ def deletar_consulta(idConsulta):
 
     erro = "Não foi possivel deletar, a consulta não se encontra no sistema!"
 
-    return render_template('/public/consulta/listar.html', todosPetsOption = todosPetsOption, donos = donos, erro = erro, consultasFuturas = consultasFuturas)
+    return render_template('/public/consulta/listar_deletar_atualizar_consulta.html', todosPetsOption = todosPetsOption, donos = donos, erro = erro, consultasFuturas = consultasFuturas)
   
 @app.route('/listar_consulta_atualizar/<idConsulta>', methods=['GET', 'POST'])
 def atualizar_consulta(idConsulta):
@@ -621,26 +621,26 @@ def atualizar_consulta(idConsulta):
     donos = pesquisarPetsDonos()
     
     if data_hora in feriados:
-      return render_template('/public/consulta/listar.html', todosPetsOption = todosPetsOption, donos = donos, consultasFuturas = consultasFuturas, erro = "Data informada é feriado") 
+      return render_template('/public/consulta/listar_deletar_atualizar_consulta.html', todosPetsOption = todosPetsOption, donos = donos, consultasFuturas = consultasFuturas, erro = "Data informada é feriado") 
 
     # Verifica se a data selecionada é um dia útil (segunda a sexta-feira)
     if data_hora.weekday() < 0 or data_hora.weekday() > 4:
-      return render_template('/public/consulta/listar.html', todosPetsOption = todosPetsOption, donos = donos, consultasFuturas = consultasFuturas, erro = "Data informada não é dia util.")
+      return render_template('/public/consulta/listar_deletar_atualizar_consulta.html', todosPetsOption = todosPetsOption, donos = donos, consultasFuturas = consultasFuturas, erro = "Data informada não é dia util.")
     
     # Verifica se o horário selecionado não tem minutos
     if data_hora.minute != 0:
-      return render_template('/public/consulta/listar.html', todosPetsOption = todosPetsOption, donos = donos, consultasFuturas = consultasFuturas, erro = "Horario inválido, consideramos que cada consulta dura exatemente 1 hora e não aceita minutos alem de H:00.")
+      return render_template('/public/consulta/listar_deletar_atualizar_consulta.html', todosPetsOption = todosPetsOption, donos = donos, consultasFuturas = consultasFuturas, erro = "Horario inválido, consideramos que cada consulta dura exatemente 1 hora e não aceita minutos alem de H:00.")
 
     agora_str = datetime.now().strftime('%Y-%m-%dT%H:%M')
     
     if data_hora_str <= agora_str:
-      return render_template('/public/consulta/listar.html', todosPetsOption = todosPetsOption, donos = donos, consultasFuturas = consultasFuturas, erro = "Horario inválido, agendamento precede o dia e hora deste momento.")
+      return render_template('/public/consulta/listar_deletar_atualizar_consulta.html', todosPetsOption = todosPetsOption, donos = donos, consultasFuturas = consultasFuturas, erro = "Horario inválido, agendamento precede o dia e hora deste momento.")
 
     agendados = listarConsultaData()
 
     if agendados != None:
       if data_hora in agendados:
-        return render_template('/public/consulta/listar.html', todosPetsOption = todosPetsOption, donos = donos, consultasFuturas = consultasFuturas, erro = "Horario já ocupado.")
+        return render_template('/public/consulta/listar_deletar_atualizar_consulta.html', todosPetsOption = todosPetsOption, donos = donos, consultasFuturas = consultasFuturas, erro = "Horario já ocupado.")
 
     if time(8, 0) <= data_hora.time() <= time(17, 0):
 
@@ -650,10 +650,10 @@ def atualizar_consulta(idConsulta):
 
       consultasFuturas = listarConsultaFutura()
 
-      return render_template('/public/consulta/listar.html', todosPetsOption = todosPetsOption, donos = donos, dadosAtualiza = dadosAtualiza, consultasFuturas = consultasFuturas)
+      return render_template('/public/consulta/listar_deletar_atualizar_consulta.html', todosPetsOption = todosPetsOption, donos = donos, dadosAtualiza = dadosAtualiza, consultasFuturas = consultasFuturas)
     
     else:
-      return render_template('/public/consulta/listar.html', todosPetsOption = todosPetsOption, donos = donos, consultasFuturas = consultasFuturas, erro = "Fora de horario de serviço.")
+      return render_template('/public/consulta/listar_deletar_atualizar_consulta.html', todosPetsOption = todosPetsOption, donos = donos, consultasFuturas = consultasFuturas, erro = "Fora de horario de serviço.")
 
   else:
 
@@ -663,7 +663,7 @@ def atualizar_consulta(idConsulta):
     
     erro = "Não foi possivel atualizar, a consulta não se encontra no sistema!"
 
-    return render_template('/public/consulta/listar.html', todosPetsOption = todosPetsOption, erros = erro, donos = donos, consultasFuturas = consultasFuturas)
+    return render_template('/public/consulta/listar_deletar_atualizar_consulta.html', todosPetsOption = todosPetsOption, erros = erro, donos = donos, consultasFuturas = consultasFuturas)
   
 
 @app.route('/listar_consulta', methods=['GET', 'POST'])
@@ -676,13 +676,11 @@ def listar_consulta_pet():
   if(petEsp):
 
     consultaPetEsp = pesquisaConsultaPetESp(idPet)
-    print()
-    print(consultaPetEsp)
-    print()
+    donosPetEsp = pesquisarPetDonos(idPet)
     todosPetsOption = pesquisarPets()
     donos = pesquisarPetsDonos()
     
-    return render_template('/public/consulta/listar.html', consultaPetEsp = consultaPetEsp, donos = donos, todosPetsOption = todosPetsOption)
+    return render_template('/public/consulta/listar_deletar_atualizar_consulta.html', petEsp = petEsp, donosPetEsp = donosPetEsp, consultaPetEsp = consultaPetEsp, donos = donos, todosPetsOption = todosPetsOption)
 
   else:
     
@@ -690,7 +688,7 @@ def listar_consulta_pet():
     consultasHoje = listarConsultaAtual()
     donos = pesquisarPetsDonos()
 
-    return render_template('/public/consulta/listar.html', consultasHoje = consultasHoje, todosPetsOption = todosPetsOption, donos = donos, erro="Pet não encontrado no sistema, tente novamente!")
+    return render_template('/public/consulta/listar_deletar_atualizar_consulta.html', consultasHoje = consultasHoje, todosPetsOption = todosPetsOption, donos = donos, erro="Pet não encontrado no sistema, tente novamente!")
   
 @app.route('/listar_consulta_pet_verificando_id', methods=['GET', 'POST'])
 def verificaIdPetConsulta():

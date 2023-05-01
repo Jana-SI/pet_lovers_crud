@@ -55,6 +55,11 @@ const idade = document.querySelectorAll('.idade');
 for (let i = 0; i < data.length; i++) {
 
     data[i].textContent = dataAtualFormatada(data[i].innerText);
+    
+}
+
+for (let i = 0; i < nascimento.length; i++) {
+
     nascimento[i].textContent = dataAtualFormatada(nascimento[i].innerText);
     idade[i].textContent = calcularIdade(nascimento[i].textContent);
     

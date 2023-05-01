@@ -13,14 +13,11 @@
 {% from 'bootstrap5/utils.html' import render_icon %}
 
 {% block content %}
-<div class="row">
-    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
-        <button class="btn btn-lg" id="btnHome"><a
-                href="{{url_for('index')}}">{{render_icon('house-heart-fill')}}Home</a></button>
-    </div>
+<div class="position-absolute top-0 start-0">
+    <button class="btn btn-lg" id="btnHome"><a href="{{url_for('index')}}">{{render_icon('house-heart-fill')}} Home</a></button>
 </div>
 
-<div class="row justify-content-center">
+<div class="row justify-content-center text-center">
     <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 col-xxl-6">
 
         <form id="formConsultaPets" action="/listar_consulta" method="post">
@@ -52,9 +49,9 @@
             </div>
         </form>
 
-        <button><a href="{{url_for('listar_consulta')}}">Consultas de Hoje</a></button>
-        <button><a href="{{url_for('listar_consulta_futura')}}">Proximas consultas</a></button>
-        <button><a href="{{url_for('listar_consulta_passada')}}">Historico de consultas</a></button>
+        <button id="btnHoje" class="btn btn-lg"><a href="{{url_for('listar_consulta')}}">Consultas de Hoje</a></button>
+        <button id="btnProxima" class="btn btn-lg"><a href="{{url_for('listar_consulta_futura')}}">Proximas consultas</a></button>
+        <button id="btnHistorica" class="btn btn-lg"><a href="{{url_for('listar_consulta_passada')}}">Historico de consultas</a></button>
 
         {% if erro %}
         <p class="alert alert-danger text-center" role="alert">{{render_icon('exclamation-triangle-fill')}}
@@ -224,10 +221,75 @@
         </table>
         {% endif %}
 
-        {% if consultaPetEsp %}
-            {% for consulta in consultaPetEsp%}
-                {{consulta}}
-            {% endfor %}
+        {% if petEsp %}
+            <div class="card" id="styleCard">
+                <div class="card-header text-center">
+                    <h5 class="card-title">
+                        {{petEsp.1}}
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
+                            <p class="card-title"><strong>Dados do Pet: </strong></p>
+                            <p class="card-text">Tipo: <span class="tipo">{{petEsp.4}}</span><img class="imgTipo" src=""></p>
+                            <p class="card-text">Raça: {{petEsp.3}}</p>
+                        
+                            <p class="card-text">Data de Nascimento: <span class="nascimento">{{petEsp.2}}</span>
+                            </p>
+                            <p class="card-text">Idade: <span class="idade"></span></p>
+                        </div>
+                        <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
+                            <p class="card-title"><strong>Donos: </strong></p>
+            
+                            {% for dono in donosPetEsp %}
+                                {% if petEsp.0 == dono.0 %}
+                            <p class="card-text">Nome: {{dono.1}}</p>
+                            <p class="card-text">Contato: {{dono.2}}</p>
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    {% if consultaPetEsp %}
+                    <table id="tabConsultas" class="table align-middle text-center">
+                        <thead>
+                            <tr>
+                                <td colspan="10">
+                                    <h1>Historico de consultas do Pet</h1>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Data</td>
+                                <td>Hora</td>
+                                <td>Dono do pet</td>
+                                <td>Contato</td>
+                                <td>Nome do Pet</td>
+                                <td>Tipo</td>
+                                <td>Raça</td>
+                                <td>Data de nascimento</td>
+                                <td>Idade</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for consulta in consultaPetEsp %}
+                            <tr>
+                                <td><span class="data">{{consulta.2}}</span></td>
+                                <td>{{consulta.1.strftime("%H:%M")}}</td>
+                                <td>{{consulta.3}}</td>
+                                <td>{{consulta.4}}</td>
+                                <td>{{consulta.5}}</td>
+                                <td><span class="tipo">{{consulta.6}}</span><img class="imgTipo" src=""></td>
+                                <td>{{consulta.7}}</td>
+                                <td><span class="nascimento">{{consulta.8}}</span></td>
+                                <td><span class="idade"></span></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {% endif %}
+                </div>
+            </div>
         {% endif%}
     </div>
 

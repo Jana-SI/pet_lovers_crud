@@ -62,3 +62,64 @@
 #formAtualizar{
     margin-top: 10px !important;
 }
+
+#styleCard{
+    background-color: var(--fundo2);
+    color: var(--texto);
+    border: 2px solid var(--texto);
+    border-radius: 10px;
+}
+
+#styleCard .card-header{
+    background-color: var(--texto);
+    color: var(--fundo2);
+}
+
+#styleCard .input-group{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.input-group{
+    border: 2px solid var(--texto);
+}
+
+.input-group span{
+    background-color: var(--texto) !important;
+    color: var(--fundo) !important;
+}
+
+#btnPesquisar{
+    background-color: var(--texto);
+    color: var(--fundo);
+}
+
+#btnPesquisar:hover{
+    background-color: var(--fundo);
+    color: var(--texto);
+}
+
+#btnHoje, #btnProxima, #btnHistorica{
+    background-color: var(--texto);
+    color: var(--fundo);
+    border: 2px solid var(--fundo);
+    border-radius: 10px;
+    margin-bottom: 16px;
+}
+
+#btnHoje:hover, #btnProxima:hover, #btnHistorica:hover{
+    background-color: var(--fundo);
+    color: var(--texto);
+    border: 2px solid var(--texto);
+    border-radius: 10px;
+}
+
+#btnHoje a, #btnProxima a, #btnHistorica a{
+    text-decoration: none;
+    color: var(--fundo);
+}
+
+#btnHoje:hover a, #btnProxima:hover a, #btnHistorica:hover a{
+    background-color: var(--fundo);
+    color: var(--texto);
+}
