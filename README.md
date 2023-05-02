@@ -7,7 +7,7 @@
 O site é composto por 3 seções:
 
 👤 **Clientes:** cadastrar, listar, pesquisar cliente especifico, deletar e atualizar (nome e telefone do cliente pesquisado);<br>
-🐰 **Pets:** cadastrar, listar, pesquisar pet especifico, deletar e atualizar (nome, tipo, raça e data de nascimento do cliente pesquisado ) e associar a mais um dono;<br>
+🐰 **Pets:** cadastrar, listar, pesquisar pet especifico, deletar, atualizar (nome, tipo, raça e data de nascimento do cliente pesquisado ) e associar a mais um dono;<br>
 🩺 **Consulta:** agendar, listar, pesquisar historico de consultas do pet, consultas do dia, proximas consultas, historico total de consultas, deletar e atualizar (data e hora das próximas consultas).
 
 ---
