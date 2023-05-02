@@ -21,8 +21,13 @@
 
         <h1 class="text-center">Cadastro de clientes</h1>
 
-        {% if mensagemCadastroSucesso %}
-            <p id="CadCliente" class="alert alert-success text-center" role="alert">{{render_icon('check-circle-fill')}} {{mensagemCadastroSucesso}}</p>
+        {% if mensagemCadastro %}
+            <p id="CadCliente" class="alert alert-success text-center" role="alert">{{render_icon('check-circle-fill')}} {{mensagemCadastro}}</p>
+        {% endif %}
+
+        {% if erro %}
+        <p id="CadCliente" class="alert alert-danger text-center" role="alert">{{render_icon('exclamation-triangle-fill')}}
+            {{erro}}</p>
         {% endif %}
 
         <form name="formCadastro" action="/cadastro_cliente" method="POST">
