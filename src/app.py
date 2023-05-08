@@ -41,7 +41,7 @@ def cadastrarCliente():
 
       insereCliente(nome, cpfInt, telefone)
 
-      return render_template('/public/cliente/cadastro_cliente.html', mensagemCadastroSucesso="Cadastrado com sucesso")
+      return render_template('/public/cliente/cadastro_cliente.html', sucesso="Cadastrado com sucesso")
   
   else:
     return render_template('/public/cliente/cadastro_cliente.html', erro="Cadastrado não realizado, tente novamente!")
@@ -599,14 +599,14 @@ def agendar_consulta():
 
   return render_template('/public/consulta/agendar.html', todosPets = todosPets, donos = donos)
 
-class FormAgendar(Form):
-    idDono = StringField('idDono', validators=[DataRequired()])
-    dataHora = DateTimeField('dataHora', format='%Y-%m-%dT%H:%M:%S', validators=[DataRequired()])
+class AgendarForm(Form):
+    idDono = StringField('idDono', validators=[InputRequired()])
+    dataHora = DateTimeField('dataHora', format='%Y-%m-%dT%H:%M', validators=[DataRequired()])
 
 @app.route('/agendar_consulta', methods=['GET', 'POST'])
 def agendarConsulta():
 
-  form = FormAgendar(request.form)
+  form = AgendarForm(request.form)
 
   if form.validate():
     # obtém os feriados do ano atual no RS, Brasil
@@ -614,7 +614,10 @@ def agendarConsulta():
 
     idDonoPet = form.idDono.data
     data_hora_str = form.dataHora.data
+    data_hora_str = data_hora_str.strftime('%Y-%m-%dT%H:%M')
     data_hora = datetime.strptime(data_hora_str, '%Y-%m-%dT%H:%M')
+
+    """ data_hora = datetime.strptime(data_hora_str, '%Y-%m-%dT%H:%M') """
     todosPets = pesquisarPets()
     donos = pesquisarPetsDonos()
     
