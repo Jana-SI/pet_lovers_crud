@@ -1,122 +1,57 @@
 function mostraImgTipo(tipo) {
 
+    var ave = "/static//img/ave.png",
+        cachorro = "/static//img/cachorro.png",
+        chinchila = "/static//img/chinchila.png",
+        coelho = "/static//img/coelho.png",
+        gato = "/static//img/gato.png",
+        exotico = "/static//img/exotico.png",
+        hamster = "/static//img/hamster.png",
+        peixe = "/static//img/peixe.png",
+        porquinho_da_india = "/static//img/porquinho_da_india.png",
+        naoDeclarado = "/static//img/nao_informado.png";
+
     if (tipo == "ave") {
-        document.getElementById('ave').style.display='inline-block';
-        document.getElementById('cachorro').style.display = 'none';
-        document.getElementById('chinchila').style.display = 'none';
-        document.getElementById('coelho').style.display = 'none';
-        document.getElementById('gato').style.display = 'none';
-        document.getElementById('exotico').style.display = 'none';
-        document.getElementById('hamster').style.display = 'none';
-        document.getElementById('peixe').style.display = 'none';
-        document.getElementById('porquinho_da_india').style.display = 'none';
+        document.getElementById('imgTipo').src = ave;
     } 
 
     if (tipo == "cachorro") {
-        document.getElementById('ave').style.display='none';
-        document.getElementById('cachorro').style.display = 'inline-block';
-        document.getElementById('chinchila').style.display = 'none';
-        document.getElementById('coelho').style.display = 'none';
-        document.getElementById('gato').style.display = 'none';
-        document.getElementById('exotico').style.display = 'none';
-        document.getElementById('hamster').style.display = 'none';
-        document.getElementById('peixe').style.display = 'none';
-        document.getElementById('porquinho_da_india').style.display = 'none';
+        document.getElementById('imgTipo').src = cachorro;
     }
 
     if (tipo == "chinchila") {
-        document.getElementById('ave').style.display='none';
-        document.getElementById('cachorro').style.display = 'none';
-        document.getElementById('chinchila').style.display = 'inline-block';
-        document.getElementById('coelho').style.display = 'none';
-        document.getElementById('gato').style.display = 'none';
-        document.getElementById('exotico').style.display = 'none';
-        document.getElementById('hamster').style.display = 'none';
-        document.getElementById('peixe').style.display = 'none';
-        document.getElementById('porquinho_da_india').style.display = 'none';
+        document.getElementById('imgTipo').src = chinchila;
     }
 
     if (tipo == "coelho") {
-        document.getElementById('ave').style.display='none';
-        document.getElementById('cachorro').style.display = 'none';
-        document.getElementById('chinchila').style.display = 'none';
-        document.getElementById('coelho').style.display = 'inline-block';
-        document.getElementById('gato').style.display = 'none';
-        document.getElementById('exotico').style.display = 'none';
-        document.getElementById('hamster').style.display = 'none';
-        document.getElementById('peixe').style.display = 'none';
-        document.getElementById('porquinho_da_india').style.display = 'none';
+        document.getElementById('imgTipo').src = coelho; 
     }
 
     if (tipo == "gato") {
-        document.getElementById('ave').style.display='none';
-        document.getElementById('cachorro').style.display = 'none';
-        document.getElementById('chinchila').style.display = 'none';
-        document.getElementById('coelho').style.display = 'none';
-        document.getElementById('gato').style.display = 'inline-block';
-        document.getElementById('exotico').style.display = 'none';
-        document.getElementById('hamster').style.display = 'none';
-        document.getElementById('peixe').style.display = 'none';
-        document.getElementById('porquinho_da_india').style.display = 'none';
+        document.getElementById('imgTipo').src = gato;
     }
 
     if (tipo == "exotico") {
-        document.getElementById('ave').style.display='none';
-        document.getElementById('cachorro').style.display = 'none';
-        document.getElementById('chinchila').style.display = 'none';
-        document.getElementById('coelho').style.display = 'none';
-        document.getElementById('gato').style.display = 'none';
-        document.getElementById('exotico').style.display = 'inline-block';
-        document.getElementById('hamster').style.display = 'none';
-        document.getElementById('peixe').style.display = 'none';
-        document.getElementById('porquinho_da_india').style.display = 'none';
+        document.getElementById('imgTipo').src = exotico;
     }
 
     if (tipo == "hamster") {
-        document.getElementById('ave').style.display='none';
-        document.getElementById('cachorro').style.display = 'none';
-        document.getElementById('chinchila').style.display = 'none';
-        document.getElementById('coelho').style.display = 'none';
-        document.getElementById('gato').style.display = 'none';
-        document.getElementById('exotico').style.display = 'none';
-        document.getElementById('hamster').style.display = 'inline-block';
-        document.getElementById('peixe').style.display = 'none';
-        document.getElementById('porquinho_da_india').style.display = 'none';
+        document.getElementById('imgTipo').src = hamster;
     }
 
     if (tipo == "peixe") {
-        document.getElementById('ave').style.display='none';
-        document.getElementById('cachorro').style.display = 'none';
-        document.getElementById('chinchila').style.display = 'none';
-        document.getElementById('coelho').style.display = 'none';
-        document.getElementById('gato').style.display = 'none';
-        document.getElementById('exotico').style.display = 'none';
-        document.getElementById('hamster').style.display = 'none';
-        document.getElementById('peixe').style.display = 'inline-block';
-        document.getElementById('porquinho_da_india').style.display = 'none';
+        document.getElementById('imgTipo').src = peixe;
     }
 
     if (tipo == "porquinho_da_india") {
-        document.getElementById('ave').style.display='none';
-        document.getElementById('cachorro').style.display = 'none';
-        document.getElementById('chinchila').style.display = 'none';
-        document.getElementById('coelho').style.display = 'none';
-        document.getElementById('gato').style.display = 'none';
-        document.getElementById('exotico').style.display = 'none';
-        document.getElementById('hamster').style.display = 'none';
-        document.getElementById('peixe').style.display = 'none';
-        document.getElementById('porquinho_da_india').style.display = 'inline-block';
+        document.getElementById('imgTipo').src = porquinho_da_india;
     }
 
-    /* if(tipo == "" || tipo == "nao-declarado"){
-        document.getElementById('ave').style.display='none';
-        document.getElementById('cachorro').style.display = 'none';
-        document.getElementById('chinchila').style.display = 'none';
-        document.getElementById('coelho').style.display = 'none';
-        document.getElementById('gato').style.display = 'none';
-        document.getElementById('exotico').style.display = 'none';
-        document.getElementById('hamster').style.display = 'none';
-        document.getElementById('peixe').style.display = 'none';
-        document.getElementById('porquinho_da_india').style.display = 'none';
-    } */
+    if(tipo == "nao-declarado"){
+        document.getElementById('imgTipo').src = naoDeclarado;
+    }
+
+    if(tipo == ""){
+        document.getElementById('imgTipo').src = "";
+    }
 }

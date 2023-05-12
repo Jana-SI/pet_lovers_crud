@@ -1,5 +1,9 @@
 @import url("cores.css");
 
+#rowMobile{
+    margin-top: 60px;
+}
+
 #styleCard{
     background-color: var(--fundo2);
     margin: 20px;
@@ -31,18 +35,22 @@
     border: 2px solid var(--texto) !important;
 }
 
-#btnMostraTodos a{
-    text-decoration: none;
-    color: var(--fundo);
-}
-
 #btnPesquisar, #btnMostraTodos{
     background-color: var(--texto);
     color: var(--fundo);
 }
 
-#btnPesquisar:hover, #btnMostraTodos:hover, #btnMostraTodos:hover a{
+#btnPesquisar:hover, #btnMostraTodos:hover{
     background-color: var(--fundo);
+    color: var(--texto);
+}
+
+#btnMostraTodos a{
+    text-decoration: none;
+    color: var(--fundo);
+}
+
+#btnMostraTodos:hover a{
     color: var(--texto);
 }
 
@@ -60,6 +68,20 @@
     background-color: var(--fundo2);
     color: #aa0000;
     border-color: 2px solid #aa0000 !important;
+}
+
+#btnCadCadastrar, #btnCadApagar{
+    background-color: var(--texto);
+    color: var(--fundo);
+    border: 2px solid var(--fundo);
+    margin-top: 10px;
+}
+
+#btnCadCadastrar:hover, #btnCadApagar:hover{
+    background-color: var(--fundo);
+    color: var(--texto);
+    border: 2px solid var(--texto);
+    margin-top: 10px;
 }
 
 .card-footer form{
@@ -89,9 +111,9 @@
 }
 
 #btnEditarNome:hover{
-    background-color: var(--texto);
-    color: var(--fundo);
-    border-color: 2px solid var(--fundo) !important;
+    background-color: var(--fundo2);
+    color: var(--texto);
+    border-color: 2px solid var(--texto) !important;
 }
 
 #formListaPets, #formListaClientes{

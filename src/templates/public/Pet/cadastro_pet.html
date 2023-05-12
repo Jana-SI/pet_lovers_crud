@@ -38,14 +38,13 @@
                     <img src="{{url_for('static', filename='/img/nome-pet.png')}}">
                 </span>
                 <div class="form-floating">
-                    <input class="form-control" type="text" id="nome" name="nome" placeholder="digite o nome do pet"
-                        min="6" max="50" required>
+                    <input class="form-control" type="text" id="nome" name="nome" placeholder="digite o nome do pet" max="50" required>
                     <label for="nome">Nome</label>
                 </div>
             </div>
 
             <div class="row">
-                <div class="col-8 col-sm-8 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
+                <div class="col-10 col-sm-10 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
                     <div class="input-group">
                         <span id="spanImg" class="input-group-text">
                             <img src="{{url_for('static', filename='/img/tipo-pet.png')}}">
@@ -70,15 +69,7 @@
                 </div>
 
                 <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 col-xxl-2 align-self-center text-center">
-                    <img id="ave" src="{{url_for('static', filename='/img/ave.png')}}">
-                    <img id="cachorro" src="{{url_for('static', filename='/img/cachorro.png')}}">
-                    <img id="chinchila" src="{{url_for('static', filename='/img/chinchila.png')}}">
-                    <img id="coelho" src="{{url_for('static', filename='/img/coelho.png')}}">
-                    <img id="gato" src="{{url_for('static', filename='/img/gato.png')}}">
-                    <img id="exotico" src="{{url_for('static', filename='/img/exotico.png')}}">
-                    <img id="hamster" src="{{url_for('static', filename='/img/hamster.png')}}">
-                    <img id="peixe" src="{{url_for('static', filename='/img/peixe.png')}}">
-                    <img id="porquinho_da_india" src="{{url_for('static', filename='/img/porquinho_da_india.png')}}">
+                    <img id="imgTipo" src="">
                 </div>
             </div>
 
@@ -87,14 +78,13 @@
                     <img src="{{url_for('static', filename='/img/raca-pet.png')}}">
                 </span>
                 <div class="form-floating">
-                    <input class="form-control" type="text" id="raca" name="raca" placeholder="digite a raça do pet"
-                        min="6" max="50" pattern="^[a-zA-ZÀ-ú\s]+$" required>
+                    <input class="form-control" type="text" id="raca" name="raca" placeholder="digite a raça do pet" max="50" pattern="^[a-zA-ZÀ-ú\s]+$" required>
                     <label for="raca">Raça</label>
                 </div>
             </div>
 
             <div class="row">
-                <div class="col-8 col-sm-8 col-md-5 col-lg-5 col-xl-5 col-xxl-5">
+                <div class="col-9 col-sm-9 col-md-5 col-lg-5 col-xl-5 col-xxl-5">
                     <div class="input-group">
                         <span class="input-group-text">{{render_icon('calendar-check-fill')}}</span>
                         <div class="form-floating">
@@ -104,11 +94,11 @@
                     </div>
                 </div>
 
-                <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 col-xxl-4 align-self-center">
+                <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4 align-self-center">
                     <div class="text-center" id="errorData"></div>
                 </div>
 
-                <div class="col-8 col-sm-8 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
+                <div class="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
                     <div class="input-group">
                         <span id="spanImg" class="input-group-text">
                             <img src="{{url_for('static', filename='/img/dono-pet.png')}}">

@@ -8,7 +8,8 @@ function mostraImgTipo(tipo) {
         exotico = "/static//img/exotico.png",
         hamster = "/static//img/hamster.png",
         peixe = "/static//img/peixe.png",
-        porquinho_da_india = "/static//img/porquinho_da_india.png";
+        porquinho_da_india = "/static//img/porquinho_da_india.png",
+        naoDeclarado = "/static//img/nao_informado.png";
 
     if (tipo == "ave") {
         document.getElementById('imgTipo').src = ave;
@@ -46,7 +47,11 @@ function mostraImgTipo(tipo) {
         document.getElementById('imgTipo').src = porquinho_da_india;
     }
 
-    if(tipo == "" || tipo == "nao-declarado"){
+    if(tipo == "nao-declarado"){
+        document.getElementById('imgTipo').src = naoDeclarado;
+    }
+
+    if(tipo == ""){
         document.getElementById('imgTipo').src = "";
     }
 }

@@ -12,9 +12,15 @@ from wtforms.validators import Length, InputRequired, DataRequired, Regexp
 app = Flask(__name__)
 bootstrap = Bootstrap5(app)
 
+app.config["PROPAGATE_EXCEPTIONS"] = False
+
 @app.errorhandler(404) 
 def not_found(e): 
-  return render_template('/public/error_404.html')
+  return render_template('/public/erro/error_404.html'),404
+
+@app.errorhandler(500)
+def internal_server_error(e):
+  return render_template('/public/erro/error_500.html'), 500
               
 @app.route('/')
 def index():
@@ -69,9 +75,9 @@ def cadastro_pet():
 
   return render_template('/public/pet/cadastro_pet.html', donosPet = donosPet)
 class CadastroPetForm(Form):
-    nome = StringField('Nome', [InputRequired(), Length(min=6, max=50)])
+    nome = StringField('Nome', [InputRequired(), Length(max=50)])
     tipo = SelectField('Tipo', choices=[('--', '--'), ('ave', 'Ave'), ('cachorro', 'Cachorro'), ('chinchila', 'Chinchila'), ('coelho', 'Coelho'), ('gato', 'Gato'), ('exotico', 'Exótico'), ('hamster', 'Hamster'), ('peixe', 'Peixe'), ('porquinho_da_india', 'Porquinho-da-índia'), ('nao-declarado', 'Não declarado')], validators=[InputRequired()])
-    raca = StringField('Raça', validators=[InputRequired(), Length(min=6, max=50), Regexp('[a-zA-ZÀ-ÖØ-öø-ÿ]')])
+    raca = StringField('Raça', validators=[InputRequired(), Length(max=50), Regexp('[a-zA-ZÀ-ÖØ-öø-ÿ]')])
     nascimento = DateField('Nascimento', format='%Y-%m-%d', validators=[InputRequired()])
     donosPet = StringField('CPF do Dono', validators=[InputRequired(), Regexp('\d{3}\.\d{3}\.\d{3}-\d{2}')])
 
@@ -484,7 +490,7 @@ def deletar_dono_pet(idPet, cpfDono):
 
     return render_template('/public/pet/listar_deletar_atualizar_pets.html', erros = erro, todosPets = todosPets, donos = donos, todosPetsOption = todosPetsOption)
 class PetAtualizarNomeForm(Form):
-    nome = StringField('Nome', validators=[DataRequired(), Length(min=6, max=50)])
+    nome = StringField('Nome', validators=[DataRequired(), Length(max=50)])
 
 @app.route('/listar_pet_atualizar_nome/<idPet>', methods=['GET', 'POST'])
 def atualizar_pet_nome(idPet):
@@ -528,7 +534,7 @@ class AtualizarTipoRacaForm(Form):
         ('porquinho_da_india', 'Porquinho-da-índia'),
         ('nao-declarado', 'Não declarado')
     ])
-    raca = StringField('Raça', validators=[DataRequired(), Length(min=6, max=50), Regexp('[a-zA-ZÀ-ÖØ-öø-ÿ]')])
+    raca = StringField('Raça', validators=[DataRequired(), Length(max=50), Regexp('[a-zA-ZÀ-ÖØ-öø-ÿ]')])
 
 
 @app.route('/listar_pet_atualizar_tipo_raca/<idPet>', methods=['GET', 'POST'])
@@ -617,7 +623,6 @@ def agendarConsulta():
     data_hora_str = data_hora_str.strftime('%Y-%m-%dT%H:%M')
     data_hora = datetime.strptime(data_hora_str, '%Y-%m-%dT%H:%M')
 
-    """ data_hora = datetime.strptime(data_hora_str, '%Y-%m-%dT%H:%M') """
     todosPets = pesquisarPets()
     donos = pesquisarPetsDonos()
     
@@ -753,7 +758,7 @@ def deletar_consulta(idConsulta):
       return render_template('/public/consulta/listar_deletar_atualizar_consulta.html', todosPetsOption = todosPetsOption, donos = donos, erro = erro, msg=msg)
   
 class FormAtualizar(Form):
-    dataHora = DateTimeField('Data e Hora', format='%Y-%m-%dT%H:%M:%S', validators=[DataRequired()])
+    dataHora = DateTimeField('Data e Hora', format='%Y-%m-%dT%H:%M', validators=[DataRequired()])
 
 @app.route('/listar_consulta_atualizar/<idConsulta>', methods=['GET', 'POST'])
 def atualizar_consulta(idConsulta):
@@ -768,8 +773,10 @@ def atualizar_consulta(idConsulta):
 
       # obtém os feriados do ano atual no RS, Brasil
       feriados = holidays.Brazil(state='RS')
-      data_hora_str = request.form.get('dataHora')
+      data_hora_str = form.dataHora.data
+      data_hora_str = data_hora_str.strftime('%Y-%m-%dT%H:%M')
       data_hora = datetime.strptime(data_hora_str, '%Y-%m-%dT%H:%M')
+      
       consultasFuturas = listarConsultaFutura()
       todosPetsOption = pesquisarPets()
       donos = pesquisarPetsDonos()

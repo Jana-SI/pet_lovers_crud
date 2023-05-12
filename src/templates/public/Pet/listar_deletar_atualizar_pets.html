@@ -16,13 +16,11 @@
 
 {% block content %}
 
-<div class="row">
-    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
-        <button class="btn btn-lg" id="btnHome"><a href="{{url_for('index')}}">{{render_icon('house-heart-fill')}} Home</a></button>
-    </div>
+<div class="position-absolute top-0 start-0">
+    <button class="btn btn-lg" id="btnHome"><a href="{{url_for('index')}}">{{render_icon('house-heart-fill')}} Home</a></button>
 </div>
 
-<div class="row justify-content-center">
+<div id="rowMobile" class="row justify-content-center">
     <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 col-xxl-6">
         <form id="formListaPets" method="post">
             <div class="input-group">
@@ -64,7 +62,7 @@
 <div class="row justify-content-center">
     {% if todosPets %}
     <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
-        <div class="row row-cols-1 row-cols-md-2 g-4">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-4 row-col-xl-4 row-col-xxl-4 g-4">
                 {% for pet in todosPets %}
             <div class="col">
                 <div class="card" id="styleCard">
@@ -115,7 +113,7 @@
     {% endif %}
 
     {% if petEsp %}
-    <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 col-xxl-6">
+    <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xxl-4 col-xxl-4">
         <div class="card" id="styleCard">
             <div class="card-header text-center">
                 <h5 class="card-title">
@@ -132,8 +130,7 @@
                                 <img src="{{url_for('static', filename='/img/nome-pet.png')}}">
                             </span>
                             <div class="form-floating">
-                                <input class="form-control" type="text" id="nome" name="nome" placeholder="digite o nome do pet"
-                                    min="6" max="50" required>
+                                <input class="form-control" type="text" id="nome" name="nome" placeholder="digite o nome do pet" max="50" required>
                                 <label for="nome">Nome</label>
                             </div>
                         </div>
@@ -199,8 +196,7 @@
                                                 <img src="{{url_for('static', filename='/img/raca-pet.png')}}">
                                             </span>
                                             <div class="form-floating">
-                                                <input class="form-control" type="text" id="raca" name="raca" placeholder="digite a raça do pet"
-                                                    min="6" max="50" pattern="^[a-zA-ZÀ-ú\s]+$" required>
+                                                <input class="form-control" type="text" id="raca" name="raca" placeholder="digite a raça do pet" max="50" pattern="^[a-zA-ZÀ-ú\s]+$" required>
                                                 <label for="raca">Raça</label>
                                             </div>
                                         </div>
@@ -227,7 +223,7 @@
                             <form  name="formAtualiza" action="/listar_pet_atualizar_data/{{petEsp.0}}" method="POST">
 
                                 <div class="row">
-                                    <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
+                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
                                         <div class="input-group">
                                             <span class="input-group-text">{{render_icon('calendar-check-fill')}}</span>
                                             <div class="form-floating">
@@ -237,7 +233,7 @@
                                         </div>
                                     </div>
                     
-                                    <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6 align-self-center">
+                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12 align-self-center">
                                         <div class="text-center" id="errorData"></div>
                                     </div>
                                 </div>
