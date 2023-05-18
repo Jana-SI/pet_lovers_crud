@@ -227,8 +227,9 @@ def listar_cliente():
 
   todosClientes = pesquisarDonos()
   todosClientesOption = pesquisarDonos()
+  listarPets = listarPetsCliente()
 
-  return render_template('/public/cliente/listar_deletar_atualizar_clientes.html', todosClientes = todosClientes, todosClientesOption = todosClientesOption)
+  return render_template('/public/cliente/listar_deletar_atualizar_clientes.html', todosClientes = todosClientes, todosClientesOption = todosClientesOption, listarPets = listarPets)
 
 @app.route('/listar_cliente_verificando_cpf', methods=['GET', 'POST'])
 def verificaCPFListarCliente():
@@ -263,50 +264,55 @@ def CPFListarCliente():
     if (clienteEsp):
       
       todosClientesOption = pesquisarDonos()
+      listarPets = listarPetsCliente()
 
-      return render_template('/public/cliente/listar_deletar_atualizar_clientes.html', clienteEsp = clienteEsp, todosClientesOption = todosClientesOption)
+      return render_template('/public/cliente/listar_deletar_atualizar_clientes.html', clienteEsp = clienteEsp, todosClientesOption = todosClientesOption, listarPets = listarPets)
 
     else:
       todosClientes = pesquisarDonos()
       todosClientesOption = pesquisarDonos()
+      listarPets = listarPetsCliente()
 
-      return render_template('/public/cliente/listar_deletar_atualizar_clientes.html', todosClientes = todosClientes, todosClientesOption = todosClientesOption, erro="Cliente não encontrado no sistema, tente novamente!")
+      return render_template('/public/cliente/listar_deletar_atualizar_clientes.html', todosClientes = todosClientes, todosClientesOption = todosClientesOption, listarPets = listarPets, erro="Cliente não encontrado no sistema, tente novamente!")
   
   else:
     todosClientes = pesquisarDonos()
     todosClientesOption = pesquisarDonos()
+    listarPets = listarPetsCliente()
 
-    return render_template('/public/cliente/listar_deletar_atualizar_clientes.html', todosClientes = todosClientes, todosClientesOption = todosClientesOption, erro="Cliente não encontrado no sistema, tente novamente!")    
+    return render_template('/public/cliente/listar_deletar_atualizar_clientes.html', todosClientes = todosClientes, todosClientesOption = todosClientesOption, listarPets = listarPets, erro="Cliente não encontrado no sistema, tente novamente!")    
 
 @app.route('/listar_cliente_deletar/<idCliente>', methods=['GET', 'POST'])
 def deletar_cliente(idCliente):
 
   todosClientes = pesquisarDonos()
   todosClientesOption = pesquisarDonos()
+  listarPets = listarPetsCliente()
   verifica = verificaIdCliente(idCliente)
 
   if(verifica):
 
     if(verifica[4] > 0):
       
-      erro = "O cliente %s está associado a %s pets" % (verifica[2],  verifica[4])
+      erro = "O cliente %s está associado a %s pets e não poderá ser deletado" % (verifica[2],  verifica[4])
 
-      return render_template('/public/cliente/listar_deletar_atualizar_clientes.html', erro = erro, todosClientesOption = todosClientesOption, todosClientes = todosClientes)
+      return render_template('/public/cliente/listar_deletar_atualizar_clientes.html', erro = erro, todosClientesOption = todosClientesOption, todosClientes = todosClientes, listarPets = listarPets)
 
     else:
       nome = deletarCliente(idCliente)
       todosClientes = pesquisarDonos()
       todosClientesOption = pesquisarDonos()
+      listarPets = listarPetsCliente()
 
       sucesso = "O cliente %s foi deletado com sucesso!" % (nome)
 
-      return render_template('/public/cliente/listar_deletar_atualizar_clientes.html', sucesso = sucesso, todosClientesOption = todosClientesOption, todosClientes = todosClientes)
+      return render_template('/public/cliente/listar_deletar_atualizar_clientes.html', sucesso = sucesso, todosClientesOption = todosClientesOption, todosClientes = todosClientes, listarPets = listarPets)
 
   else:
 
     erro = "Não foi possivel deletar, cliente não se encontra no sistema!"
 
-    return render_template('/public/cliente/listar_deletar_atualizar_clientes.html', erro = erro, todosClientesOption = todosClientesOption, todosClientes = todosClientes)
+    return render_template('/public/cliente/listar_deletar_atualizar_clientes.html', erro = erro, todosClientesOption = todosClientesOption, todosClientes = todosClientes, listarPets = listarPets)
 
 class AtualizarNomeClienteForm(Form):
     nome = StringField('Nome', validators=[DataRequired(), Length(min=6, max=50)])
@@ -327,16 +333,18 @@ def atualizar_cliente_nome(idCliente):
 
     todosClientes = pesquisarDonos()
     todosClientesOption = pesquisarDonos()
+    listarPets = listarPetsCliente()
 
-    return render_template('/public/cliente/listar_deletar_atualizar_clientes.html', sucesso = sucesso, todosClientesOption = todosClientesOption, todosClientes = todosClientes)
+    return render_template('/public/cliente/listar_deletar_atualizar_clientes.html', sucesso = sucesso, todosClientesOption = todosClientesOption, todosClientes = todosClientes, listarPets = listarPets)
 
   else:
     erro = "Não foi possivel atualizar o nome do cliente, tente novamente!"
 
     todosClientes = pesquisarDonos()
     todosClientesOption = pesquisarDonos()
+    listarPets = listarPetsCliente()
 
-    return render_template('/public/cliente/listar_deletar_atualizar_clientes.html', erro = erro, todosClientesOption = todosClientesOption, todosClientes = todosClientes)
+    return render_template('/public/cliente/listar_deletar_atualizar_clientes.html', erro = erro, todosClientesOption = todosClientesOption, todosClientes = todosClientes, listarPets = listarPets)
 
 class AtualizarTelefoneClienteForm(Form):
     telefone = StringField('Contato', validators=[DataRequired(), Regexp('^\(\d{2}\)\s\d{4,5}-\d{4}$', message='Telefone inválido. Use o formato (00) 00000-0000')])
@@ -356,16 +364,18 @@ def atualizar_cliente_telefone(idCliente):
 
     todosClientes = pesquisarDonos()
     todosClientesOption = pesquisarDonos()
+    listarPets = listarPetsCliente()
 
-    return render_template('/public/cliente/listar_deletar_atualizar_clientes.html', sucesso = sucesso, todosClientesOption = todosClientesOption, todosClientes = todosClientes)
+    return render_template('/public/cliente/listar_deletar_atualizar_clientes.html', sucesso = sucesso, todosClientesOption = todosClientesOption, todosClientes = todosClientes, listarPets = listarPets)
 
   else:
     erro = "Não foi possivel atualizar o telefone do cliente, tente novamente!"
 
     todosClientes = pesquisarDonos()
     todosClientesOption = pesquisarDonos()
+    listarPets = listarPetsCliente()
 
-    return render_template('/public/cliente/listar_deletar_atualizar_clientes.html', erro = erro, todosClientesOption = todosClientesOption, todosClientes = todosClientes)
+    return render_template('/public/cliente/listar_deletar_atualizar_clientes.html', erro = erro, todosClientesOption = todosClientesOption, todosClientes = todosClientes, listarPets = listarPets)
 
 @app.route('/listar_pet')
 def listar_pet():

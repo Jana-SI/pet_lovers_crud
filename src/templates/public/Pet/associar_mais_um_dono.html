@@ -9,6 +9,7 @@
     <script defer src="{{ url_for('static', filename='js/exibirDonosPets.js') }}"></script>
     <script defer src="{{ url_for('static', filename='js/formataData.js') }}"></script>
     <script defer src="{{ url_for('static', filename='js/validadorIdPet.js') }}"></script>
+    <script defer src="{{ url_for('static', filename='js/mascara.js') }}"></script>
 </head>
 
 {% extends "base.html" %}
@@ -59,7 +60,7 @@
 
                 </div>
 
-                <div class="col-12 col-sm-12 col-md-12 col-lg-7 col-xl-5 col-xxl-5 align-self-center text-center">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-7 col-xl-7 col-xxl-7 align-self-center text-center">
                     <div id="resultadoPet"></div>
                 </div>
 
@@ -79,7 +80,7 @@
                                     {% endfor %}
                                 {% endif %}
                             </datalist>
-                            <label for="donosPet" class="form-label">CPF do dono</label>
+                            <label for="donosPet" class="form-label">CPF do dono adicional</label>
                         </div>
                     </div>
                 </div>

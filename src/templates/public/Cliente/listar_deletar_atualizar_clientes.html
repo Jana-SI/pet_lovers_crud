@@ -24,7 +24,7 @@
                     {{render_icon('search')}}
                 </span>
                 <div class="form-floating">
-                    <input class="form-control" list="listaCliente" id="cliente" name="cliente" placeholder="Digitar CPF do cliente" onfocusout="verificaCpf()" oninput="mascaraCPF(this); setCustomValidity('')" maxlength="14" required>
+                    <input class="form-control" list="listaCliente" id="cliente" name="cliente" placeholder="Digitar CPF do cliente" onfocusout="verificaCpf()" oninput="setCustomValidity(''); mascaraCPF(this)" maxlength="14" required>
                     <datalist id="listaCliente">
                         {% if todosClientesOption %}
                             {% for cliente in todosClientesOption %}
@@ -35,8 +35,8 @@
                     <label for="cliente" class="form-label">Cliente (CPF)</label>
                 </div>
                 <button class="btn" type="submit" id="btnPesquisar" >Pesquisar</button>
-                <button class="btn" id="btnMostraTodos"><a href="{{url_for("listar_cliente")}}">Mostrar todos</a></button>
-            </div>
+                <button class="btn" id="btnMostraTodos"><a href="{{url_for('listar_cliente')}}">Mostrar todos</a></button>
+            </div>              
         </form>
 
         {% if erro %}
@@ -62,11 +62,16 @@
                         <h5 class="card-title">{{cliente.2}}</h5>
                     </div>
                     <div class="card-body">
-                        <p class="card-text">CPF: <span class="formatarCPF">{{cliente.1}}</span></p>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><strong>CPF:</strong> <span class="formatarCPF">{{cliente.1}}</span></li>
+                            <li class="list-group-item"><strong>Telefone:</strong> {{cliente.3}}</li>
+                            <li class="list-group-item"><strong>Quantidade de pets:</strong> {{cliente.4}}</li>
+                        </ul>
+                        <!-- <p class="card-text">CPF: <span class="formatarCPF">{{cliente.1}}</span></p>
 
                         <p class="card-text">Telefone: {{cliente.3}}</p>
                         
-                        <p class="card-text">Quantidade de pets: {{cliente.4}}</p>
+                        <p class="card-text">Quantidade de pets: {{cliente.4}}</p> -->
                     </div>
                     <div class="card-footer text-center">
                         <form action="/listar_cliente_deletar/{{cliente.0}}" method="POST">
@@ -110,7 +115,49 @@
                 </div>
             </div>
             <div class="card-body">
-                <p class="card-text">CPF: <span class="formatarCPF">{{clienteEsp.1}}</span></p>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><strong>CPF:</strong> <span class="formatarCPF">{{clienteEsp.1}}</span></li>
+                    <li class="list-group-item"><strong>Telefone:</strong> {{clienteEsp.3}}
+                        <button id="btnEditar" class="btn float-end" onclick="toggleVisibility('{{clienteEsp.3}}')">
+                            {{render_icon('pencil-square')}}
+                        </button>
+                    </li>
+                    <li class="list-group-item" style="display: none;" id="{{clienteEsp.3}}">
+                        <div class="row">
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
+                                <form action="/listar_cliente_atualizar_telefone/{{clienteEsp.0}}" method="POST">
+
+                                    <div class="input-group">
+                                        <span class="input-group-text">{{render_icon('telephone-fill')}}</span>
+                                        <div class="form-floating">
+                                            <input class="form-control" type="tel" id="telefone" name="telefone"
+                                                placeholder="(00) 00000-0000" onfocusout="verificaTelefone()" oninput="setCustomValidity('')" required>
+                                            <label for="telefone">Contato</label>
+                                        </div>
+                                    </div>
+
+                                    <button class="btn float-start" type="reset" id="btnCadApagar">Apagar</button>
+                                    <button class="btn float-end" type="submit" id="btnCadCadastrar">Atualizar</button>
+                                </form>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li class="list-group-item"><strong>Quantidade de pets:</strong> {{clienteEsp.4}}</li>
+
+                    <div class="fw-bold">Pets:</div>
+                    {% if listarPets %}
+                        {%for pet in listarPets%}
+                            {% if pet.0 == clienteEsp.1 %}
+                            <li class="list-group-item"><strong>Nome do pet:</strong> {{pet.1}}</li>
+                            <li class="list-group-item"><strong>Id do pet:</strong> {{pet.2}}</li>
+                            <li class="list-group-item" title="Este id é necessário para marcar a consulta"><strong>Id da dupla:</strong> {{pet.3}}</li>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+
+                </ul>
+                <!-- <p class="card-text">CPF: <span class="formatarCPF">{{clienteEsp.1}}</span></p>
                 <p class="card-text">
                     Telefone: {{clienteEsp.3}}
 
@@ -142,6 +189,20 @@
                 </div>
 
                 <p class="card-text">Quantidade de pets: {{clienteEsp.4}}</p>
+
+                <p class="card-title"><strong>Pets: </strong></p>  
+                                      
+                {% if listarPets %}
+                    {%for pet in listarPets%}
+                        {% if pet.0 == clienteEsp.1 %}
+                        <hr>
+                        <p class="card-text">Nome do pet: {{pet.1}}</p>
+                        <p class="card-text">Id do pet: {{pet.2}}</p>
+                        <p class="card-text" title="Este id é necessário para marcar a consulta">Id da dupla: {{pet.3}}</p>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %} -->
+                
             </div>
             <div class="card-footer text-center">
                 <form action="/listar_cliente_deletar/{{clienteEsp.0}}" method="POST">

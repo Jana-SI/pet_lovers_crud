@@ -55,26 +55,34 @@ const verificaCpf = async () => {
     const cpfFormElement = formAssociar['cliente'];
     const cpf = cpfFormElement.value;
 
-    resp = validarCPF(cpf, cpfFormElement);
+    if(!cpf){
+        cpfFormElement.setCustomValidity("Campo CPF está vazio!")
+        cpfFormElement.reportValidity()
+    }
 
-    //codigo de comunicação js->flask pra fazer verificação se campo inserido ja tem no sistema
+    else{
+        resp = validarCPF(cpf, cpfFormElement);
 
-    if(resp){
-        axios.post('/listar_cliente_verificando_cpf', {
-            cpf: cpf
-        }).then((response) => {
-                if (response.data.cpfValido == "true") {
-                    console.log(response.data);
-         
-                    cpfFormElement.setCustomValidity("")
-    
-                } else {
-                    cpfFormElement.setCustomValidity("CPF não castrado!")
-                    cpfFormElement.reportValidity()
-                }
-            }, (error) => {
-                console.log(error)
-            })
+        //codigo de comunicação js->flask pra fazer verificação se campo inserido ja tem no sistema
+
+        if(resp){
+            axios.post('/listar_cliente_verificando_cpf', {
+                cpf: cpf
+            }).then((response) => {
+                    if (response.data.cpfValido == "true") {
+                        console.log(response.data);
+            
+                        cpfFormElement.setCustomValidity("")
+        
+                    } else {
+                        cpfFormElement.setCustomValidity("CPF não castrado!")
+                        cpfFormElement.reportValidity()
+                    }
+                }, (error) => {
+                    console.log(error)
+                })
+        }
+
     }
 
 }

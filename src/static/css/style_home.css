@@ -15,6 +15,7 @@
 }
 
 #colHome .card-header{
+    color: var(--texto);
     border-bottom: 2px solid var(--texto);
 }
 

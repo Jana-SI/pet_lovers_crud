@@ -29,8 +29,10 @@ function mtel(v){
 function id( el ){
 	return document.getElementById( el );
 }
-window.onload = function(){
-	id('telefone').onkeyup = function(){
-		mascara( this, mtel );
-	}
+window.onload = function () {
+    if (id('telefone')) {
+        id('telefone').onkeyup = function () {
+            mascara(this, mtel);
+        }
+    }
 }

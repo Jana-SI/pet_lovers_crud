@@ -42,10 +42,17 @@ let verificarData = async () => {
 
     var idade = calcularIdade(nascimento);
 
-    if((idade < 0) || (idade > 100)){
-        errorData = "Data de nascimento inválida!";
+    if(idade < 0){
+        errorData = "Data de nascimento inválida, idade negativa!";
         document.getElementById("errorData").innerHTML = errorData;
-        nascFormElement.setCustomValidity("Data de nascimento inválida!");
+        nascFormElement.setCustomValidity("Data de nascimento inválida, idade negativa!");
+        nascFormElement.reportValidity();
+    }
+
+    else if(idade > 100){
+        errorData = "Data de nascimento inválida, idade passou dos 100 anos!";
+        document.getElementById("errorData").innerHTML = errorData;
+        nascFormElement.setCustomValidity("Data de nascimento inválida, idade passou dos 100 anos!");
         nascFormElement.reportValidity();
     }
 

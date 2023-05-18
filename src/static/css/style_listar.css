@@ -93,15 +93,15 @@
 }
 
 #btnEditar{
-    background-color: var(--fundo2);
+    background-color: var(--fundo3);
     color: var(--texto);
     border-color: 2px solid var(--texto) !important;
 }
 
 #btnEditar:hover{
-    background-color: var(--texto);
-    color: var(--fundo);
-    border-color: 2px solid var(--fundo) !important;
+    background-color: var(--fundo2);
+    color: var(--texto);
+    border-color: 2px solid var(--texto) !important;
 }
 
 #btnEditarNome{
@@ -122,4 +122,39 @@
 
 #formRacaTipo{
     margin-bottom: 20px !important;
+}
+
+#styleCard li{
+    background-color: var(--fundo3);
+    color: var(--texto);
+    border-bottom: 2px solid var(--texto);
+}
+
+#styleCard .fw-bold{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#donosPetEsp{
+    padding-right: 0px;
+}
+
+#btnDelPetEsp{
+    background-color: var(--fundo3);
+    border-bottom: 2px solid var(--texto);
+}
+
+#btnDelPetEsp #btnDeletar{
+    background-color: var(--fundo3);
+    color: var(--texto);
+    border-color: 2px solid var(--texto) !important;
+}
+
+#btnDelPetEsp #btnDeletar:hover{
+    color: #aa0000;
+    border-color: 2px solid #aa0000 !important;
+}
+
+#btnDelPetEsp #formDelDonoPetEsp{
+    margin-bottom: 0px !important;
 }

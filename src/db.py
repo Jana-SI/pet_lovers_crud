@@ -679,3 +679,21 @@ def pesquisaConsultaPetESp(idPet):
     finally:
         cursor.close()
         conn.close
+
+def listarPetsCliente():
+
+    try:
+        conn = psycopg2.connect(conn_string)
+        cursor = conn.cursor()
+
+        cursor.execute("SELECT cliente.cpf, pet.nome, pet.id, donopet.id FROM cliente JOIN donopet ON cliente.cpf = donopet.cpfcliente JOIN pet ON pet.id = donopet.idpet")
+        conn.commit()
+        return cursor.fetchall()
+
+    except psycopg2.DatabaseError as error:
+        cursor.execute("ROLLBACK")
+        conn.commit()
+
+    finally:
+        cursor.close()
+        conn.close

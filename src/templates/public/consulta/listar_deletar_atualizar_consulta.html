@@ -81,116 +81,71 @@
 <div class="row justify-content-center">
     <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
         {% if consultasHoje %}
-        <div class="table-responsive">
-            <table id="tabConsultas" class="table align-middle text-center">
-                <thead>
-                    <tr>
-                        <td colspan="10">
-                            <h1>Consultas de Hoje</h1>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Data</td>
-                        <td>Hora</td>
-                        <td>Dono do pet</td>
-                        <td>Contato</td>
-                        <td>Nome do Pet</td>
-                        <td>Tipo</td>
-                        <td>Raça</td>
-                        <td>Data de nascimento</td>
-                        <td>Idade</td>
-                    </tr>
-                </thead>
-                <tbody class="table-group-divider">
+        <div class="card" id="styleCardP">
+            <div class="card-header text-center">
+                <h1 class="card-title">Consultas de Hoje</h1>
+            </div>
+            <div class="card-body">
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-4 row-col-xl-4 row-col-xxl-4 g-4">
                     {% for consulta in consultasHoje %}
-                    <tr>
-                        <td><span class="data">{{consulta.2}}</span></td>
-                        <td>{{consulta.1.strftime("%H:%M")}}</td>
-                        <td>{{consulta.3}}</td>
-                        <td>{{consulta.4}}</td>
-                        <td>{{consulta.5}}</td>
-                        <td><span class="tipo">{{consulta.6}}</span><img class="imgTipo" src=""></td>
-                        <td>{{consulta.7}}</td>
-                        <td><span class="nascimento">{{consulta.8}}</span></td>
-                        <td><span class="idade"></span></td>
-                    </tr>
+                    <div class="col">
+                        <div class="card" id="styleCard">
+                            <div class="card-header text-center">
+                                <h5 class="card-title">{{consulta.5}}</h5>
+                            </div>
+                            <div class="card-body">
+                                <ul class="list-group list-group-flush">
+                                    <div class="fw-bold">Consulta</div>
+                                    <li class="list-group-item"><strong>Data da Consulta:</strong> <span class="data">{{consulta.2}}</span></li>
+                                    <li class="list-group-item"><strong>Hora da Consulta:</strong> {{consulta.1.strftime("%H:%M")}}</li>
+                                    <div class="fw-bold">Dados do pet</div>
+                                    <li class="list-group-item"><strong>Tipo:</strong> <span class="tipo">{{consulta.6}}</span><img class="imgTipo" src=""></li>
+                                    <li class="list-group-item"><strong>Raça:</strong> {{consulta.7}}</li>
+                                    <li class="list-group-item"><strong>Data de Nascimento:</strong> <span class="nascimento">{{consulta.8}}</span></li>
+                                    <li class="list-group-item"><strong>Idade:</strong> <span class="idade"></span></li>
+                                    <div class="fw-bold">Dono</div>
+                                    <li class="list-group-item"><strong>Nome:</strong> {{consulta.3}}</li>
+                                    <li class="list-group-item"><strong>Contato:</strong> {{consulta.4}}</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                     {% endfor %}
-                </tbody>
-            </table>
+                </div>
+            </div>
         </div>
         {% endif %}
 
-        {% if consultasFuturas %}
-        <div class="table-responsive">
-            <table id="tabConsultas" class="table align-middle text-center">
-                <thead>
-                    <tr>
-                        <td colspan="10">
-                            <h1>Proximas consultas</h1>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Data</td>
-                        <td>Hora</td>
-                        <td>Dono do pet</td>
-                        <td>Contato</td>
-                        <td>Nome do Pet</td>
-                        <td>Tipo</td>
-                        <td>Raça</td>
-                        <td>Data de nascimento</td>
-                        <td>Idade</td>
-                        <td>Açoes</td>
-                    </tr>
-                </thead>
-                <tbody>
+        {% if consultasFuturas %}        
+        <div class="card" id="styleCardP">
+            <div class="card-header text-center">
+                <h1 class="card-title">Proximas consultas</h1>
+            </div>
+            <div class="card-body">
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-4 row-col-xl-4 row-col-xxl-4 g-4">
                     {% for consulta in consultasFuturas %}
-                    <tr>
-                        <td><span class="data">{{consulta.2}}</span></td>
-                        <td>{{consulta.1.strftime("%H:%M")}}
-                            
-                        </td>
-                        <td>{{consulta.3}}</td>
-                        <td>{{consulta.4}}</td>
-                        <td>{{consulta.5}}</td>
-                        <td><span class="tipo">{{consulta.6}}</span><img class="imgTipo" src=""></td>
-                        <td>{{consulta.7}}</td>
-                        <td><span class="nascimento">{{consulta.8}}</span></td>
-                        <td><span class="idade"></span></td>
-                        <td>
-                            <div class="row justify-content-center align-items-center">
-                                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-6 col-xxl-6">
-                                    <button id="btnEditar" class="btn btn-lg" onclick="toggleVisibility('{{consulta.0}}')">
-                                        {{render_icon('pencil-square')}}
-                                    </button>
-                                </div>
-                                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-6 col-xxl-6">
-                                    <form id="formDeletar" action="/listar_consulta_deletar/{{consulta.0}}" method="POST">
-                                        <button id="btnDeletar" class="btn btn-lg"
-                                            type="submit">{{render_icon('trash3-fill')}}</button>
-                                    </form>
-                                </div>
+                    <div class="col">
+                        <div class="card" id="styleCard">
+                            <div class="card-header text-center">
+                                <h5 class="card-title">{{consulta.5}}</h5>
                             </div>
-                        </td>
-                    </tr>
-                    <tr hidden="hidden" id="{{consulta.0}}">
-                        <td colspan="10">
-                            <div >
-                                <div class="row justify-content-center text-center">
-                                    <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
+                            
+                            <div class="card-body">
+                                <ul class="list-group list-group-flush">
+                                    <div class="fw-bold">Consulta
+                                        <button id="btnEditar" class="btn float-end" onclick="toggleVisibility('{{consulta.0}}')">
+                                            {{render_icon('pencil-square')}}
+                                        </button>
                                     </div>
-                                    <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
-                                    </div>
-                                </div>
-                                <div class="row justify-content-center text-center">
-                                    <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
-                                    </div>
-                                    <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
+                                    <li class="list-group-item"><strong>Data da Consulta:</strong> <span class="data">{{consulta.2}}</span></li>
+                                    <li class="list-group-item"><strong>Hora da Consulta:</strong> {{consulta.1.strftime("%H:%M")}}</li>
+                                    
+                                    <div hidden="hidden" id="{{consulta.0}}">
                                         <form id="formAtualizar" action="/listar_consulta_atualizar/{{consulta.0}}" method="POST">
                                             <div class="input-group">
                                                 <span class="input-group-text">{{render_icon('calendar-check-fill')}}</span>
                                                 <div class="form-floating">
-                                                    <input class="form-control" type="datetime-local" id="dataHora" name="dataHora"
-                                                        required>
+                                                    <input class="form-control" type="datetime-local" id="dataHora" name="dataHora" required>
                                                     <label for="dataHora">Data e Hora</label>
                                                 </div>
                                             </div>
@@ -198,58 +153,69 @@
                                             <button class="btn float-start" type="reset" id="btnApagar">Resetar campo</button>
                                         </form>
                                     </div>
-                                </div>
+
+                                    <div class="fw-bold">Dados do pet</div>
+                                    <li class="list-group-item"><strong>Tipo:</strong> <span class="tipo">{{consulta.6}}</span><img class="imgTipo" src=""></li>
+                                    <li class="list-group-item"><strong>Raça:</strong> {{consulta.7}}</li>
+                                    <li class="list-group-item"><strong>Data de Nascimento:</strong> <span class="nascimento">{{consulta.8}}</span></li>
+                                    <li class="list-group-item"><strong>Idade:</strong> <span class="idade"></span></li>
+                                    
+                                    <div class="fw-bold">Dono</div>
+                                    <li class="list-group-item"><strong>Nome:</strong> {{consulta.3}}</li>
+                                    <li class="list-group-item"><strong>Contato:</strong> {{consulta.4}}</li>
+                                </ul>        
                             </div>
-                        </td>
-                    </tr>
+                            <div class="card-footer text-center">
+                                <form id="formDeletar" action="/listar_consulta_deletar/{{consulta.0}}" method="POST">
+                                    <button id="btnDeletar" class="btn btn-lg" type="submit">{{render_icon('trash3-fill')}}</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                     {% endfor %}
-                </tbody>
-            </table>
+                </div>
+            </div>
         </div>
         {% endif %}
 
         {% if hitoricoConsultas %}
-        <div class="table-responsive">
-            <table id="tabConsultas" class="table align-middle text-center">
-                <thead>
-                    <tr>
-                        <td colspan="10">
-                            <h1>Historico de consultas</h1>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Data</td>
-                        <td>Hora</td>
-                        <td>Dono do pet</td>
-                        <td>Contato</td>
-                        <td>Nome do Pet</td>
-                        <td>Tipo</td>
-                        <td>Raça</td>
-                        <td>Data de nascimento</td>
-                        <td>Idade</td>
-                    </tr>
-                </thead>
-                <tbody>
+        <div class="card" id="styleCardP">
+            <div class="card-header text-center">
+                <h1 class="card-title">Historico de consultas</h1>
+            </div>
+            <div class="card-body">
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-4 row-col-xl-4 row-col-xxl-4 g-4">
                     {% for consulta in hitoricoConsultas %}
-                    <tr>
-                        <td><span class="data">{{consulta.2}}</span></td>
-                        <td>{{consulta.1.strftime("%H:%M")}}</td>
-                        <td>{{consulta.3}}</td>
-                        <td>{{consulta.4}}</td>
-                        <td>{{consulta.5}}</td>
-                        <td><span class="tipo">{{consulta.6}}</span><img class="imgTipo" src=""></td>
-                        <td>{{consulta.7}}</td>
-                        <td><span class="nascimento">{{consulta.8}}</span></td>
-                        <td><span class="idade"></span></td>
-                    </tr>
+                    <div class="col">
+                        <div class="card" id="styleCard">
+                            <div class="card-header text-center">
+                                <h5 class="card-title">{{consulta.5}}</h5>
+                            </div>
+                            <div class="card-body">
+                                <ul class="list-group list-group-flush">
+                                    <div class="fw-bold">Consulta</div>
+                                    <li class="list-group-item"><strong>Data da Consulta:</strong> <span class="data">{{consulta.2}}</span></li>
+                                    <li class="list-group-item"><strong>Hora da Consulta:</strong> {{consulta.1.strftime("%H:%M")}}</li>
+                                    <div class="fw-bold">Dados do pet</div>
+                                    <li class="list-group-item"><strong>Tipo:</strong> <span class="tipo">{{consulta.6}}</span><img class="imgTipo" src=""></li>
+                                    <li class="list-group-item"><strong>Raça:</strong> {{consulta.7}}</li>
+                                    <li class="list-group-item"><strong>Data de Nascimento:</strong> <span class="nascimento">{{consulta.8}}</span></li>
+                                    <li class="list-group-item"><strong>Idade:</strong> <span class="idade"></span></li>
+                                    <div class="fw-bold">Dono</div>
+                                    <li class="list-group-item"><strong>Nome:</strong> {{consulta.3}}</li>
+                                    <li class="list-group-item"><strong>Contato:</strong> {{consulta.4}}</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                     {% endfor %}
-                </tbody>
-            </table>
+                </div>
+            </div>
         </div>
         {% endif %}
 
         {% if petEsp %}
-            <div class="card" id="styleCard">
+            <div class="card" id="styleCardP">
                 <div class="card-header text-center">
                     <h5 class="card-title">
                         {{petEsp.1}}
@@ -258,63 +224,60 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
-                            <p class="card-title"><strong>Dados do Pet: </strong></p>
-                            <p class="card-text">Tipo: <span class="tipo">{{petEsp.4}}</span><img class="imgTipo" src=""></p>
-                            <p class="card-text">Raça: {{petEsp.3}}</p>
-                        
-                            <p class="card-text">Data de Nascimento: <span class="nascimento">{{petEsp.2}}</span>
-                            </p>
-                            <p class="card-text">Idade: <span class="idade"></span></p>
+                            <ul class="list-group list-group-flush">
+                                <div class="fw-bold">Dados do pet</div>
+                                <li class="list-group-item"><strong>Tipo:</strong> <span class="tipo">{{petEsp.4}}</span><img class="imgTipo" src=""></li>
+                                <li class="list-group-item"><strong>Raça:</strong> {{petEsp.3}}</li>
+                                <li class="list-group-item"><strong>Data de Nascimento:</strong> <span class="nascimento">{{petEsp.2}}</span></li>
+                                <li class="list-group-item"><strong>Idade:</strong> <span class="idade"></span></li>
+                            </ul>
                         </div>
                         <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
-                            <p class="card-title"><strong>Donos: </strong></p>
-            
-                            {% for dono in donosPetEsp %}
-                                {% if petEsp.0 == dono.0 %}
-                            <p class="card-text">Nome: {{dono.1}}</p>
-                            <p class="card-text">Contato: {{dono.2}}</p>
-                            {% endif %}
-                            {% endfor %}
+                            <ul class="list-group list-group-flush">
+                                <div class="fw-bold">Donos</div>
+                                {% for dono in donosPetEsp %}
+                                    {% if petEsp.0 == dono.0 %}
+                                    <li class="list-group-item"><strong>Nome:</strong> {{dono.1}}</li>
+                                    <li class="list-group-item"><strong>Contato:</strong> {{dono.2}}</i>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
                         </div>
                     </div>
 
                     {% if consultaPetEsp %}
-                    <div class="table-responsive">
-                        <table id="tabConsultas" class="table align-middle text-center">
-                            <thead>
-                                <tr>
-                                    <td colspan="10">
-                                        <h1>Historico de consultas do Pet</h1>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Data</td>
-                                    <td>Hora</td>
-                                    <td>Dono do pet</td>
-                                    <td>Contato</td>
-                                    <td>Nome do Pet</td>
-                                    <td>Tipo</td>
-                                    <td>Raça</td>
-                                    <td>Data de nascimento</td>
-                                    <td>Idade</td>
-                                </tr>
-                            </thead>
-                            <tbody>
+                    <div class="card" id="styleCardPetH">
+                        <div class="card-header text-center">
+                            <h1 class="card-title">Historico de consultas do Pet</h1>
+                        </div>
+                        <div class="card-body">
+                            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-4 row-col-xl-4 row-col-xxl-4 g-4">
                                 {% for consulta in consultaPetEsp %}
-                                <tr>
-                                    <td><span class="data">{{consulta.2}}</span></td>
-                                    <td>{{consulta.1.strftime("%H:%M")}}</td>
-                                    <td>{{consulta.3}}</td>
-                                    <td>{{consulta.4}}</td>
-                                    <td>{{consulta.5}}</td>
-                                    <td><span class="tipo">{{consulta.6}}</span><img class="imgTipo" src=""></td>
-                                    <td>{{consulta.7}}</td>
-                                    <td><span class="nascimento">{{consulta.8}}</span></td>
-                                    <td><span class="idade"></span></td>
-                                </tr>
+                                <div class="col">
+                                    <div class="card" id="styleCard">
+                                        <div class="card-header text-center">
+                                            <h5 class="card-title">{{consulta.5}}</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <ul class="list-group list-group-flush">
+                                                <div class="fw-bold">Consulta</div>
+                                                <li class="list-group-item"><strong>Data da Consulta:</strong> <span class="data">{{consulta.2}}</span></li>
+                                                <li class="list-group-item"><strong>Hora da Consulta:</strong> {{consulta.1.strftime("%H:%M")}}</li>
+                                                <div class="fw-bold">Dados do pet</div>
+                                                <li class="list-group-item"><strong>Tipo:</strong> <span class="tipo">{{consulta.6}}</span><img class="imgTipo" src=""></li>
+                                                <li class="list-group-item"><strong>Raça:</strong> {{consulta.7}}</li>
+                                                <li class="list-group-item"><strong>Data de Nascimento:</strong> <span class="nascimento">{{consulta.8}}</span></li>
+                                                <li class="list-group-item"><strong>Idade:</strong> <span class="idade"></span></li>
+                                                <div class="fw-bold">Dono</div>
+                                                <li class="list-group-item"><strong>Nome:</strong> {{consulta.3}}</li>
+                                                <li class="list-group-item"><strong>Contato:</strong> {{consulta.4}}</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
                                 {% endfor %}
-                            </tbody>
-                        </table>
+                            </div>
+                        </div>
                     </div>
                     {% endif %}
                 </div>

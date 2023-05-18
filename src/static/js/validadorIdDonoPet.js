@@ -4,24 +4,31 @@ const verificaIdDono = async () => {
     const idDonoFormElement = formAgendar['idDono'];
     const idDono = idDonoFormElement.value;
 
-    //codigo de comunicação js->flask pra fazer verificação se campo inserido ja tem no sistema
+    if(!idDono){
+        idDonoFormElement.setCustomValidity("Campo id dono está vazio!")
+        idDonoFormElement.reportValidity()
+    }
 
-    axios.post('/agendar_consulta_verificando_id', {
+    else{
+        //codigo de comunicação js->flask pra fazer verificação se campo inserido ja tem no sistema
+
+        axios.post('/agendar_consulta_verificando_id', {
             idDono: idDono
         }).then((response) => {
-                if (response.data.idDonoValido == "true") {
-                    console.log(response.data);
-         
-                    idDonoFormElement.setCustomValidity("")
-                    document.getElementById("btnAgendar").disabled = false;
-    
-                } else {
-                    idDonoFormElement.setCustomValidity("id não castrado!")
-                    idDonoFormElement.reportValidity()
-                    document.getElementById("btnAgendar").disabled = true;
-                }
-            }, (error) => {
-                console.log(error)
-            })
+            if (response.data.idDonoValido == "true") {
+                console.log(response.data);
+
+                idDonoFormElement.setCustomValidity("")
+                document.getElementById("btnAgendar").disabled = false;
+
+            } else {
+                idDonoFormElement.setCustomValidity("id não castrado!")
+                idDonoFormElement.reportValidity()
+                document.getElementById("btnAgendar").disabled = true;
+            }
+        }, (error) => {
+            console.log(error)
+        })
+    }
 
 }

@@ -4,19 +4,6 @@
     margin-top: 60px;
 }
 
-#tabConsultas{
-    background-color: var(--fundo2);
-    color: var(--texto);
-    border: 2px solid var(--texto);
-    border-radius: 10px;
-}
-
-#tabConsultas thead{
-    background-color: var(--texto);
-    color: var(--fundo2);
-    border: 2px solid var(--fundo2);
-}
-
 .tipo{
     display: none;
 }
@@ -66,15 +53,16 @@
 #formAtualizar{
     margin-top: 10px !important;
 }
+#styleCardP{margin-bottom: 15px;}
 
-#styleCard{
+#styleCardP, #styleCard, #styleCardPetH{
     background-color: var(--fundo2);
     color: var(--texto);
     border: 2px solid var(--texto);
     border-radius: 10px;
 }
 
-#styleCard .card-header{
+#styleCardP .card-header, #styleCard .card-header{
     background-color: var(--texto);
     color: var(--fundo2);
 }
@@ -125,4 +113,23 @@
 
 #btnHoje:hover a, #btnProxima:hover a, #btnHistorica:hover a{
     color: var(--texto);
+}
+
+#styleCardP li, #styleCard li{
+    background-color: var(--fundo3);
+    color: var(--texto);
+    border-bottom: 2px solid var(--texto);
+}
+
+#styleCardP li{
+    border-radius: 4px;
+}
+
+#styleCardP .fw-bold, #styleCard .fw-bold{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#styleCardPetH{
+    margin-top: 15px;
 }
