@@ -1,7 +1,7 @@
 @import url("cores.css");
 
 /* css geral */
-body{
+body {
     background-image: url(../img/fundo.jpg);
 }
 
@@ -9,34 +9,40 @@ body{
     height: 100vh;
 }
 
-#btnHome{
-    background-color: var(--texto);    
-    border: 2px solid var(--fundo);
-    margin-top: 10px;
+#btnHome {
+    margin-top: 20px;
     margin-left: 10px;
-}
-
-#btnHome a{
-    text-decoration: none;
+    padding: 0px;
+    cursor: pointer;
+    -webkit-border-radius: 10;
+    -moz-border-radius: 10;
+    border-radius: 10px;
     color: var(--fundo);
+    font-size: 20px;
+    background: var(--texto);
+    padding: 10px 20px 10px 20px;
+    border: 2px solid var(--fundo);
+    text-decoration: none;
+
+    /* flex para alinhar conteúdo*/
+   display: flex;
+   justify-content: space-around;
+   align-items: center;
 }
 
 #btnHome:hover{
-    background-color: var(--fundo);
+    background: var(--fundo);
+    color: var(--texto);
     border: 2px solid var(--texto);
-    color: var(--texto);
-}
-
-#btnHome:hover a{
     text-decoration: none;
-    color: var(--texto);
 }
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     /* display: none; <- Crashes Chrome on hover */
     -webkit-appearance: none;
-    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+    margin: 0;
+    /* <-- Apparently some margin are still there even though it's hidden */
 }
 
 /* input[type=number] {

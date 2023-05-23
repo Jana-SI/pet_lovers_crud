@@ -6,13 +6,24 @@ import holidays
 import wtforms
 
 from flask_bootstrap import Bootstrap5
-from wtforms import Form, StringField, IntegerField, DateField, SelectField, DateTimeField
+from wtforms import Form, StringField, IntegerField, DateField, SelectField, DateTimeField, ValidationError
 from wtforms.validators import Length, InputRequired, DataRequired, Regexp
+
+from flask_babelex import Babel, gettext
 
 app = Flask(__name__)
 bootstrap = Bootstrap5(app)
+babel = Babel(app)
 
 app.config["PROPAGATE_EXCEPTIONS"] = False
+
+app.config['LANGUAGES'] = {
+  'pt': 'Português'
+}
+
+@babel.localeselector
+def get_locale():
+    return request.accept_languages.best_match(app.config['LANGUAGES'])
 
 @app.errorhandler(404) 
 def not_found(e): 
@@ -34,6 +45,10 @@ class CadastroClienteForm(Form):
     cpf = StringField('CPF', [InputRequired(), Length(min=14, max=14)])
     telefone = StringField('Contato', [InputRequired(), Length(min=14, max=15)])
 
+    def validate_nome(self, field):
+        if len(field.data) < 6 or len(field.data) > 50:
+            raise ValidationError(gettext('O campo Nome deve ter entre 6 e 50 caracteres.'))
+
 @app.route('/cadastro_cliente', methods=['GET', 'POST'])
 def cadastrarCliente():
 
@@ -50,7 +65,15 @@ def cadastrarCliente():
       return render_template('/public/cliente/cadastro_cliente.html', sucesso="Cadastrado com sucesso")
   
   else:
-    return render_template('/public/cliente/cadastro_cliente.html', erro="Cadastrado não realizado, tente novamente!")
+    errors = form.errors
+    invalid_fields = [field for field, error in errors.items()]
+    errorNome = form.errors.get('nome', None)
+
+    if errorNome:
+        # Remover os colchetes da mensagem de erro do campo 'nome'
+        errorNome = errorNome[0].replace('[', '').replace(']', '')
+    
+    return render_template('/public/cliente/cadastro_cliente.html', erro="Cadastrado não realizado, tente novamente!", invalid_fields=invalid_fields, errorNome = errorNome)
 
 @app.route('/cadastro_cliente_verificando_cpf', methods=['GET', 'POST'])
 def verificaCPF():
@@ -155,6 +178,23 @@ class AssociarForm(Form):
     idPet = StringField('ID do Pet', validators=[DataRequired(), Length(max=50)])
     donosPet = StringField('CPF do Dono', validators=[DataRequired(), Length(max=14)])
 
+    def validate_donosPet(self, field):
+        cpfDono = field.data
+        cpfInt = re.sub('[^0-9]', '', cpfDono)
+
+        donoExistente = verificaCPFbanco(cpfInt)
+
+        if not donoExistente:
+            raise ValidationError('CPF do dono não encontrado.')
+        
+    def validate_idPet(self, field):
+        idPet = field.data
+        
+        idPetExistente = verificaIdPetbanco(idPet)
+
+        if not idPetExistente:
+            raise ValidationError('Id do pet não encontrado.')
+
 @app.route('/associar_mais_um_dono_pet', methods=['GET', 'POST'])
 def associarDonoPet():
 
@@ -188,8 +228,18 @@ def associarDonoPet():
   else:
     todosPets = pesquisarPets()
     donosPet = pesquisarDonos()
+    erroDonosPet = form.errors.get('donosPet', None)
+    erroIdPet = form.errors.get('idPet', None)
 
-    return render_template('/public/pet/associar_mais_um_dono.html', erro="Associação não realizada, tente novamente!.", todosPets = todosPets, donosPet = donosPet)
+    if erroDonosPet:
+        # Remover os colchetes da mensagem de erro do campo 'donosPet'
+        erroDonosPet = erroDonosPet[0].replace('[', '').replace(']', '')
+
+    if erroIdPet:
+        # Remover os colchetes da mensagem de erro do campo 'idPet'
+        erroIdPet = erroIdPet[0].replace('[', '').replace(']', '')
+
+    return render_template('/public/pet/associar_mais_um_dono.html', erroDonosPet=erroDonosPet, erroIdPet=erroIdPet, todosPets=todosPets, donosPet=donosPet)
 
 @app.route('/associar_mais_um_dono_pet_verificando_cpf', methods=['GET', 'POST'])
 def verificaCPFassociaPet():
