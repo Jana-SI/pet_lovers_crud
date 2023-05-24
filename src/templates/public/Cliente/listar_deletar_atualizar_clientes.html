@@ -23,7 +23,7 @@
                     {{render_icon('search')}}
                 </span>
                 <div class="form-floating">
-                    <input class="form-control" list="listaCliente" id="cliente" name="cliente" placeholder="Digitar CPF do cliente" onfocusout="verificaCpf()" oninput="setCustomValidity(''); mascaraCPF(this)" maxlength="14" required>
+                    <input class="form-control" list="listaCliente" id="cliente" name="cliente" placeholder="Digitar CPF do cliente" onfocusout="verificaCpf()" oninput="setCustomValidity(''); mascaraCPF(this)" maxlength="14" autocomplete="off" required>
                     <datalist id="listaCliente">
                         {% if todosClientesOption %}
                             {% for cliente in todosClientesOption %}

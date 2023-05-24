@@ -103,7 +103,7 @@
                             <img src="{{url_for('static', filename='/img/dono-pet.png')}}">
                         </span>
                         <div class="form-floating">
-                            <input class="form-control" list="listaDonos" id="donosPet" name="donosPet" placeholder="Digitar CPF dono do pet" onfocusout="verificaCpf()" oninput="mascaraCPF(this); setCustomValidity('')" maxlength="14" required>
+                            <input class="form-control" list="listaDonos" id="donosPet" name="donosPet" placeholder="Digitar CPF dono do pet" onfocusout="verificaCpf()" oninput="mascaraCPF(this); setCustomValidity('')" maxlength="14" autocomplete="off" required>
                             <datalist id="listaDonos">
                                 {% if donosPet %}
                                     {% for dono in donosPet %}

@@ -133,3 +133,11 @@
 #styleCardPetH{
     margin-top: 15px;
 }
+
+#liDono{
+    margin-top: 5px;
+    }
+    
+#liDono:nth-child(1){
+    margin-top: 0px;
+}

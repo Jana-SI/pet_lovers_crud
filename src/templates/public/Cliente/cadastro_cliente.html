@@ -24,19 +24,14 @@
             <p id="CadCliente" class="alert alert-success text-center" role="alert">{{render_icon('check-circle-fill')}} {{sucesso}}</p>
         {% endif %}
 
-        {% if erro %}
-        <p id="CadCliente" class="alert alert-danger text-center" role="alert">{{render_icon('exclamation-triangle-fill')}}
-            {{erro}}</p>
-        {% endif %}
-
-        {% if invalid_fields %}
-        <p id="CadCliente" class="alert alert-danger text-center" role="alert">{{render_icon('exclamation-triangle-fill')}}
-            Os seguintes campos estão inválidos: {{ ', '.join(invalid_fields) }}</p>
-        {% endif %}
-
-        {% if errorNome %}
-        <p id="CadCliente" class="alert alert-danger text-center" role="alert">{{render_icon('exclamation-triangle-fill')}}
-            {{errorNome}}</p>
+        {% if error_messages %}
+        <p id="CadCliente" class="alert alert-danger text-center" role="alert">{{render_icon('exclamation-triangle-fill')}} {{ erro }} <br>
+            {% for field, messages in error_messages.items() %}
+                {% for message in messages %}
+                    {{ message }}
+                {% endfor %}
+            {% endfor %}
+        </p>
         {% endif %}
 
         <form name="formCadastro" action="/cadastro_cliente" method="POST">

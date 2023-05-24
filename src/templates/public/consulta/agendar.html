@@ -37,7 +37,7 @@
                     <img src="{{url_for('static', filename='/img/tipo-pet.png')}}">
                 </span>
                 <div class="form-floating">
-                    <input class="form-control" list="donos" id="idDono" name="idDono" placeholder="Digitar id do dono" onfocusout="verificaIdDono()" oninput="setCustomValidity('')" required>
+                    <input class="form-control" list="donos" id="idDono" name="idDono" placeholder="Digitar id do dono" onfocusout="verificaIdDono()" oninput="setCustomValidity('')" autocomplete="off" required>
                     <datalist id="donos">
                         {% if donos %}
                             {% for dono in donos %}

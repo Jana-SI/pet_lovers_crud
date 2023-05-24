@@ -9,21 +9,10 @@ from flask_bootstrap import Bootstrap5
 from wtforms import Form, StringField, IntegerField, DateField, SelectField, DateTimeField, ValidationError
 from wtforms.validators import Length, InputRequired, DataRequired, Regexp
 
-from flask_babelex import Babel, gettext
-
 app = Flask(__name__)
 bootstrap = Bootstrap5(app)
-babel = Babel(app)
 
 app.config["PROPAGATE_EXCEPTIONS"] = False
-
-app.config['LANGUAGES'] = {
-  'pt': 'Português'
-}
-
-@babel.localeselector
-def get_locale():
-    return request.accept_languages.best_match(app.config['LANGUAGES'])
 
 @app.errorhandler(404) 
 def not_found(e): 
@@ -40,15 +29,13 @@ def index():
 @app.route('/cadastro_cliente')
 def cadastro_cliente():
     return render_template('/public/cliente/cadastro_cliente.html')
+from wtforms.validators import InputRequired, Length
 class CadastroClienteForm(Form):
-    nome = StringField('Nome', [InputRequired(), Length(min=6, max=50)])
-    cpf = StringField('CPF', [InputRequired(), Length(min=14, max=14)])
-    telefone = StringField('Contato', [InputRequired(), Length(min=14, max=15)])
+    nome = StringField('Nome', validators=[InputRequired(message='Campo nome é obrigatório.'), Length(min=6, max=50, message='Nome deve ter entre 6 e 50 caracteres.')])
+    cpf = StringField('CPF', validators=[InputRequired(message='Campo CPF é obrigatório.'), Length(min=14, max=14, message='CPF deve ter 14 caracteres.')])
+    telefone = StringField('Contato', validators=[InputRequired(message='Campo contato é obrigatório.'), Length(min=14, max=15, message='Contato deve ter entre 14 e 15 caracteres.')])
 
-    def validate_nome(self, field):
-        if len(field.data) < 6 or len(field.data) > 50:
-            raise ValidationError(gettext('O campo Nome deve ter entre 6 e 50 caracteres.'))
-
+                            
 @app.route('/cadastro_cliente', methods=['GET', 'POST'])
 def cadastrarCliente():
 
@@ -65,15 +52,15 @@ def cadastrarCliente():
       return render_template('/public/cliente/cadastro_cliente.html', sucesso="Cadastrado com sucesso")
   
   else:
-    errors = form.errors
-    invalid_fields = [field for field, error in errors.items()]
-    errorNome = form.errors.get('nome', None)
+    invalid_fields = form.errors.keys()
+    error_messages = {}
 
-    if errorNome:
-        # Remover os colchetes da mensagem de erro do campo 'nome'
-        errorNome = errorNome[0].replace('[', '').replace(']', '')
-    
-    return render_template('/public/cliente/cadastro_cliente.html', erro="Cadastrado não realizado, tente novamente!", invalid_fields=invalid_fields, errorNome = errorNome)
+    for field in invalid_fields:
+        field_errors = form.errors[field]
+        messages = [str(error) for error in field_errors]
+        error_messages[field] = messages
+
+    return render_template('/public/cliente/cadastro_cliente.html', erro="Cadastrado não realizado, tente novamente!", error_messages=error_messages)
 
 @app.route('/cadastro_cliente_verificando_cpf', methods=['GET', 'POST'])
 def verificaCPF():
