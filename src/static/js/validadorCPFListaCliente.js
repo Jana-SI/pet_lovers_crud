@@ -1,4 +1,3 @@
-// valida input cpf da pagina cadastro de clientes
 function validarCPF(cpf, cpfFormElement) {
 
     var strCPF = cpf.replace(/\D/g, ''), Soma = 0, Resto;
@@ -55,32 +54,30 @@ const verificaCpf = async () => {
     const cpfFormElement = formAssociar['cliente'];
     const cpf = cpfFormElement.value;
 
-    if(!cpf){
+    if (!cpf) {
         cpfFormElement.setCustomValidity("Campo CPF está vazio!")
         cpfFormElement.reportValidity()
     }
 
-    else{
+    else {
         resp = validarCPF(cpf, cpfFormElement);
 
-        //codigo de comunicação js->flask pra fazer verificação se campo inserido ja tem no sistema
-
-        if(resp){
+        if (resp) {
             axios.post('/listar_cliente_verificando_cpf', {
                 cpf: cpf
             }).then((response) => {
-                    if (response.data.cpfValido == "true") {
-                        console.log(response.data);
-            
-                        cpfFormElement.setCustomValidity("")
-        
-                    } else {
-                        cpfFormElement.setCustomValidity("CPF não castrado!")
-                        cpfFormElement.reportValidity()
-                    }
-                }, (error) => {
-                    console.log(error)
-                })
+                if (response.data.cpfValido == "true") {
+                    console.log(response.data);
+
+                    cpfFormElement.setCustomValidity("")
+
+                } else {
+                    cpfFormElement.setCustomValidity("CPF não castrado!")
+                    cpfFormElement.reportValidity()
+                }
+            }, (error) => {
+                console.log(error)
+            })
         }
 
     }

@@ -1,4 +1,3 @@
-// valida input cpf da pagina cadastro de clientes
 function validarCPF(cpf, cpfFormElement) {
 
     var strCPF = cpf.replace(/\D/g, ''), Soma = 0, Resto;
@@ -55,34 +54,32 @@ const verificaCpf = async () => {
     const cpfFormElement = formAssociar['donosPet'];
     const cpf = cpfFormElement.value;
 
-    if(!cpf){
+    if (!cpf) {
         cpfFormElement.setCustomValidity("Campo CPF está vazio!")
         cpfFormElement.reportValidity()
     }
 
-    else{
+    else {
         resp = validarCPF(cpf, cpfFormElement);
 
-        //codigo de comunicação js->flask pra fazer verificação se campo inserido ja tem no sistema
-
-        if(resp){
+        if (resp) {
             axios.post('/associar_mais_um_dono_pet_verificando_cpf', {
                 cpf: cpf
             }).then((response) => {
-                    if (response.data.cpfValido == "true") {
-                        console.log(response.data);
-            
-                        cpfFormElement.setCustomValidity("")
-                        document.getElementById("btnCadCadastrar").disabled = false;
-        
-                    } else {
-                        cpfFormElement.setCustomValidity("CPF não castrado!")
-                        cpfFormElement.reportValidity()
-                        document.getElementById("btnCadCadastrar").disabled = true;
-                    }
-                }, (error) => {
-                    console.log(error)
-                })
+                if (response.data.cpfValido == "true") {
+                    console.log(response.data);
+
+                    cpfFormElement.setCustomValidity("")
+                    document.getElementById("btnCadCadastrar").disabled = false;
+
+                } else {
+                    cpfFormElement.setCustomValidity("CPF não castrado!")
+                    cpfFormElement.reportValidity()
+                    document.getElementById("btnCadCadastrar").disabled = true;
+                }
+            }, (error) => {
+                console.log(error)
+            })
         }
     }
 

@@ -1,6 +1,5 @@
 @import url("cores.css");
 
-/* css geral */
 body {
     background-image: url(../img/fundo.jpg);
 }
@@ -36,15 +35,3 @@ body {
     border: 2px solid var(--texto);
     text-decoration: none;
 }
-
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-    /* display: none; <- Crashes Chrome on hover */
-    -webkit-appearance: none;
-    margin: 0;
-    /* <-- Apparently some margin are still there even though it's hidden */
-}
-
-/* input[type=number] {
-    -moz-appearance:textfield; /* Firefox 
-}*/

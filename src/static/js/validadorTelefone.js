@@ -1,10 +1,9 @@
-// validar input telefone da pagina cadastro de clientes
-function validarTelefone(telefone, telefoneFormElement){
+function validarTelefone(telefone, telefoneFormElement) {
 
     var newTelefone = telefone.replace(/\D/g, ''), errorTelefone;
 
     if (!(newTelefone.length >= 10 && newTelefone.length <= 11)) {
-		errorTelefone = 'Telefone inválido!';
+        errorTelefone = 'Telefone inválido!';
         document.getElementById("errorTelefone").innerHTML = errorTelefone;
         telefoneFormElement.setCustomValidity("Telefone inválido!")
         return telefoneFormElement.reportValidity();
@@ -42,7 +41,7 @@ function validarTelefone(telefone, telefoneFormElement){
         return telefoneFormElement.reportValidity();
     }
 
-    else{
+    else {
         errorTelefone = 'Telefone valido!';
         document.getElementById("errorTelefone").innerHTML = errorTelefone;
         return telefoneFormElement.setCustomValidity("");
@@ -55,27 +54,7 @@ const verificaTelefone = async () => {
     const formCadastro = document.forms["formCadastro"];
     const telefoneFormElement = formCadastro['telefone'];
     const telefone = telefoneFormElement.value;
-    
+
     validarTelefone(telefone, telefoneFormElement);
-
-    // codigo de comunicação js->flask pra fazer verificação se campo inserido ja tem no sistema
-
-    // axios.post('/read/validarCpf', {
-    //     cpf: cpf
-    // })
-    // .then((response) => {
-    //     console.log("")
-    //     console.log(response.data.cpfValido)
-    //     if(response.data.cpfValido == "false"){
-    //         cpfFormElement.setCustomValidity("cpf invalido")
-    //         cpfFormElement.reportValidity()
-    //     }else{
-    //         cpfFormElement.setCustomValidity("")
-
-    //     }
-    // }, (error) => {
-    //     console.log(error)
-    // })
-
 
 }

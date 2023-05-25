@@ -4,13 +4,12 @@ const verificaIdPet = async () => {
     const idPetFormElement = formAssociar['idPet'];
     const idPet = idPetFormElement.value;
 
-    if(!idPet){
+    if (!idPet) {
         idPetFormElement.setCustomValidity("Campo id pet está vazio!")
         idPetFormElement.reportValidity()
     }
 
-    else{
-        //codigo de comunicação js->flask pra fazer verificação se campo inserido ja tem no sistema
+    else {
 
         axios.post('/associar_mais_um_dono_pet_verificando_id', {
             idPet: idPet

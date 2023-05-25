@@ -29,7 +29,7 @@ def index():
 @app.route('/cadastro_cliente')
 def cadastro_cliente():
     return render_template('/public/cliente/cadastro_cliente.html')
-from wtforms.validators import InputRequired, Length
+
 class CadastroClienteForm(Form):
     nome = StringField('Nome', validators=[InputRequired(message='Campo nome é obrigatório.'), Length(min=6, max=50, message='Nome deve ter entre 6 e 50 caracteres.')])
     cpf = StringField('CPF', validators=[InputRequired(message='Campo CPF é obrigatório.'), Length(min=14, max=14, message='CPF deve ter 14 caracteres.')])
@@ -91,6 +91,15 @@ class CadastroPetForm(Form):
     nascimento = DateField('Nascimento', format='%Y-%m-%d', validators=[InputRequired()])
     donosPet = StringField('CPF do Dono', validators=[InputRequired(), Regexp('\d{3}\.\d{3}\.\d{3}-\d{2}')])
 
+    def validate_donosPet(self, field):
+      cpfDono = field.data
+      cpfInt = re.sub('[^0-9]', '', cpfDono)
+
+      donoExistente = verificaCPFbanco(cpfInt)
+
+      if not donoExistente:
+          raise ValidationError('CPF do dono não encontrado.')
+
 @app.route('/cadastro_pet', methods=['GET', 'POST'])
 def cadastrarPet():
 
@@ -134,8 +143,13 @@ def cadastrarPet():
   else:
 
     donosPet = pesquisarDonos()
+    erroDonosPet = form.errors.get('donosPet', None)
 
-    return render_template('/public/pet/cadastro_pet.html', erro="Cadastrado não realizado, tente novamente!", donosPet = donosPet)
+    if erroDonosPet:
+        # Remover os colchetes da mensagem de erro do campo 'donosPet'
+        erroDonosPet = erroDonosPet[0].replace('[', '').replace(']', '')
+
+    return render_template('/public/pet/cadastro_pet.html', erro="Cadastrado não realizado, tente novamente! "+(erroDonosPet), donosPet = donosPet)
 
 @app.route('/cadastro_pet_verificando_cpf', methods=['GET', 'POST'])
 def verificaCPFcadPet():
@@ -166,13 +180,13 @@ class AssociarForm(Form):
     donosPet = StringField('CPF do Dono', validators=[DataRequired(), Length(max=14)])
 
     def validate_donosPet(self, field):
-        cpfDono = field.data
-        cpfInt = re.sub('[^0-9]', '', cpfDono)
+      cpfDono = field.data
+      cpfInt = re.sub('[^0-9]', '', cpfDono)
 
-        donoExistente = verificaCPFbanco(cpfInt)
+      donoExistente = verificaCPFbanco(cpfInt)
 
-        if not donoExistente:
-            raise ValidationError('CPF do dono não encontrado.')
+      if not donoExistente:
+          raise ValidationError('CPF do dono não encontrado.')
         
     def validate_idPet(self, field):
         idPet = field.data
@@ -352,7 +366,7 @@ def deletar_cliente(idCliente):
     return render_template('/public/cliente/listar_deletar_atualizar_clientes.html', erro = erro, todosClientesOption = todosClientesOption, todosClientes = todosClientes, listarPets = listarPets)
 
 class AtualizarNomeClienteForm(Form):
-    nome = StringField('Nome', validators=[DataRequired(), Length(min=6, max=50)])
+    nome = StringField('Nome', validators=[InputRequired(message='Campo nome é obrigatório.'), Length(min=6, max=50, message='Nome deve ter entre 6 e 50 caracteres.')])
 
 @app.route('/listar_cliente_atualizar_nome/<idCliente>', methods=['GET', 'POST'])
 def atualizar_cliente_nome(idCliente):
@@ -376,12 +390,19 @@ def atualizar_cliente_nome(idCliente):
 
   else:
     erro = "Não foi possivel atualizar o nome do cliente, tente novamente!"
+    invalid_fields = form.errors.keys()
+    error_messages = {}
+
+    for field in invalid_fields:
+        field_errors = form.errors[field]
+        messages = [str(error) for error in field_errors]
+        error_messages[field] = messages
 
     todosClientes = pesquisarDonos()
     todosClientesOption = pesquisarDonos()
     listarPets = listarPetsCliente()
 
-    return render_template('/public/cliente/listar_deletar_atualizar_clientes.html', erro = erro, todosClientesOption = todosClientesOption, todosClientes = todosClientes, listarPets = listarPets)
+    return render_template('/public/cliente/listar_deletar_atualizar_clientes.html', erro = erro, todosClientesOption = todosClientesOption, todosClientes = todosClientes, listarPets = listarPets, error_messages=error_messages)
 
 class AtualizarTelefoneClienteForm(Form):
     telefone = StringField('Contato', validators=[DataRequired(), Regexp('^\(\d{2}\)\s\d{4,5}-\d{4}$', message='Telefone inválido. Use o formato (00) 00000-0000')])
@@ -656,6 +677,14 @@ class AgendarForm(Form):
     idDono = StringField('idDono', validators=[InputRequired()])
     dataHora = DateTimeField('dataHora', format='%Y-%m-%dT%H:%M', validators=[DataRequired()])
 
+    def validate_idDono(self, field):
+      idDono = field.data
+
+      donoExistente = verificaIdDonobanco(idDono)
+
+      if not donoExistente:
+          raise ValidationError('Id do dono não encontrado.')
+
 @app.route('/agendar_consulta', methods=['GET', 'POST'])
 def agendarConsulta():
 
@@ -707,8 +736,13 @@ def agendarConsulta():
   else:
     todosPets = pesquisarPets()
     donos = pesquisarPetsDonos()
+    erroDono = form.errors.get('idDono', None)
 
-    return render_template('/public/consulta/agendar.html', todosPets = todosPets, donos = donos, falha = "Agendamento não realizado, tente novamente!")
+    if erroDono:
+        # Remover os colchetes da mensagem de erro do campo 'donosPet'
+        erroDono = erroDono[0].replace('[', '').replace(']', '')
+
+    return render_template('/public/consulta/agendar.html', todosPets = todosPets, donos = donos, falha = "Agendamento não realizado, tente novamente! "+(erroDono))
     
 @app.route('/agendar_consulta_verificando_id', methods=['GET', 'POST'])
 def verificaIdagendarConsulta():

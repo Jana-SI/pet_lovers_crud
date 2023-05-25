@@ -1,6 +1,5 @@
 @import url("cores.css");
 
-/* css do cadastro do cliente */
 #colCad{
     margin-top: 20px !important;
     background-color: var(--fundo);
@@ -47,15 +46,6 @@
 #colCad span img{
     padding-left: 6px !important;
     padding-right: 6px !important;
-}
-
-/* remover icone de calendario do input date */
-input::-webkit-calendar-picker-indicator{
-    display: none;
-}
-
-input[type="date"]::-webkit-input-placeholder{ 
-    visibility: hidden !important;
 }
 
 #ave, #cachorro, #chinchila, #coelho, #gato, #exotico, #hamster, #peixe, #porquinho_da_india{

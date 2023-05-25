@@ -10,7 +10,6 @@ const verificaIdDono = async () => {
     }
 
     else{
-        //codigo de comunicação js->flask pra fazer verificação se campo inserido ja tem no sistema
 
         axios.post('/agendar_consulta_verificando_id', {
             idDono: idDono
