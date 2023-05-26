@@ -668,10 +668,9 @@ def atualizar_pet_data(idPet):
 @app.route('/agendar_consulta')
 def agendar_consulta():
 
-  todosPets = pesquisarPets()
-  donos = pesquisarPetsDonos()
+  idDupla = pesquisarIdDupla()
 
-  return render_template('/public/consulta/agendar.html', todosPets = todosPets, donos = donos)
+  return render_template('/public/consulta/agendar.html', idDupla = idDupla)
 
 class AgendarForm(Form):
     idDono = StringField('idDono', validators=[InputRequired()])
@@ -699,50 +698,48 @@ def agendarConsulta():
     data_hora_str = data_hora_str.strftime('%Y-%m-%dT%H:%M')
     data_hora = datetime.strptime(data_hora_str, '%Y-%m-%dT%H:%M')
 
-    todosPets = pesquisarPets()
-    donos = pesquisarPetsDonos()
+    idDupla = pesquisarIdDupla()
     
     if data_hora in feriados:
-      return render_template('/public/consulta/agendar.html', todosPets = todosPets, donos = donos, falha = "Data informada é feriado") 
+      return render_template('/public/consulta/agendar.html', idDupla = idDupla, falha = "Data informada é feriado") 
 
     # Verifica se a data selecionada é um dia útil (segunda a sexta-feira)
     if data_hora.weekday() < 0 or data_hora.weekday() > 4:
-      return render_template('/public/consulta/agendar.html', todosPets = todosPets, donos = donos, falha = "Data informada não é dia util.")
+      return render_template('/public/consulta/agendar.html', idDupla = idDupla, falha = "Data informada não é dia util.")
         # Verifica se o horário selecionado não tem minutos
 
     if data_hora.minute != 0:
-      return render_template('/public/consulta/agendar.html', todosPets = todosPets, donos = donos, falha = "Horario inválido, consideramos que cada consulta dura exatemente 1 hora e não aceita minutos alem de H:00.")
+      return render_template('/public/consulta/agendar.html', idDupla = idDupla, falha = "Horario inválido, consideramos que cada consulta dura exatemente 1 hora e não aceita minutos alem de H:00.")
 
     agora_str = datetime.now().strftime('%Y-%m-%dT%H:%M')
     
     if data_hora_str <= agora_str:
-      return render_template('/public/consulta/agendar.html', todosPets = todosPets, donos = donos, falha = "Horario inválido, agendamento precede o dia e hora deste momento.")
+      return render_template('/public/consulta/agendar.html', idDupla = idDupla, falha = "Horario inválido, agendamento precede o dia e hora deste momento.")
 
     agendados = listarConsultaData()
 
     if agendados != None:
       if data_hora in agendados:
-        return render_template('/public/consulta/agendar.html', todosPets = todosPets, donos = donos, falha = "Horario já ocupado.")
+        return render_template('/public/consulta/agendar.html', idDupla = idDupla, falha = "Horario já ocupado.")
 
     if time(8, 0) <= data_hora.time() <= time(17, 0):
 
       agendarConsultaPet(idDonoPet, data_hora)
 
-      return render_template('/public/consulta/agendar.html', todosPets = todosPets, donos = donos, sucesso = "Agendamento concluido")
+      return render_template('/public/consulta/agendar.html', idDupla = idDupla, sucesso = "Agendamento concluido")
     
     else:
-      return render_template('/public/consulta/agendar.html', todosPets = todosPets, donos = donos, falha = "Fora de horario de serviço.")
+      return render_template('/public/consulta/agendar.html', idDupla = idDupla, falha = "Fora de horario de serviço.")
   
   else:
-    todosPets = pesquisarPets()
-    donos = pesquisarPetsDonos()
+    idDupla = pesquisarIdDupla()
     erroDono = form.errors.get('idDono', None)
 
     if erroDono:
         # Remover os colchetes da mensagem de erro do campo 'donosPet'
         erroDono = erroDono[0].replace('[', '').replace(']', '')
 
-    return render_template('/public/consulta/agendar.html', todosPets = todosPets, donos = donos, falha = "Agendamento não realizado, tente novamente! "+(erroDono))
+    return render_template('/public/consulta/agendar.html', idDupla = idDupla, falha = "Agendamento não realizado, tente novamente! "+(erroDono))
     
 @app.route('/agendar_consulta_verificando_id', methods=['GET', 'POST'])
 def verificaIdagendarConsulta():

@@ -15,7 +15,6 @@ const verificaIdPet = async () => {
             idPet: idPet
         }).then((response) => {
             if (response.data.idPetValido == "true") {
-                console.log(response.data);
 
                 idPetFormElement.setCustomValidity("")
                 document.getElementById("btnPesquisar").disabled = false;

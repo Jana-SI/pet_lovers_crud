@@ -91,13 +91,19 @@
     {% if petEsp %}
     <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xxl-4 col-xxl-4">
         <div class="card" id="styleCard">
-            <div class="card-header text-center">
-                <h5 class="card-title">
-                    {{petEsp.1}}
-                    <button id="btnEditarNome" class="btn float-end" onclick="toggleVisibility('{{petEsp.1}}')">
-                        {{render_icon('pencil-square')}}
-                    </button>
-                </h5>
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-10 col-sm-10 col-md-10 col-lg-10 col-xl-10 col-xxl-10 d-flex align-items-center justify-content-center">
+                        <h5 class="card-title">
+                            {{petEsp.1}}
+                        </h5>
+                    </div>
+                    <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 col-xxl-2">
+                        <button id="btnEditarNome" class="btn float-end" onclick="toggleVisibility('{{petEsp.1}}')">
+                            {{render_icon('pencil-square')}}
+                        </button>
+                    </div>
+                </div>
                 <div style="display: none;" id="{{petEsp.1}}">
                     <form action="/listar_pet_atualizar_nome/{{petEsp.0}}" method="POST">
 
@@ -120,7 +126,7 @@
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">
                         <div class="row">
-                            <div class="col-8 col-sm-8 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
+                            <div class="col-8 col-sm-8 col-md-8 col-lg-8 col-xl-8 col-xxl-8 d-flex align-items-center">
                                 <p class="card-text"><strong>Tipo</strong>: <span class="tipo">{{petEsp.4}}</span></p>
                             </div>
                             <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 col-xxl-2">
@@ -187,10 +193,17 @@
                             </div>
                         </div>
                     </li>
-                    <li class="list-group-item"><strong>Data de Nascimento:</strong> <span class="data">{{petEsp.2}}</span>
-                        <button id="btnEditar" class="btn float-end" onclick="toggleVisibility('{{petEsp.2}}')">
-                            {{render_icon('pencil-square')}}
-                        </button>
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-10 col-sm-10 col-md-10 col-lg-10 col-xl-10 col-xxl-10 d-flex align-items-center">
+                                <strong>Data de Nascimento:</strong> <span class="data">{{petEsp.2}}</span>
+                            </div>
+                            <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 col-xxl-2">
+                                <button id="btnEditar" class="btn float-end" onclick="toggleVisibility('{{petEsp.2}}')">
+                                    {{render_icon('pencil-square')}}
+                                </button>
+                            </div>
+                        </div>
                     </li>
                     <li class="list-group-item"><strong>Idade:</strong> <span class="idade"></span></li>
                     <li class="list-group-item" style="display: none;" id="{{petEsp.2}}">
@@ -222,16 +235,16 @@
 
                     <div class="fw-bold">Donos:</div>
                     
-                    <div class="row">
+                    <div class="row" id="rowDonosPetEsp">
                         {% for dono in donosPetEsp %}
                             {% if petEsp.0 == dono.0 %}
 
                             <div class="col-10 col-sm-10 col-md-10 col-lg-10 col-xl-10 col-xxl-10" id="donosPetEsp">
-                                <li class="list-group-item">Nome: {{dono.1}}</li>
-                                <li class="list-group-item">Contato: {{dono.2}}</li>
+                                <li class="list-group-item"><strong>Nome</strong>: {{dono.1}}</li>
+                                <li class="list-group-item"><strong>Contato</strong>: {{dono.2}}</li>
                             </div>
                             
-                            <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 col-xxl-2 d-flex align-items-center" id="btnDelPetEsp">
+                            <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 col-xxl-2 d-flex justify-content-center align-items-center" id="btnDelPetEsp">
                                 <form id="formDelDonoPetEsp" action="/listar_pet_deletar_dono/{{petEsp.0}}/{{dono.3}}" method="POST">
                                     <button id="btnDeletar" class="btn btn-lg" type="submit">{{render_icon('trash3-fill')}}</button>
                                 </form>

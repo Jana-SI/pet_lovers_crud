@@ -15,7 +15,6 @@ const verificaIdDono = async () => {
             idDono: idDono
         }).then((response) => {
             if (response.data.idDonoValido == "true") {
-                console.log(response.data);
 
                 idDonoFormElement.setCustomValidity("")
                 document.getElementById("btnAgendar").disabled = false;

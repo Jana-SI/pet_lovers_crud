@@ -477,6 +477,24 @@ def atualizaDataPet(nascimento, id):
         cursor.close()
         conn.close
 
+def pesquisarIdDupla():
+
+    try:
+        conn = psycopg2.connect(conn_string)
+        cursor = conn.cursor()
+
+        cursor.execute("SELECT donopet.id, cliente.nome, pet.nome, pet.tipo FROM donopet JOIN cliente ON cliente.cpf = donopet.cpfCliente JOIN pet pet ON pet.id = donopet.idPet ORDER BY donopet.id")
+        conn.commit()
+        return cursor.fetchall()
+
+    except psycopg2.DatabaseError as error:
+        cursor.execute("ROLLBACK")
+        conn.commit()
+
+    finally:
+        cursor.close()
+        conn.close
+
 def agendarConsultaPet(idDonoPet, dataHora):
     
     try:

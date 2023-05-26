@@ -67,8 +67,7 @@ const verificaCpf = async () => {
                 cpf: cpf
             }).then((response) => {
                 if (response.data.cpfValido == "true") {
-                    console.log(response.data);
-
+                    
                     cpfFormElement.setCustomValidity("")
                     document.getElementById("btnCadCadastrar").disabled = false;
 

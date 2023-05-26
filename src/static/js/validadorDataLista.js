@@ -35,7 +35,6 @@ function calcularIdade(nascimento){
 let verificarData = async () => {
     
     var nascimento = document.getElementById('nascimento').value;
-    console.log(nascimento)
     const formAtualiza = document.forms["formAtualiza"];
     const nascFormElement = formAtualiza['nascimento'];
     var errorData;

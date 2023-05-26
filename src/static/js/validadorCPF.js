@@ -75,7 +75,6 @@ const verificaCpf = async () => {
                 cpf: cpf
             }).then((response) => {
                 if (response.data.cpfValido == "true") {
-                    console.log(response.data);
 
                     cpfFormElement.setCustomValidity("CPF já castrado!")
                     cpfFormElement.reportValidity()

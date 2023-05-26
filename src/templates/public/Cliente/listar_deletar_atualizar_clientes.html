@@ -6,6 +6,7 @@
     <script defer src="{{ url_for('static', filename='js/FormataCPFsLista.js') }}"></script>
     <script defer src="{{ url_for('static', filename='js/validadorCPFListaCliente.js') }}"></script>
     <script defer src="{{ url_for('static', filename='js/hideShow.js') }}"></script>
+    <script defer src="{{ url_for('static', filename='js/mascara.js') }}"></script>
 </head>
 
 {% extends "base.html" %}
@@ -92,14 +93,19 @@
     {% if clienteEsp %}
     <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xxl-4 col-xxl-4">
         <div class="card" id="styleCard">
-            <div class="card-header text-center">
-                <h5 class="card-title">
-                    {{clienteEsp.2}}
-
-                    <button id="btnEditarNome" class="btn float-end" onclick="toggleVisibility('{{clienteEsp.2}}')">
-                        {{render_icon('pencil-square')}}
-                    </button>
-                </h5>
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-10 col-sm-10 col-md-10 col-lg-10 col-xl-10 col-xxl-10 d-flex align-items-center justify-content-center">
+                        <h5 class="card-title">
+                            {{clienteEsp.2}}
+                        </h5>
+                    </div>
+                    <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 col-xxl-2">
+                        <button id="btnEditarNome" class="btn float-end" onclick="toggleVisibility('{{clienteEsp.2}}')">
+                            {{render_icon('pencil-square')}}
+                        </button>
+                    </div>
+                </div>                
                 <div style="display: none;" id="{{clienteEsp.2}}">
 
                     <form action="/listar_cliente_atualizar_nome/{{clienteEsp.0}}" method="POST">
@@ -121,10 +127,18 @@
             <div class="card-body">
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item"><strong>CPF:</strong> <span class="formatarCPF">{{clienteEsp.1}}</span></li>
-                    <li class="list-group-item"><strong>Telefone:</strong> {{clienteEsp.3}}
-                        <button id="btnEditar" class="btn float-end" onclick="toggleVisibility('{{clienteEsp.3}}')">
-                            {{render_icon('pencil-square')}}
-                        </button>
+                    <li class="list-group-item">
+
+                        <div class="row">
+                            <div class="col-10 col-sm-10 col-md-10 col-lg-10 col-xl-10 col-xxl-10 d-flex align-items-center">
+                                <strong>Telefone:</strong> {{clienteEsp.3}}
+                            </div>
+                            <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 col-xxl-2">
+                                <button id="btnEditar" class="btn float-end" onclick="toggleVisibility('{{clienteEsp.3}}')">
+                                    {{render_icon('pencil-square')}}
+                                </button>
+                            </div>
+                        </div>
                     </li>
                     <li class="list-group-item" style="display: none;" id="{{clienteEsp.3}}">
                         <div class="row">
@@ -155,7 +169,7 @@
                             {% if pet.0 == clienteEsp.1 %}
                             <li class="list-group-item"><strong>Nome do pet:</strong> {{pet.1}}</li>
                             <li class="list-group-item"><strong>Id do pet:</strong> {{pet.2}}</li>
-                            <li class="list-group-item" title="Este id é necessário para marcar a consulta"><strong>Id da dupla:</strong> {{pet.3}}</li>
+                            <li class="list-group-item" title="Este id é necessário para marcar a consulta" id="liPets"><strong>Id da dupla:</strong> {{pet.3}}</li>
                             {% endif %}
                         {% endfor %}
                     {% endif %}

@@ -37,25 +37,13 @@
                     <img src="{{url_for('static', filename='/img/tipo-pet.png')}}">
                 </span>
                 <div class="form-floating">
-                    <input class="form-control" list="donos" id="idDono" name="idDono" placeholder="Digitar id do dono" onfocusout="verificaIdDono()" oninput="setCustomValidity('')" autocomplete="off" required>
+                    <input class="form-control" list="donos" id="idDono" name="idDono" placeholder="Digitar id da dupla" onfocusout="verificaIdDono()" oninput="setCustomValidity('')" autocomplete="off" required>
                     <datalist id="donos">
-                        {% if donos %}
-                            {% for dono in donos %}
-                                <option value="{{dono.0}}">
-                                    Dono: {{dono.1}}, Pet: 
-        
-                                    {% if todosPets %}
-                                        {% for pet in todosPets %}
-                                        
-                                            {% if pet.0 == dono.0 %}
-        
-                                                {{pet.1}}, {{pet.4}}
-        
-                                            {% endif %}
-                                        {% endfor %}
-                                    {% endif %}
+                        {% if idDupla %}
+                            {% for id in idDupla %}
+                                <option value="{{id.0}}">
+                                    id da dupla: {{id.0}} - Dono: {{id.1}} - Pet: {{id.2}}, {{id.3}}
                                 </option>
-                                
                             {% endfor %}
                         {% endif %}
                     </datalist>
