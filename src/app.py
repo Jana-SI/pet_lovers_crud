@@ -718,7 +718,7 @@ def agendarConsulta():
 
     agendados = listarConsultaData(data_hora_str)
 
-    if agendados is not None:
+    if len(agendados) > 0:
         return render_template('/public/consulta/agendar.html', idDupla=idDupla, falha="Horario já ocupado.")
 
     if time(8, 0) <= data_hora.time() <= time(17, 0):
@@ -875,11 +875,8 @@ def atualizar_consulta(idConsulta):
         return render_template('/public/consulta/listar_deletar_atualizar_consulta.html', todosPetsOption = todosPetsOption, donos = donos, consultasFuturas = consultasFuturas, erro = "Horario inválido, agendamento precede o dia e hora deste momento.")
 
       agendados = listarConsultaData(data_hora_str)
-      print()
-      print(agendados)
-      print()
 
-      if agendados is not None:
+      if len(agendados) > 0:
         return render_template('/public/consulta/listar_deletar_atualizar_consulta.html', todosPetsOption = todosPetsOption, donos = donos, consultasFuturas = consultasFuturas, erro = "Horario já ocupado.")
 
       if time(8, 0) <= data_hora.time() <= time(17, 0):
