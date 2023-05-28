@@ -41,7 +41,7 @@
                     <label for="idPet" class="form-label">id do Pet</label>
                 </div>
                 <button class="btn" type="submit" id="btnPesquisar" >Pesquisar</button>
-                <button class="btn" id="btnMostraTodos"><a href="{{url_for("listar_pet")}}">Mostrar todos</a></button>
+                <a id="btnMostraTodos"href="{{url_for('listar_pet')}}">Mostrar todos</a>
             </div>
         </form>
 
@@ -69,7 +69,7 @@
                     </div>
                     <div class="card-body">
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item"><strong>Tipo:</strong> <span class="tipo">{{pet.4}}</span><img class="imgTipo float-end" src=""></li>
+                            <li class="list-group-item"><strong>Tipo:</strong> <span class="tipo">{{pet.4}}</span><img class="imgTipo" src=""></li>
                             <li class="list-group-item"><strong>Raça:</strong> {{pet.3}}</li>
                             <li class="list-group-item"><strong>Data de Nascimento:</strong> <span class="data">{{pet.2}}</li>
                             <li class="list-group-item"><strong>Idade:</strong> <span class="idade"></span></li>
@@ -126,13 +126,11 @@
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">
                         <div class="row">
-                            <div class="col-8 col-sm-8 col-md-8 col-lg-8 col-xl-8 col-xxl-8 d-flex align-items-center">
-                                <p class="card-text"><strong>Tipo</strong>: <span class="tipo">{{petEsp.4}}</span></p>
+                            <div class="col-10 col-sm-10 col-md-10 col-lg-10 col-xl-10 col-xxl-10">
+                                <strong>Tipo</strong>: <span class="tipo">{{petEsp.4}}</span>
+                                <img class="imgTipo" src="">
                             </div>
-                            <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 col-xxl-2">
-                                <img class="imgTipo float-end" src="">
-                            </div>
-                            <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 col-xxl-2">
+                            <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 col-xxl-2 d-flex justify-content-center align-items-center">
                                 <button id="btnEditar" class="btn float-end" onclick="toggleVisibility('{{petEsp.4}}')">
                                     {{render_icon('pencil-square')}}
                                 </button>
@@ -180,7 +178,7 @@
                                                     <img src="{{url_for('static', filename='/img/raca-pet.png')}}">
                                                 </span>
                                                 <div class="form-floating">
-                                                    <input class="form-control" type="text" id="raca" name="raca" placeholder="digite a raça do pet" max="50" pattern="^[a-zA-ZÀ-ú\s]+$" required>
+                                                    <input class="form-control" type="text" id="raca" name="raca" placeholder="digite a raça do pet" max="50" pattern="^[A-Za-zÀ-ÿ-]+(?: [A-Za-zÀ-ÿ-]+)*$" required>
                                                     <label for="raca">Raça</label>
                                                 </div>
                                             </div>
@@ -195,10 +193,11 @@
                     </li>
                     <li class="list-group-item">
                         <div class="row">
-                            <div class="col-10 col-sm-10 col-md-10 col-lg-10 col-xl-10 col-xxl-10 d-flex align-items-center">
-                                <strong>Data de Nascimento:</strong> <span class="data">{{petEsp.2}}</span>
+                            <div class="col-10 col-sm-10 col-md-10 col-lg-10 col-xl-10 col-xxl-10">
+                                <strong>Data de Nascimento:</strong>
+                                <span class="data">{{petEsp.2}}</span>
                             </div>
-                            <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 col-xxl-2">
+                            <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 col-xxl-2 d-flex justify-content-center align-items-center">
                                 <button id="btnEditar" class="btn float-end" onclick="toggleVisibility('{{petEsp.2}}')">
                                     {{render_icon('pencil-square')}}
                                 </button>
@@ -246,7 +245,7 @@
                             
                             <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 col-xxl-2 d-flex justify-content-center align-items-center" id="btnDelPetEsp">
                                 <form id="formDelDonoPetEsp" action="/listar_pet_deletar_dono/{{petEsp.0}}/{{dono.3}}" method="POST">
-                                    <button id="btnDeletar" class="btn btn-lg" type="submit">{{render_icon('trash3-fill')}}</button>
+                                    <button id="btnDeletar" class="btn" type="submit">{{render_icon('trash3-fill')}}</button>
                                 </form>
                             </div>
                             {% endif %}

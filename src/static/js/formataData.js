@@ -13,6 +13,10 @@ function dataAtualFormatada(data){
     return diaF+"/"+mesF+"/"+anoF;
 }
 
-const data = document.getElementById('data').innerText;
+const data = document.querySelectorAll('.data');
 
-document.getElementById('data').innerText = dataAtualFormatada(data);
+for (let i = 0; i < data.length; i++) {
+
+    data[i].textContent = dataAtualFormatada(data[i].innerText);
+    
+}

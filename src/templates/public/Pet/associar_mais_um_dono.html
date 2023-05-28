@@ -10,6 +10,7 @@
     <script defer src="{{ url_for('static', filename='js/formataData.js') }}"></script>
     <script defer src="{{ url_for('static', filename='js/validadorIdPet.js') }}"></script>
     <script defer src="{{ url_for('static', filename='js/mascara.js') }}"></script>
+    <script defer src="{{ url_for('static', filename='js/formataTipo.js') }}"></script>
 </head>
 
 {% extends "base.html" %}
@@ -59,7 +60,7 @@
                             <datalist id="listaPets">
                                 {% if todosPets %}
                                     {% for pet in todosPets %}
-                                        <option value="{{pet.0}}">{{pet.1}}, {{pet.4}}, {{pet.3}}, <span id="data">{{pet.2}}</span></option>
+                                        <option value="{{pet.0}}">{{pet.1}}, <span class="tipo">{{pet.4}}</span>, {{pet.3}}, <span class="data">{{pet.2}}</span></option>
                                     {% endfor %}
                                 {% endif %}
                             </datalist>

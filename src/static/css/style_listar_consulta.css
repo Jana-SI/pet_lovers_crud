@@ -92,27 +92,26 @@
 }
 
 #btnHoje, #btnProxima, #btnHistorica{
-    background-color: var(--texto);
-    color: var(--fundo);
-    border: 2px solid var(--fundo);
-    border-radius: 10px;
-    margin-bottom: 16px;
-}
-
-#btnHoje:hover, #btnProxima:hover, #btnHistorica:hover{
-    background-color: var(--fundo);
-    color: var(--texto);
-    border: 2px solid var(--texto);
-    border-radius: 10px;
+    padding: 0px;
+    margin-top: 10px;
+    margin-bottom: 20px;
 }
 
 #btnHoje a, #btnProxima a, #btnHistorica a{
     text-decoration: none;
+    background-color: var(--texto);
     color: var(--fundo);
+    border: 2px solid var(--fundo);
+    border-radius: 10px;
+    cursor: pointer;
+    padding: 10px 20px 10px 20px;
 }
 
 #btnHoje:hover a, #btnProxima:hover a, #btnHistorica:hover a{
+    background-color: var(--fundo);
     color: var(--texto);
+    border: 2px solid var(--texto);
+    border-radius: 10px;
 }
 
 #styleCardP li, #styleCard li{

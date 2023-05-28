@@ -4,6 +4,10 @@
     margin-top: 80px;
 }
 
+.tipo{
+    display: none;
+}
+
 #styleCard{
     background-color: var(--fundo2);
     margin: 20px;
@@ -35,22 +39,31 @@
     border: 2px solid var(--texto) !important;
 }
 
-#btnPesquisar, #btnMostraTodos{
+#btnPesquisar{
     background-color: var(--texto);
     color: var(--fundo);
 }
 
-#btnPesquisar:hover, #btnMostraTodos:hover{
+#btnPesquisar:hover{
     background-color: var(--fundo);
     color: var(--texto);
 }
 
-#btnMostraTodos a{
+#btnMostraTodos{
     text-decoration: none;
+    background-color: var(--texto);
     color: var(--fundo);
+    padding: 10px 20px 10px 20px;
+    
+    /* flex para alinhar conteúdo*/
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
 }
 
-#btnMostraTodos:hover a{
+#btnMostraTodos:hover{
+    text-decoration: none;
+    background-color: var(--fundo);
     color: var(--texto);
 }
 

@@ -1,14 +1,41 @@
 function mostraImgTipo(tipo) {
 
-    var ave = "/static//img/ave.png",
-        cachorro = "/static//img/cachorro.png",
-        chinchila = "/static//img/chinchila.png",
-        coelho = "/static//img/coelho.png",
-        gato = "/static//img/gato.png",
-        exotico = "/static//img/exotico.png",
-        hamster = "/static//img/hamster.png",
-        peixe = "/static//img/peixe.png",
-        porquinho_da_india = "/static//img/porquinho_da_india.png";
+    var ave = {
+        src: "/static//img/ave.png",
+        title: "Ave"
+    };
+    var cachorro = {
+        src: "/static//img/cachorro.png",
+        title: "Cachorro"
+    };
+    var chinchila = {
+        src: "/static//img/chinchila.png",
+        title: "Chinchila"
+    };
+    var coelho = {
+        src: "/static//img/coelho.png",
+        title: "Coelho"
+    };
+    var gato = {
+        src: "/static//img/gato.png",
+        title: "Gato"
+    };
+    var exotico = {
+        src: "/static//img/exotico.png",
+        title: "Exótico"
+    };
+    var hamster = {
+        src: "/static//img/hamster.png",
+        title: "Hamster"
+    };
+    var peixe = {
+        src: "/static//img/peixe.png",
+        title: "Peixe"
+    };
+    var porquinho_da_india = {
+        src: "/static//img/porquinho_da_india.png",
+        title: "Porquinho da Índia"
+    };
 
     if (tipo == "ave") {
         return ave;
@@ -46,7 +73,7 @@ function mostraImgTipo(tipo) {
         return porquinho_da_india;
     }
 
-    if(tipo == "" || tipo == "nao-declarado"){
+    if (tipo == "" || tipo == "nao-declarado"){
         return "";
     }
 }
@@ -55,7 +82,9 @@ const tipo = document.querySelectorAll('.tipo');
 const imgTipo = document.querySelectorAll('.imgTipo');
 
 for (let i = 0; i < tipo.length; i++) {
-
-    imgTipo[i].src = mostraImgTipo(tipo[i].innerText);
+    const tipoAnimal = tipo[i].innerText;
+    const imagem = mostraImgTipo(tipoAnimal);
     
+    imgTipo[i].src = imagem.src;
+    imgTipo[i].title = imagem.title;
 }

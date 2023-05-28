@@ -20,15 +20,34 @@
 }
 
 #colHome a{
-    text-decoration: none;
+
+    cursor: pointer;
+    -webkit-border-radius: 10;
+    -moz-border-radius: 10;
+    border-radius: 10px;
     color: var(--texto);
     font-size: 14pt;
-}
-
-#colHome button{
+    background: var(--fundo2);
+    padding: 10px 20px 10px 20px;
     border: 2px solid var(--fundo2);
+    text-decoration: none;
+
+    /* flex para alinhar conteúdo*/
+   display: flex;
+   justify-content: space-around;
+   align-items: center;
 }
 
-#colHome button:hover{
+#colHome a:hover{
     border: 2px solid var(--texto);
+    text-decoration: none;
+}
+
+ #colHome button{
+    padding: 0px;
+    margin: 0px;
+}
+
+#colHome svg{
+    margin-right: 3px;
 }

@@ -78,7 +78,7 @@
                     <img src="{{url_for('static', filename='/img/raca-pet.png')}}">
                 </span>
                 <div class="form-floating">
-                    <input class="form-control" type="text" id="raca" name="raca" placeholder="digite a raça do pet" max="50" pattern="^[a-zA-ZÀ-ú\s]+$" required>
+                    <input class="form-control" type="text" id="raca" name="raca" placeholder="digite a raça do pet" max="50" pattern="^[A-Za-zÀ-ÿ-]+(?: [A-Za-zÀ-ÿ-]+)*$" required>
                     <label for="raca">Raça</label>
                 </div>
             </div>

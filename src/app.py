@@ -87,7 +87,7 @@ def cadastro_pet():
 class CadastroPetForm(Form):
     nome = StringField('Nome', [InputRequired(), Length(max=50)])
     tipo = SelectField('Tipo', choices=[('--', '--'), ('ave', 'Ave'), ('cachorro', 'Cachorro'), ('chinchila', 'Chinchila'), ('coelho', 'Coelho'), ('gato', 'Gato'), ('exotico', 'Exótico'), ('hamster', 'Hamster'), ('peixe', 'Peixe'), ('porquinho_da_india', 'Porquinho-da-índia'), ('nao-declarado', 'Não declarado')], validators=[InputRequired()])
-    raca = StringField('Raça', validators=[InputRequired(), Length(max=50), Regexp('[a-zA-ZÀ-ÖØ-öø-ÿ]')])
+    raca = StringField('Raça', validators=[InputRequired(), Length(max=50), Regexp('^[A-Za-zÀ-ÿ-]+(?: [A-Za-zÀ-ÿ-]+)*$')])
     nascimento = DateField('Nascimento', format='%Y-%m-%d', validators=[InputRequired()])
     donosPet = StringField('CPF do Dono', validators=[InputRequired(), Regexp('\d{3}\.\d{3}\.\d{3}-\d{2}')])
 
@@ -602,7 +602,7 @@ class AtualizarTipoRacaForm(Form):
         ('porquinho_da_india', 'Porquinho-da-índia'),
         ('nao-declarado', 'Não declarado')
     ])
-    raca = StringField('Raça', validators=[DataRequired(), Length(max=50), Regexp('[a-zA-ZÀ-ÖØ-öø-ÿ]')])
+    raca = StringField('Raça', validators=[DataRequired(), Length(max=50), Regexp('^[A-Za-zÀ-ÿ-]+(?: [A-Za-zÀ-ÿ-]+)*$')])
 
 
 @app.route('/listar_pet_atualizar_tipo_raca/<idPet>', methods=['GET', 'POST'])
