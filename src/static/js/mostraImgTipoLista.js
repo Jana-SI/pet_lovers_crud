@@ -37,6 +37,11 @@ function mostraImgTipo(tipo) {
         title: "Porquinho da Índia"
     };
 
+    var naoDeclarado = {
+        src: "/static//img/nao_informado.png",
+        title: "Não declarado"
+    };
+
     if (tipo == "ave") {
         return ave;
     } 
@@ -73,7 +78,11 @@ function mostraImgTipo(tipo) {
         return porquinho_da_india;
     }
 
-    if (tipo == "" || tipo == "nao-declarado"){
+    if (tipo == "nao-declarado"){
+        return naoDeclarado;
+    }
+
+    if (tipo == ""){
         return "";
     }
 }
