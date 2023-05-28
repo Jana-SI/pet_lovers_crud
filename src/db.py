@@ -533,15 +533,14 @@ def verificaIdDonobanco(idDono):
         cursor.close()
         conn.close
 
-def listarConsultaData():
-
+def listarConsultaData(dataHora):
     try:
         conn = psycopg2.connect(conn_string)
         cursor = conn.cursor()
 
-        cursor.execute("select data from consulta order by data")
+        cursor.execute("SELECT * FROM consulta WHERE data = %s;", (dataHora,))
         conn.commit()
-        return cursor.fetchone()
+        return cursor.fetchall()
 
     except psycopg2.DatabaseError as error:
         cursor.execute("ROLLBACK")
@@ -549,7 +548,7 @@ def listarConsultaData():
 
     finally:
         cursor.close()
-        conn.close
+        conn.close()
 
 def listarConsultaAtual():
 
