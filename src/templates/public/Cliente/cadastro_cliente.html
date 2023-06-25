@@ -20,8 +20,8 @@
 
         <h1 class="text-center">Cadastro de clientes</h1>
 
-        {% if sucesso %}
-            <p id="CadCliente" class="alert alert-success text-center" role="alert">{{render_icon('check-circle-fill')}} {{sucesso}}</p>
+        {% if 'sucesso' in session %}
+            <p id="CadCliente" class="alert alert-success text-center" role="alert">{{render_icon('check-circle-fill')}} {{ session['sucesso'] }}</p>
         {% endif %}
 
         {% if error_messages %}
@@ -41,7 +41,7 @@
                 <div class="form-floating">
                     <input class="form-control" type="text" id="nome" name="nome" placeholder="digite seu nome completo"
                       min="6"  max="50" required>
-                    <label for="nome">Nome</label>
+                    <label for="nome">Nome Completo</label>
                 </div>
             </div>
 
@@ -50,8 +50,8 @@
                     <div class="input-group">
                         <span class="input-group-text">{{render_icon('card-text')}}</span>
                         <div class="form-floating">
-                            <input class="form-control" type="text" id="cpf" name="cpf" placeholder="000.000.000-00" onfocusout="verificaCpf()" oninput="setCustomValidity(''); mascaraCPF(this)" maxlength="14" required>
-                            <label for="cpf">CPF</label>
+                            <input class="form-control" type="text" id="cpf" name="cpf" placeholder="000.000.000-00" onblur="verificaCpf()" oninput="setCustomValidity(''); mascaraCPF(this)" maxlength="14" required>
+                            <label for="cpf">CPF (informe somente números)</label>
                         </div>
                     </div>
                 </div>
@@ -61,8 +61,8 @@
                         <span class="input-group-text">{{render_icon('telephone-fill')}}</span>
                         <div class="form-floating">
                             <input class="form-control" type="tel" id="telefone" name="telefone"
-                                placeholder="(00) 00000-0000" onfocusout="verificaTelefone()" oninput="setCustomValidity('')" required>
-                            <label for="telefone">Contato</label>
+                                placeholder="(00) 00000-0000" onblur="verificaTelefone()" oninput="setCustomValidity('')" required>
+                            <label for="telefone">Contato (informe somente números)</label>
                         </div>
                     </div>
                 </div>

@@ -5,6 +5,7 @@
     <!-- js -->
     <script defer src="{{ url_for('static', filename='js/exibirDonosPetsConsulta.js') }}"></script>
     <script defer src="{{ url_for('static', filename='js/validadorIdDonoPet.js') }}"></script>
+    <script defer src="{{ url_for('static', filename='js/formataDataListaConsulta.js') }}"></script>
 </head>
 
 
@@ -20,13 +21,39 @@
 
         <h1>Agendar Consulta</h1>
 
-        {% if sucesso %}
-            <p class="alert alert-success text-center" role="alert">{{render_icon('check-circle-fill')}} {{sucesso}}</p>
+        {% if 'sucesso' in session %}
+            <p class="alert alert-success text-center" role="alert">{{render_icon('check-circle-fill')}} {{ session['sucesso'] }}</p>
         {% endif %}
         
         {% if falha %}
             <p class="alert alert-danger text-center" role="alert">{{render_icon('exclamation-triangle-fill')}} {{falha}}</p>
         {% endif %}
+
+        {% if 'dados_consulta' not in session %}
+            {% if dados %}
+            <div class="row justify-content-center">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
+                    <div class="card" id="styleCard">
+                        <div class="card-header text-center">
+                            <h5 class="card-title">{{dados.1}}</h5>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-group list-group-flush">
+                                <div class="fw-bold">Donos</div>
+                                <li class="list-group-item"><strong>Nome:</strong> {{dados.2}}</li>
+
+                                <div class="fw-bold">Consulta</div>
+                                
+                                <li class="list-group-item"><strong>Data da Consulta:</strong> <span class="data">{{dados.4}}</span></li>
+                                <li class="list-group-item"><strong>Hora da Consulta:</strong> {{dados.3.strftime("%H:%M")}}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+        {% else %}
 
         <form name="formAgendar" method="post">
 
@@ -68,7 +95,8 @@
             <button class="btn" type="reset" id="btnApagar">Apagar</button>
         
         </form>
-
+        {% endif %}
+        
     </div>
 </div>
 

@@ -1,0 +1,38 @@
+<head>
+    <!-- css -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_cadastros.css')}}">
+</head>
+{% extends "base.html" %}
+{% from 'bootstrap5/utils.html' import render_icon %}
+
+{% block content %}
+
+{% include 'public/button.html' %}
+<div class="row justify-content-center">
+    <div id="colCad" class="col-8 col-sm-8 col-md-6 col-lg-6 col-xl-6 col-xxl-6 text-center">
+        <h1 class="text-center">O que você deseja fazer?</h1>
+
+        {% if 'sucesso' in session %}
+        <p class="alert alert-success text-center" role="alert">{{ render_icon('check-circle-fill') }}
+            {{ session['sucesso'] }}</p>
+        {% endif %}
+
+        {% if erro %}
+        <p class="alert alert-danger text-center" role="alert">{{render_icon('exclamation-triangle-fill')}}
+            {{erro}}</p>
+        {% endif %}
+
+        <form action="/escolher_opcao" method="POST">
+            {% if 'cadastro_pet' not in session %}
+                <input id="btnOpt" class="btn" type="submit" name="opcao" value="Cadastrar Pet">
+            {% endif %}
+            {% if 'associar_pet' not in session %}
+                <input id="btnOpt" class="btn" type="submit" name="opcao" value="Associar cliente a pet">
+            {% endif %}
+            {% if 'agendar_consulta' not in session %}
+                <input id="btnOpt" class="btn" type="submit" name="opcao" value="Agendar consulta">
+            {% endif %}
+        </form>
+    </div>
+</div>
+{% endblock %}

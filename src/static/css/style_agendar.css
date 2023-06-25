@@ -47,3 +47,36 @@
     padding-left: 6px !important;
     padding-right: 6px !important;
 }
+
+#styleCard{
+    background-color: var(--fundo2);
+    margin: 20px;
+    color: var(--texto);
+    border: 2px solid var(--texto);
+    border-radius: 10px;
+}
+
+#styleCard .card-header{
+    background-color: var(--texto);
+    color: var(--fundo2);
+}
+
+#styleCard hr{
+    border: 2px solid var(--texto) !important;
+}
+
+#styleCard li{
+    background-color: var(--fundo3);
+    color: var(--texto);
+    border-bottom: 2px solid var(--texto);
+}
+
+#styleCard .fw-bold{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#colAgendar span.data{
+    background-color: var(--fundo3) !important;
+    color: var(--texto) !important;
+}

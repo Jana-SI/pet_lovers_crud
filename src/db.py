@@ -501,7 +501,28 @@ def agendarConsultaPet(idDonoPet, dataHora):
         conn = psycopg2.connect(conn_string)
         cursor = conn.cursor() 
 
-        cursor.execute("insert into consulta (idDonoPet, data) values (%s, %s);",(idDonoPet, dataHora))
+        cursor.execute("insert into consulta (idDonoPet, data) values (%s, %s) RETURNING id;",(idDonoPet, dataHora))
+
+        conn.commit()
+        id_consulta = cursor.fetchone()[0]  # Obtém o ID retornado
+
+        return id_consulta
+
+    except psycopg2.DatabaseError as error:
+        cursor.execute("ROLLBACK")
+        conn.commit()
+
+    finally:
+        cursor.close()
+        conn.close
+
+def pesquisarDadosConsultaAgendada(idConsulta):
+
+    try:
+        conn = psycopg2.connect(conn_string)
+        cursor = conn.cursor()
+
+        cursor.execute("SELECT c.id, p.nome AS nome_pet, cli.nome AS nome_dono, cast(c.data as time), cast(c.data as date) FROM Consulta c JOIN donoPet dp ON dp.id = c.idDonoPet JOIN pet p ON p.id = dp.idPet JOIN cliente cli ON cli.cpf = dp.cpfCliente WHERE c.id = %s;",(idConsulta, ))
 
         conn.commit()
         return cursor.fetchone()

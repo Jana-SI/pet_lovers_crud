@@ -20,7 +20,7 @@
 
 <div id="rowMobile" class="row justify-content-center">
     <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 col-xxl-6">
-        <form id="formListaPets" method="post">
+        <form id="formListaPets" method="post" action="/listar_pet">
             <div class="input-group">
                 <span class="input-group-text">
                     {{render_icon('search')}}
@@ -52,6 +52,13 @@
 
         {% if sucesso %}
             <p class="alert alert-success text-center" role="alert">{{render_icon('check-circle-fill')}} {{sucesso}}</p>
+        {% endif %}
+
+        {% if msg %}
+        <p id="atencao" class="alert alert-primary text-center" role="alert">
+            {{render_icon('info-circle')}}
+            {{msg}}
+        </p>
         {% endif %}
 
     </div>
@@ -153,14 +160,12 @@
                                                     <select class="form-select" id="tipo" name="tipo" onchange="mostraImgTipo(this.options[this.selectedIndex].value)" required>
                                                         <option value="" selected>--</option>
                                                         <option value="ave">Ave</option>
-                                                        <option value="cachorro">Cachorro</option>
-                                                        <option value="chinchila">Chinchila</option>
-                                                        <option value="coelho">Coelho</option>
-                                                        <option value="gato">Gato</option>
+                                                        <option value="canino">Canino</option>
                                                         <option value="exotico">Exótico</option>
-                                                        <option value="hamster">Hamster</option>
+                                                        <option value="felino">Felino</option>
+                                                        <option value="lagomorfo">Lagomorfo</option>
                                                         <option value="peixe">Peixe</option>
-                                                        <option value="porquinho_da_india">Porquinho-da-índia</option>
+                                                        <option value="roedor">Roedor</option>
                                                         <option value="nao-declarado">Não declarado</option>
                                                     </select>
                                                     <label for="tipo">Tipo</label>

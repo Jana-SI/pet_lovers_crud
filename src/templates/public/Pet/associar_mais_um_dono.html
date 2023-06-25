@@ -25,9 +25,9 @@
 
         <h1 class="text-center">Associar mais um dono</h1>
 
-        {% if sucesso %}
+        {% if 'sucesso' in session %}
         <p id="CadPet" class="alert alert-success text-center" role="alert">{{render_icon('check-circle-fill')}}
-            {{sucesso}}
+            {{ session['sucesso'] }}
         </p>
         {% endif %}
 

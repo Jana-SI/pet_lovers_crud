@@ -13,14 +13,14 @@
     margin-bottom: 20px;
 }
 
-#btnCadCadastrar, #btnCadApagar{
+#btnCadCadastrar, #btnCadApagar, #btnOpt{
     background-color: var(--texto);
     color: var(--fundo);
     border: 2px solid var(--fundo);
     margin-top: 10px;
 }
 
-#btnCadCadastrar:hover, #btnCadApagar:hover{
+#btnCadCadastrar:hover, #btnCadApagar:hover, #btnOpt:hover{
     background-color: var(--fundo);
     color: var(--texto);
     border: 2px solid var(--texto);

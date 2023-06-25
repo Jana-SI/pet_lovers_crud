@@ -1,7 +1,7 @@
 from src.app import app
 
 host = 'localhost'
-port = 4000
+port = 5000
 debug = True
 
 if(__name__ == '__main__'):

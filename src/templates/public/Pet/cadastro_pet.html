@@ -22,9 +22,9 @@
 
         <h1 class="text-center">Cadastro de Pet</h1>
 
-        {% if sucesso %}
+        {% if 'sucesso' in session %}
         <p id="CadPet" class="alert alert-success text-center" role="alert">{{render_icon('check-circle-fill')}}
-            {{sucesso}}</p>
+            {{ session['sucesso'] }}</p>
         {% endif %}
 
         {% if erro %}
@@ -53,14 +53,12 @@
                             <select class="form-select" id="tipo" name="tipo" onchange=" mostraImgTipo(this.options[this.selectedIndex].value)" required>
                                 <option selected>--</option>
                                 <option value="ave">Ave</option>
-                                <option value="cachorro">Cachorro</option>
-                                <option value="chinchila">Chinchila</option>
-                                <option value="coelho">Coelho</option>
-                                <option value="gato">Gato</option>
+                                <option value="canino">Canino</option>
                                 <option value="exotico">Exótico</option>
-                                <option value="hamster">Hamster</option>
+                                <option value="felino">Felino</option>
+                                <option value="lagomorfo">Lagomorfo</option>
                                 <option value="peixe">Peixe</option>
-                                <option value="porquinho_da_india">Porquinho-da-índia</option>
+                                <option value="roedor">Roedor</option>
                                 <option value="nao-declarado">Não declarado</option>
                             </select>
                             <label for="tipo">Tipo</label>

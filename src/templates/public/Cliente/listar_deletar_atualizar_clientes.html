@@ -58,6 +58,13 @@
             <p class="alert alert-success text-center" role="alert">{{render_icon('check-circle-fill')}} {{sucesso}}</p>
         {% endif %}
 
+        {% if msg %}
+        <p id="atencao" class="alert alert-primary text-center" role="alert">
+            {{render_icon('info-circle')}}
+            {{msg}}
+        </p>
+        {% endif %}
+
     </div>
 </div>
 

@@ -4,39 +4,30 @@ function mostraImgTipo(tipo) {
         src: "/static//img/ave.png",
         title: "Ave"
     };
-    var cachorro = {
-        src: "/static//img/cachorro.png",
-        title: "Cachorro"
-    };
-    var chinchila = {
-        src: "/static//img/chinchila.png",
-        title: "Chinchila"
-    };
-    var coelho = {
-        src: "/static//img/coelho.png",
-        title: "Coelho"
-    };
-    var gato = {
-        src: "/static//img/gato.png",
-        title: "Gato"
+    var canino = {
+        src: "/static//img/canino.png",
+        title: "canino"
     };
     var exotico = {
         src: "/static//img/exotico.png",
         title: "Exótico"
     };
-    var hamster = {
-        src: "/static//img/hamster.png",
-        title: "Hamster"
+    var felino = {
+        src: "/static//img/felino.png",
+        title: "felino"
+    };
+    var lagomorfo = {
+        src: "/static//img/lagomorfo.png",
+        title: "lagomorfo"
     };
     var peixe = {
         src: "/static//img/peixe.png",
         title: "Peixe"
     };
-    var porquinho_da_india = {
-        src: "/static//img/porquinho_da_india.png",
-        title: "Porquinho da Índia"
+    var roedor = {
+        src: "/static//img/roedor.png",
+        title: "roedor"
     };
-
     var naoDeclarado = {
         src: "/static//img/nao_informado.png",
         title: "Não declarado"
@@ -46,36 +37,28 @@ function mostraImgTipo(tipo) {
         return ave;
     } 
 
-    if (tipo == "cachorro") {
-        return cachorro;
-    }
-
-    if (tipo == "chinchila") {
-        return chinchila;
-    }
-
-    if (tipo == "coelho") {
-        return coelho; 
-    }
-
-    if (tipo == "gato") {
-        return gato;
+    if (tipo == "canino") {
+        return canino;
     }
 
     if (tipo == "exotico") {
         return exotico;
     }
 
-    if (tipo == "hamster") {
-        return hamster;
+    if (tipo == "felino") {
+        return felino;
+    }
+
+    if (tipo == "lagomorfo") {
+        return lagomorfo; 
     }
 
     if (tipo == "peixe") {
         return peixe;
     }
 
-    if (tipo == "porquinho_da_india") {
-        return porquinho_da_india;
+    if (tipo == "roedor") {
+        return roedor;
     }
 
     if (tipo == "nao-declarado"){

@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, redirect, jsonify
+from flask import Flask, request, render_template, redirect, jsonify, session
 from src.db import *
 from datetime import datetime, time
 import re
@@ -9,10 +9,15 @@ from flask_bootstrap import Bootstrap5
 from wtforms import Form, StringField, IntegerField, DateField, SelectField, DateTimeField, ValidationError
 from wtforms.validators import Length, InputRequired, DataRequired, Regexp
 
+import secrets
+
+chave_secreta = secrets.token_hex(16)
+
 app = Flask(__name__)
 bootstrap = Bootstrap5(app)
 
 app.config["PROPAGATE_EXCEPTIONS"] = False
+app.config['SECRET_KEY'] = chave_secreta
 
 @app.errorhandler(404) 
 def not_found(e): 
@@ -28,6 +33,9 @@ def index():
 
 @app.route('/cadastro_cliente')
 def cadastro_cliente():
+    
+    session.pop('sucesso', None)
+
     return render_template('/public/cliente/cadastro_cliente.html')
 
 class CadastroClienteForm(Form):
@@ -36,7 +44,7 @@ class CadastroClienteForm(Form):
     telefone = StringField('Contato', validators=[InputRequired(message='Campo contato é obrigatório.'), Length(min=14, max=15, message='Contato deve ter entre 14 e 15 caracteres.')])
 
                             
-@app.route('/cadastro_cliente', methods=['GET', 'POST'])
+@app.route('/cadastro_cliente', methods=['POST'])
 def cadastrarCliente():
 
   form = CadastroClienteForm(request.form)
@@ -49,9 +57,15 @@ def cadastrarCliente():
 
       insereCliente(nome, cpfInt, telefone)
 
-      return render_template('/public/cliente/cadastro_cliente.html', sucesso="Cadastrado com sucesso")
+      session['sucesso'] = 'Cliente cadastrado com sucesso'
+      session['agendar_consulta'] = True
+      session.pop('cadastro_pet', None)
+      session.pop('associar_pet', None)
+
+      return redirect('/escolher_opcao')
   
   else:
+    session.pop('sucesso', None)
     invalid_fields = form.errors.keys()
     error_messages = {}
 
@@ -62,7 +76,7 @@ def cadastrarCliente():
 
     return render_template('/public/cliente/cadastro_cliente.html', erro="Cadastrado não realizado, tente novamente!", error_messages=error_messages)
 
-@app.route('/cadastro_cliente_verificando_cpf', methods=['GET', 'POST'])
+@app.route('/cadastro_cliente_verificando_cpf', methods=['POST'])
 def verificaCPF():
 
   if request.method == "POST":
@@ -81,12 +95,14 @@ def verificaCPF():
 @app.route('/cadastro_pet')
 def cadastro_pet():
 
+  session.pop('sucesso', None)
+
   donosPet = pesquisarDonos()
 
   return render_template('/public/pet/cadastro_pet.html', donosPet = donosPet)
 class CadastroPetForm(Form):
     nome = StringField('Nome', [InputRequired(), Length(max=50)])
-    tipo = SelectField('Tipo', choices=[('--', '--'), ('ave', 'Ave'), ('cachorro', 'Cachorro'), ('chinchila', 'Chinchila'), ('coelho', 'Coelho'), ('gato', 'Gato'), ('exotico', 'Exótico'), ('hamster', 'Hamster'), ('peixe', 'Peixe'), ('porquinho_da_india', 'Porquinho-da-índia'), ('nao-declarado', 'Não declarado')], validators=[InputRequired()])
+    tipo = SelectField('Tipo', choices=[('--', '--'), ('ave', 'Ave'), ('canino', 'canino'), ('exotico', 'Exótico'), ('felino', 'felino'),('lagomorfo', 'lagomorfo'), ('peixe', 'Peixe'), ('roedor', 'roedor'), ('nao-declarado', 'Não declarado')], validators=[InputRequired()])
     raca = StringField('Raça', validators=[InputRequired(), Length(max=50), Regexp('^[A-Za-zÀ-ÿ-]+(?: [A-Za-zÀ-ÿ-]+)*$')])
     nascimento = DateField('Nascimento', format='%Y-%m-%d', validators=[InputRequired()])
     donosPet = StringField('CPF do Dono', validators=[InputRequired(), Regexp('\d{3}\.\d{3}\.\d{3}-\d{2}')])
@@ -100,7 +116,7 @@ class CadastroPetForm(Form):
       if not donoExistente:
           raise ValidationError('CPF do dono não encontrado.')
 
-@app.route('/cadastro_pet', methods=['GET', 'POST'])
+@app.route('/cadastro_pet', methods=['POST'])
 def cadastrarPet():
 
   form = CadastroPetForm(request.form)
@@ -117,6 +133,8 @@ def cadastrarPet():
     petJaExiste = verificaPetbanco(nome, nascimento, raca, tipo)
     
     if(petJaExiste):
+
+      session.pop('sucesso', None)
       donosPet = pesquisarDonos()
 
       return render_template('/public/pet/cadastro_pet.html', erro="Cadastro falhou: o pet já se encontra em nosso sistema.", donosPet = donosPet)
@@ -130,7 +148,7 @@ def cadastrarPet():
       petComMesmoDono = verificaDonoPetbanco(idPet, cpfInt)
 
       if(petComMesmoDono):
-
+        session.pop('sucesso', None)
         return render_template('/public/pet/cadastro_pet.html', erro="Cadastro falhou: o pet já está associado com este dono.", donosPet = donosPet)
 
       else:
@@ -138,10 +156,14 @@ def cadastrarPet():
         adicionaNumPet(cpfInt)
         insereDonoPet(cpfInt, idPet)
 
-        return render_template('/public/pet/cadastro_pet.html', sucesso="Pet cadastrado com sucesso", donosPet = donosPet)
+        session['sucesso'] = 'Pet cadastrado com sucesso'
+        session.pop('associar_pet', None)
+        session.pop('agendar_consulta', None)
+        
+        return redirect('/escolher_opcao')
       
   else:
-
+    session.pop('sucesso', None)
     donosPet = pesquisarDonos()
     erroDonosPet = form.errors.get('donosPet', None)
 
@@ -151,7 +173,7 @@ def cadastrarPet():
 
     return render_template('/public/pet/cadastro_pet.html', erro="Cadastrado não realizado, tente novamente! "+(erroDonosPet), donosPet = donosPet)
 
-@app.route('/cadastro_pet_verificando_cpf', methods=['GET', 'POST'])
+@app.route('/cadastro_pet_verificando_cpf', methods=['POST'])
 def verificaCPFcadPet():
 
   if request.method == "POST":
@@ -166,9 +188,38 @@ def verificaCPFcadPet():
 
   else:
     return jsonify({"cpfValido": "false"})
+  
+@app.route('/escolher_opcao')
+def escolher_opcao():
+
+  return render_template('/public/escolher_opcao.html')
+
+@app.route('/escolher_opcao', methods=['POST'])
+def escolherOpcao():
+  opcao = request.form.get('opcao')
+  
+  if opcao == "Cadastrar Pet":
+      session['cadastro_pet'] = True
+      session.pop('associar_pet', None)
+      session.pop('agendar_consulta', None)
+      return redirect('/cadastro_pet')
+
+  elif opcao == "Associar cliente a pet":
+      session['cadastro_pet'] = True
+      session.pop('associar_pet', None)
+      session.pop('agendar_consulta', None)
+      return redirect('/associar_mais_um_dono_pet')
+
+  elif opcao == "Agendar consulta":
+      return redirect('/agendar_consulta')
+
+  else:
+      return redirect('/escolher_opcao', erro='Opção inválida')
 
 @app.route('/associar_mais_um_dono_pet')
 def associar_mais_um_dono_pet():
+
+  session.pop('sucesso', None)
 
   todosPets = pesquisarPets()
   donosPet = pesquisarDonos()
@@ -196,7 +247,7 @@ class AssociarForm(Form):
         if not idPetExistente:
             raise ValidationError('Id do pet não encontrado.')
 
-@app.route('/associar_mais_um_dono_pet', methods=['GET', 'POST'])
+@app.route('/associar_mais_um_dono_pet', methods=['POST'])
 def associarDonoPet():
 
   form = AssociarForm(request.form)
@@ -210,7 +261,7 @@ def associarDonoPet():
     petComMesmoDono = verificaDonoPetbanco(idPet, cpfInt)
 
     if(petComMesmoDono):
-
+      session.pop('sucesso', None)
       todosPets = pesquisarPets()
       donosPet = pesquisarDonos()
       
@@ -224,9 +275,17 @@ def associarDonoPet():
       adicionaNumPet(cpfInt)
       insereDonoPet(cpfInt, idPet)
 
-      return render_template('/public/pet/associar_mais_um_dono.html', sucesso="Pet associado ao dono com sucesso", todosPets = todosPets, donosPet = donosPet)
+      # Armazena a mensagem de sucesso na sessão
+      session['sucesso'] = 'Pet associado ao dono com sucesso'
+      session['cadastro_pet'] = True
+      session.pop('associar_pet', None)
+      session.pop('agendar_consulta', None)
+
+      # Redireciona para a tela de escolher opção
+      return redirect('/escolher_opcao')
     
   else:
+    session.pop('sucesso', None)
     todosPets = pesquisarPets()
     donosPet = pesquisarDonos()
     erroDonosPet = form.errors.get('donosPet', None)
@@ -242,7 +301,7 @@ def associarDonoPet():
 
     return render_template('/public/pet/associar_mais_um_dono.html', erroDonosPet=erroDonosPet, erroIdPet=erroIdPet, todosPets=todosPets, donosPet=donosPet)
 
-@app.route('/associar_mais_um_dono_pet_verificando_cpf', methods=['GET', 'POST'])
+@app.route('/associar_mais_um_dono_pet_verificando_cpf', methods=['POST'])
 def verificaCPFassociaPet():
 
   if request.method == "POST":
@@ -258,7 +317,7 @@ def verificaCPFassociaPet():
   else:
     return jsonify({"cpfValido": "false"})
 
-@app.route('/associar_mais_um_dono_pet_verificando_id', methods=['GET', 'POST'])
+@app.route('/associar_mais_um_dono_pet_verificando_id', methods=['POST'])
 def verificaIdAssociaPet():
 
   if request.method == "POST":
@@ -280,9 +339,14 @@ def listar_cliente():
   todosClientesOption = pesquisarDonos()
   listarPets = listarPetsCliente()
 
-  return render_template('/public/cliente/listar_deletar_atualizar_clientes.html', todosClientes = todosClientes, todosClientesOption = todosClientesOption, listarPets = listarPets)
+  if(todosClientes):
+    return render_template('/public/cliente/listar_deletar_atualizar_clientes.html', todosClientes = todosClientes, todosClientesOption = todosClientesOption, listarPets = listarPets)
 
-@app.route('/listar_cliente_verificando_cpf', methods=['GET', 'POST'])
+  else:
+    msg = "Não à clientes cadastrados!"
+    return render_template('/public/cliente/listar_deletar_atualizar_clientes.html', todosClientes = todosClientes, todosClientesOption = todosClientesOption, listarPets = listarPets, msg=msg)
+
+@app.route('/listar_cliente_verificando_cpf', methods=['POST'])
 def verificaCPFListarCliente():
 
   if request.method == "POST":
@@ -301,7 +365,7 @@ def verificaCPFListarCliente():
 class ListaClientesForm(Form):
   cliente = StringField('Cliente (CPF)', validators=[DataRequired()])
 
-@app.route('/listar_cliente', methods=['GET', 'POST'])
+@app.route('/listar_cliente', methods=['POST'])
 def CPFListarCliente():
 
   form = ListaClientesForm(request.form)
@@ -333,7 +397,7 @@ def CPFListarCliente():
 
     return render_template('/public/cliente/listar_deletar_atualizar_clientes.html', todosClientes = todosClientes, todosClientesOption = todosClientesOption, listarPets = listarPets, erro="Cliente não encontrado no sistema, tente novamente!")    
 
-@app.route('/listar_cliente_deletar/<idCliente>', methods=['GET', 'POST'])
+@app.route('/listar_cliente_deletar/<idCliente>', methods=['POST'])
 def deletar_cliente(idCliente):
 
   todosClientes = pesquisarDonos()
@@ -368,7 +432,7 @@ def deletar_cliente(idCliente):
 class AtualizarNomeClienteForm(Form):
     nome = StringField('Nome', validators=[InputRequired(message='Campo nome é obrigatório.'), Length(min=6, max=50, message='Nome deve ter entre 6 e 50 caracteres.')])
 
-@app.route('/listar_cliente_atualizar_nome/<idCliente>', methods=['GET', 'POST'])
+@app.route('/listar_cliente_atualizar_nome/<idCliente>', methods=['POST'])
 def atualizar_cliente_nome(idCliente):
 
   form = AtualizarNomeClienteForm(request.form)
@@ -407,7 +471,7 @@ def atualizar_cliente_nome(idCliente):
 class AtualizarTelefoneClienteForm(Form):
     telefone = StringField('Contato', validators=[DataRequired(), Regexp('^\(\d{2}\)\s\d{4,5}-\d{4}$', message='Telefone inválido. Use o formato (00) 00000-0000')])
 
-@app.route('/listar_cliente_atualizar_telefone/<idCliente>', methods=['GET', 'POST'])
+@app.route('/listar_cliente_atualizar_telefone/<idCliente>', methods=['POST'])
 def atualizar_cliente_telefone(idCliente):
 
   form = AtualizarTelefoneClienteForm(request.form)
@@ -442,9 +506,14 @@ def listar_pet():
   todosPetsOption = pesquisarPets()
   donos = pesquisarPetsDonos()
 
-  return render_template('/public/pet/listar_deletar_atualizar_pets.html', todosPets = todosPets, donos = donos, todosPetsOption = todosPetsOption)
+  if(todosPets):
+    return render_template('/public/pet/listar_deletar_atualizar_pets.html', todosPets = todosPets, donos = donos, todosPetsOption = todosPetsOption)
 
-@app.route('/listar_pet_verificando_id', methods=['GET', 'POST'])
+  else:
+      msg = "Não à pets cadastrados!"
+      return render_template('/public/pet/listar_deletar_atualizar_pets.html', todosPets = todosPets, donos = donos, todosPetsOption = todosPetsOption, msg=msg)
+
+@app.route('/listar_pet_verificando_id', methods=['POST'])
 def verificaIdListarPet():
 
   if request.method == "POST":
@@ -462,7 +531,7 @@ def verificaIdListarPet():
 class ListaPetForm(Form):
     idPet = StringField('id do Pet', validators=[DataRequired()])
 
-@app.route('/listar_pet', methods=['GET', 'POST'])
+@app.route('/listar_pet', methods=['POST'])
 def IDListar_pet():
 
   form = ListaPetForm(request.form)
@@ -497,7 +566,7 @@ def IDListar_pet():
       return render_template('/public/pet/listar_deletar_atualizar_pets.html', todosPets = todosPets, donos = donos, todosPetsOption = todosPetsOption, erro="Pet não encontrado no sistema, tente novamente!")
 
 
-@app.route('/listar_pet_deletar/<idPet>', methods=['GET', 'POST'])
+@app.route('/listar_pet_deletar/<idPet>', methods=['POST'])
 def deletar_pet(idPet):
 
   verifica = verificaIdPetbanco(idPet)
@@ -530,7 +599,7 @@ def deletar_pet(idPet):
 
     return render_template('/public/pet/listar_deletar_atualizar_pets.html', erros = erro, todosPets = todosPets, donos = donos, todosPetsOption = todosPetsOption)
   
-@app.route('/listar_pet_deletar_dono/<idPet>/<cpfDono>', methods=['GET', 'POST'])
+@app.route('/listar_pet_deletar_dono/<idPet>/<cpfDono>', methods=['POST'])
 def deletar_dono_pet(idPet, cpfDono):
 
   verifica = verificaIdPetbanco(idPet)
@@ -560,7 +629,7 @@ def deletar_dono_pet(idPet, cpfDono):
 class PetAtualizarNomeForm(Form):
     nome = StringField('Nome', validators=[DataRequired(), Length(max=50)])
 
-@app.route('/listar_pet_atualizar_nome/<idPet>', methods=['GET', 'POST'])
+@app.route('/listar_pet_atualizar_nome/<idPet>', methods=['POST'])
 def atualizar_pet_nome(idPet):
 
   form = PetAtualizarNomeForm(request.form)
@@ -592,20 +661,18 @@ class AtualizarTipoRacaForm(Form):
     tipo = SelectField('Tipo', validators=[DataRequired()], choices=[
         ('', '--'),
         ('ave', 'Ave'),
-        ('cachorro', 'Cachorro'),
-        ('chinchila', 'Chinchila'),
-        ('coelho', 'Coelho'),
-        ('gato', 'Gato'),
+        ('canino', 'canino'),
         ('exotico', 'Exótico'),
-        ('hamster', 'Hamster'),
+        ('felino', 'felino'),
+        ('lagomorfo', 'lagomorfo'),
         ('peixe', 'Peixe'),
-        ('porquinho_da_india', 'Porquinho-da-índia'),
+        ('roedor', 'roedor'),
         ('nao-declarado', 'Não declarado')
     ])
     raca = StringField('Raça', validators=[DataRequired(), Length(max=50), Regexp('^[A-Za-zÀ-ÿ-]+(?: [A-Za-zÀ-ÿ-]+)*$')])
 
 
-@app.route('/listar_pet_atualizar_tipo_raca/<idPet>', methods=['GET', 'POST'])
+@app.route('/listar_pet_atualizar_tipo_raca/<idPet>', methods=['POST'])
 def atualizar_pet_tipo_raca(idPet):
 
   form = AtualizarTipoRacaForm(request.form)
@@ -637,7 +704,7 @@ def atualizar_pet_tipo_raca(idPet):
 class AtualizarDataForm(Form):
     nascimento = DateField('Nascimento', validators=[InputRequired()])
 
-@app.route('/listar_pet_atualizar_data/<idPet>', methods=['GET', 'POST'])
+@app.route('/listar_pet_atualizar_data/<idPet>', methods=['POST'])
 def atualizar_pet_data(idPet):
 
   form = AtualizarDataForm(request.form)
@@ -668,6 +735,9 @@ def atualizar_pet_data(idPet):
 @app.route('/agendar_consulta')
 def agendar_consulta():
 
+  session.pop('sucesso', None)
+  session['dados_consulta'] = True
+
   idDupla = pesquisarIdDupla()
 
   return render_template('/public/consulta/agendar.html', idDupla = idDupla)
@@ -684,7 +754,7 @@ class AgendarForm(Form):
       if not donoExistente:
           raise ValidationError('Id do dono não encontrado.')
 
-@app.route('/agendar_consulta', methods=['GET', 'POST'])
+@app.route('/agendar_consulta', methods=['POST'])
 def agendarConsulta():
 
   form = AgendarForm(request.form)
@@ -701,33 +771,53 @@ def agendarConsulta():
     idDupla = pesquisarIdDupla()
     
     if data_hora in feriados:
+      
+      session.pop('sucesso', None)
+      session['dados_consulta'] = True
       return render_template('/public/consulta/agendar.html', idDupla = idDupla, falha = "Data informada é feriado") 
 
     # Verifica se a data selecionada é um dia útil (segunda a sexta-feira)
     if data_hora.weekday() < 0 or data_hora.weekday() > 4:
+      
+      session.pop('sucesso', None)
+      session['dados_consulta'] = True
       return render_template('/public/consulta/agendar.html', idDupla = idDupla, falha = "Data informada não é dia util.")
         # Verifica se o horário selecionado não tem minutos
 
     if data_hora.minute != 0:
+      
+      session.pop('sucesso', None)
+      session['dados_consulta'] = True
       return render_template('/public/consulta/agendar.html', idDupla = idDupla, falha = "Horario inválido, consideramos que cada consulta dura exatemente 1 hora e não aceita minutos alem de H:00.")
 
     agora_str = datetime.now().strftime('%Y-%m-%dT%H:%M')
     
     if data_hora_str <= agora_str:
+      session.pop('sucesso', None)
+      session['dados_consulta'] = True
       return render_template('/public/consulta/agendar.html', idDupla = idDupla, falha = "Horario inválido, agendamento precede o dia e hora deste momento.")
 
     agendados = listarConsultaData(data_hora_str)
 
     if len(agendados) > 0:
+        session.pop('sucesso', None)
+        session['dados_consulta'] = True
         return render_template('/public/consulta/agendar.html', idDupla=idDupla, falha="Horario já ocupado.")
 
     if time(8, 0) <= data_hora.time() <= time(17, 0):
 
-      agendarConsultaPet(idDonoPet, data_hora)
+      id_consulta = agendarConsultaPet(idDonoPet, data_hora)
 
-      return render_template('/public/consulta/agendar.html', idDupla = idDupla, sucesso = "Agendamento concluido")
+      dados = pesquisarDadosConsultaAgendada(id_consulta)
+
+      session['sucesso'] = 'Agendamento concluido'
+      session.pop('dados_consulta', None)
+
+      return render_template('/public/consulta/agendar.html', idDupla = idDupla, dados=dados)
     
     else:
+      session.pop('sucesso', None)
+      session['dados_consulta'] = True
       return render_template('/public/consulta/agendar.html', idDupla = idDupla, falha = "Fora de horario de serviço.")
   
   else:
@@ -737,10 +827,12 @@ def agendarConsulta():
     if erroDono:
         # Remover os colchetes da mensagem de erro do campo 'donosPet'
         erroDono = erroDono[0].replace('[', '').replace(']', '')
-
+        
+    session.pop('sucesso', None)
+    session['dados_consulta'] = True
     return render_template('/public/consulta/agendar.html', idDupla = idDupla, falha = "Agendamento não realizado, tente novamente! "+(erroDono))
     
-@app.route('/agendar_consulta_verificando_id', methods=['GET', 'POST'])
+@app.route('/agendar_consulta_verificando_id', methods=['POST'])
 def verificaIdagendarConsulta():
 
   if request.method == "POST":
@@ -797,7 +889,7 @@ def listar_consulta_passada():
     msg = "Ainda não há historico de consultas!"
     return render_template('/public/consulta/listar_deletar_atualizar_consulta.html', todosPetsOption = todosPetsOption, donos = donos, msg=msg)
 
-@app.route('/listar_consulta_deletar/<idConsulta>', methods=['GET', 'POST'])
+@app.route('/listar_consulta_deletar/<idConsulta>', methods=['POST'])
 def deletar_consulta(idConsulta):
 
   verifica = verificaIdConsulta(idConsulta)
@@ -837,7 +929,7 @@ def deletar_consulta(idConsulta):
 class FormAtualizar(Form):
     dataHora = DateTimeField('Data e Hora', format='%Y-%m-%dT%H:%M', validators=[DataRequired()])
 
-@app.route('/listar_consulta_atualizar/<idConsulta>', methods=['GET', 'POST'])
+@app.route('/listar_consulta_atualizar/<idConsulta>', methods=['POST'])
 def atualizar_consulta(idConsulta):
 
   form = FormAtualizar(request.form)
@@ -925,7 +1017,7 @@ def atualizar_consulta(idConsulta):
 class ListarConsultaPetForm(Form):
     idPet = StringField('idPet', validators=[InputRequired()])
 
-@app.route('/listar_consulta', methods=['GET', 'POST'])
+@app.route('/listar_consulta', methods=['POST'])
 def listar_consulta_pet():
 
   form = ListarConsultaPetForm(request.form)
@@ -970,7 +1062,7 @@ def listar_consulta_pet():
       msg = "Não têm consultas hoje!"
       return render_template('/public/consulta/listar_deletar_atualizar_consulta.html', todosPetsOption = todosPetsOption, donos = donos, erro="Pet não encontrado no sistema, tente novamente!", msg=msg)
   
-@app.route('/listar_consulta_pet_verificando_id', methods=['GET', 'POST'])
+@app.route('/listar_consulta_pet_verificando_id', methods=['POST'])
 def verificaIdPetConsulta():
 
   if request.method == "POST":
