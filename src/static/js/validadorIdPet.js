@@ -5,8 +5,11 @@ const verificaIdPet = async () => {
     const idPet = idPetFormElement.value;
 
     if (!idPet) {
-        idPetFormElement.setCustomValidity("Campo id pet está vazio!")
-        idPetFormElement.reportValidity()
+        errorIdPet = 'Campo ID PET está vazio!!';
+        document.getElementById("errorIdPet").innerHTML = errorIdPet;
+        document.getElementById("btnCadCadastrar").disabled = true;
+        document.getElementById("errorIdPet").style.cssText = 'color: red; border: 2px solid red; background: #fee; border-radius: 10px; padding: 10px;';
+        idPetFormElement.style.cssText = 'color: red; border: 2px solid red;background: #fee;'
     }
 
     else {
@@ -15,14 +18,20 @@ const verificaIdPet = async () => {
             idPet: idPet
         }).then((response) => {
             if (response.data.idPetValido == "true") {
-
-                idPetFormElement.setCustomValidity("")
+                errorIdPet = '';
+                document.getElementById("errorIdPet").innerHTML = errorIdPet;
+                document.getElementById("errorIdPet").style.cssText = '';
+                document.getElementById("resultadoPet").style.cssText = 'display: block;';
+                idPetFormElement.style.cssText = '';
                 document.getElementById("btnCadCadastrar").disabled = false;
 
             } else {
-                idPetFormElement.setCustomValidity("id não castrado!")
-                idPetFormElement.reportValidity()
                 document.getElementById("btnCadCadastrar").disabled = true;
+                errorIdPet = 'ID PET não castrado!';
+                document.getElementById("errorIdPet").innerHTML = errorIdPet;
+                document.getElementById("btnCadCadastrar").disabled = true;
+                document.getElementById("errorIdPet").style.cssText = 'color: red; border: 2px solid red; background: #fee; border-radius: 10px; padding: 10px;';
+                idPetFormElement.style.cssText = 'color: red; border: 2px solid red;background: #fee;'
             }
         }, (error) => {
             console.log(error)

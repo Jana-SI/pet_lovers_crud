@@ -46,7 +46,7 @@
             </div>
 
             <div class="row">
-                <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 col-xxl-6">
                     <div class="input-group">
                         <span class="input-group-text">{{render_icon('card-text')}}</span>
                         <div class="form-floating">
@@ -55,8 +55,12 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
 
+                <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 col-xxl-6 d-flex align-items-center justify-content-center">
+                    <div class="text-center" id="errorCPF"></div>
+                </div>
+
+                <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 col-xxl-6">
                     <div class="input-group">
                         <span class="input-group-text">{{render_icon('telephone-fill')}}</span>
                         <div class="form-floating">
@@ -66,11 +70,12 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 col-xxl-6 d-flex align-items-center justify-content-center">
+                    <div class="text-center" id="errorTelefone"></div>
+                </div>
             </div>
             
-            <div class="text-center" id="errorCPF"></div>
-            <div class="text-center" id="errorTelefone"></div>
-
             <button class="btn" type="reset" id="btnCadApagar">Apagar</button>
             <button class="btn float-end" type="submit" id="btnCadCadastrar" >Cadastrar</button>
 

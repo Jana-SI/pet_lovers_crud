@@ -1,63 +1,69 @@
-function calcularIdade(nascimento){
-
+function calcularIdade(nascimento) {
     const dataAtual = new Date();
+    const anoAtual = dataAtual.getFullYear();
+    const mesAtual = dataAtual.getMonth() + 1;
+    const diaAtual = dataAtual.getDate();
 
-    var anoAtual = dataAtual.getFullYear();
-    var anoNascimentoParts = nascimento.split('-');
+    const [anoNascimento, mesNascimento, diaNascimento] = nascimento.split('-').map(Number);
 
-    var diaNascimento = anoNascimentoParts[2];
-    var mesNascimento = anoNascimentoParts[1];
-    var anoNascimento = anoNascimentoParts[0];
-
-    var idade = anoAtual - anoNascimento;
-
-    var mesAtual = dataAtual.getMonth() + 1;
-    var diaAtual = dataAtual.getDate();
+    let idade = anoAtual - anoNascimento;
 
     if (mesAtual < mesNascimento || (mesAtual === mesNascimento && diaAtual < diaNascimento)) {
         idade--; // Ajuste na idade se ainda não completou o ano atual
     }
 
-    // Verifica se a idade é menor que 1 ano
-    if (idade < 1) {
-        return ''; // Retorna uma string vazia
-    }
-
     return idade;
 }
 
-let verificarData = async () => {
-    
-    var nascimento = document.getElementById('nascimento').value;
-    const formAtualiza = document.forms["formAtualiza"];
-    const nascFormElement = formAtualiza['nascimento'];
+const verificarData = async () => {
+
+    const nascimento = document.getElementById('nascimento').value;
+    const formCadastro = document.forms["formAtualiza"];
+    const nascFormElement = formCadastro['nascimento'];
     var errorData;
 
-    var idade = calcularIdade(nascimento);
-
-    if(idade < 0){
-        errorData = "Data de nascimento inválida, idade negativa!";
+    if (!nascimento) {
+        errorData = "campo Data está vazio !!";
         document.getElementById("errorData").innerHTML = errorData;
-        nascFormElement.setCustomValidity("Data de nascimento inválida, idade negativa!");
-        nascFormElement.reportValidity();
+        document.getElementById("errorData").style.cssText = 'display: block;color: red; border: 2px solid red; background: #fee; border-radius: 10px; padding: 10px;';
+        nascFormElement.style.cssText = 'color: red; border: 2px solid red;background: #fee;'
+        document.getElementById("btnCadCadastrar").disabled = true;
     }
 
-    else if(idade > 100){
-        errorData = "Data de nascimento inválida, idade passou dos 100 anos!";
-        document.getElementById("errorData").innerHTML = errorData;
-        nascFormElement.setCustomValidity("Data de nascimento inválida, idade passou dos 100 anos!");
-        nascFormElement.reportValidity();
-    }
+    else {
 
-    else if(idade == ''){
-        errorData = '';
-        document.getElementById("errorData").innerHTML = errorData;
-        nascFormElement.setCustomValidity("");
-    }
+        let idade = calcularIdade(nascimento);
 
-    else{
-        errorData = idade + ' anos';
-        document.getElementById("errorData").innerHTML = errorData;
-        nascFormElement.setCustomValidity("");
+        if (idade < 0) {
+            errorData = "Data de nascimento inválida, idade negativa!";
+            document.getElementById("errorData").innerHTML = errorData;
+            document.getElementById("errorData").style.cssText = 'display: block;color: red; border: 2px solid red; background: #fee; border-radius: 10px; padding: 10px;';
+            nascFormElement.style.cssText = 'color: red; border: 2px solid red;background: #fee;'
+            document.getElementById("btnCadCadastrar").disabled = true;
+        }
+
+        else if (idade > 100) {
+            errorData = "Data de nascimento inválida, idade passou dos 100 anos!";
+            document.getElementById("errorData").innerHTML = errorData;
+            document.getElementById("errorData").style.cssText = 'display: block;color: red; border: 2px solid red; background: #fee; border-radius: 10px; padding: 10px;';
+            nascFormElement.style.cssText = 'color: red; border: 2px solid red;background: #fee;'
+            document.getElementById("btnCadCadastrar").disabled = true;
+        }
+
+        else if (idade == '') {
+            errorData = '';
+            document.getElementById("errorData").innerHTML = errorData;
+            document.getElementById("errorData").style.cssText = '';
+            nascFormElement.style.cssText = ''
+            document.getElementById("btnCadCadastrar").disabled = true;
+        }
+
+        else {
+            errorData = idade + ' anos';
+            document.getElementById("errorData").innerHTML = errorData;
+            document.getElementById("errorData").style.cssText = 'display: block;';
+            nascFormElement.style.cssText = '';
+            document.getElementById("btnCadCadastrar").disabled = true;
+        }
     }
 }

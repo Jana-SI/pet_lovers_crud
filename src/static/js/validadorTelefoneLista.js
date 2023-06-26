@@ -34,7 +34,7 @@ function validarTelefone(telefone, telefoneFormElement) {
 
 const verificaTelefone = async () => {
 
-    const formCadastro = document.forms["formCadastro"];
+    const formCadastro = document.forms["formAtualiza"];
     const telefoneFormElement = formCadastro['telefone'];
     const telefone = telefoneFormElement.value;
 

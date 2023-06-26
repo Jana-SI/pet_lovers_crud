@@ -7,6 +7,7 @@
     <script defer src="{{ url_for('static', filename='js/validadorCPFListaCliente.js') }}"></script>
     <script defer src="{{ url_for('static', filename='js/hideShow.js') }}"></script>
     <script defer src="{{ url_for('static', filename='js/mascara.js') }}"></script>
+    <script defer src="{{ url_for('static', filename='js/validadorTelefoneLista.js') }}"></script>
 </head>
 
 {% extends "base.html" %}
@@ -38,6 +39,12 @@
                 <a id="btnMostraTodos" href="{{url_for('listar_cliente')}}">Mostrar todos</a>
             </div>              
         </form>
+
+        <div class="row">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12 d-flex align-items-center justify-content-center">
+                <div id="errorCPF"></div>
+            </div>
+        </div>
 
         {% if erro %}
         <p class="alert alert-danger text-center" role="alert">{{render_icon('exclamation-triangle-fill')}}
@@ -150,7 +157,7 @@
                     <li class="list-group-item" style="display: none;" id="{{clienteEsp.3}}">
                         <div class="row">
                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
-                                <form action="/listar_cliente_atualizar_telefone/{{clienteEsp.0}}" method="POST">
+                                <form name="formAtualiza" action="/listar_cliente_atualizar_telefone/{{clienteEsp.0}}" method="POST">
 
                                     <div class="input-group">
                                         <span class="input-group-text">{{render_icon('telephone-fill')}}</span>
@@ -160,6 +167,8 @@
                                             <label for="telefone">Contato</label>
                                         </div>
                                     </div>
+
+                                    <div class="text-center" id="errorTelefone"></div>
 
                                     <button class="btn float-start" type="reset" id="btnCadApagar">Apagar</button>
                                     <button class="btn float-end" type="submit" id="btnCadCadastrar">Atualizar</button>

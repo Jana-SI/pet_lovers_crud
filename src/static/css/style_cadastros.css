@@ -31,6 +31,7 @@
     margin-top: 10px;
     margin-bottom: 10px;
     border: 2px solid var(--texto);
+    border-radius: 10px;
 }
 
 #colCad span{
@@ -48,6 +49,11 @@
     padding-right: 6px !important;
 }
 
-#ave, #cachorro, #chinchila, #coelho, #gato, #exotico, #hamster, #peixe, #porquinho_da_india{
+#resultadoPet, #resultadoDono, #errorData{
     display: none;
+    color: green;
+    border: 2px solid green;
+    background: #cfc;
+    border-radius: 10px;
+    padding: 10px;
 }

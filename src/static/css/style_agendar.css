@@ -80,3 +80,12 @@
     background-color: var(--fundo3) !important;
     color: var(--texto) !important;
 }
+
+#resultado{
+    display: none;
+    color: green;
+    border: 2px solid green;
+    background: #cfc;
+    border-radius: 10px;
+    padding: 10px;
+}

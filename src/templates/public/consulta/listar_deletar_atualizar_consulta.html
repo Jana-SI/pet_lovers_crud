@@ -48,6 +48,12 @@
             </div>
         </form>
 
+        <div class="row">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12 d-flex align-items-center justify-content-center">
+                <div id="errorIdPet"></div>
+            </div>
+        </div>
+
         <button id="btnHoje" class="btn btn-lg"><a href="{{url_for('listar_consulta')}}">Consultas de Hoje</a></button>
         <button id="btnProxima" class="btn btn-lg"><a href="{{url_for('listar_consulta_futura')}}">Proximas consultas</a></button>
         <button id="btnHistorica" class="btn btn-lg"><a href="{{url_for('listar_consulta_passada')}}">Historico de consultas</a></button>
