@@ -10,6 +10,7 @@ const verificaIdDono = async () => {
         document.getElementById("btnAgendar").disabled = true;
         document.getElementById("errorIdDono").style.cssText = 'color: red; border: 2px solid red; background: #fee; border-radius: 10px; padding: 10px;';
         idDonoFormElement.style.cssText = 'color: red; border: 2px solid red;background: #fee;'
+        document.getElementById("resultado").style.cssText = 'display: none;';
     }
 
     else {
@@ -33,6 +34,7 @@ const verificaIdDono = async () => {
                 document.getElementById("btnAgendar").disabled = true;
                 document.getElementById("errorIdDono").style.cssText = 'color: red; border: 2px solid red; background: #fee; border-radius: 10px; padding: 10px;';
                 idDonoFormElement.style.cssText = 'color: red; border: 2px solid red;background: #fee;'
+                document.getElementById("resultado").style.cssText = 'display: none;';
             }
         }, (error) => {
             console.log(error)

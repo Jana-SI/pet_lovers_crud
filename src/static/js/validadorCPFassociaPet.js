@@ -52,7 +52,8 @@ const verificaCpf = async () => {
         document.getElementById("errorCPF").innerHTML = errorCPF;
         document.getElementById("btnCadCadastrar").disabled = true;
         document.getElementById("errorCPF").style.cssText = 'color: red; border: 2px solid red; background: #fee; border-radius: 10px; padding: 10px;';
-        cpfFormElement.style.cssText = 'color: red; border: 2px solid red;background: #fee;'
+        cpfFormElement.style.cssText = 'color: red; border: 2px solid red;background: #fee;';
+        document.getElementById("resultadoDono").style.cssText = 'display: none;';
     }
 
     else {
@@ -64,6 +65,7 @@ const verificaCpf = async () => {
             document.getElementById("errorCPF").innerHTML = errorCPF;
             document.getElementById("btnCadCadastrar").disabled = true;
             document.getElementById("errorCPF").style.cssText = 'color: red; border: 2px solid red; text-align: center; background: #fee; border-radius: 10px; padding: 10px;';
+            document.getElementById("resultadoDono").style.cssText = 'display: none;';
         } else {
             if (resp) {
                 axios.post('/associar_mais_um_dono_pet_verificando_cpf', {
@@ -82,7 +84,8 @@ const verificaCpf = async () => {
                         document.getElementById("errorCPF").innerHTML = errorCPF;
                         document.getElementById("btnCadCadastrar").disabled = true;
                         document.getElementById("errorCPF").style.cssText = 'color: red; border: 2px solid red; text-align: center; background: #fee; border-radius: 10px; padding: 10px;';
-                        cpfFormElement.style.cssText = 'color: red; border: 2px solid red;background: #fee;';;
+                        cpfFormElement.style.cssText = 'color: red; border: 2px solid red;background: #fee;';
+                        document.getElementById("resultadoDono").style.cssText = 'display: none;';
                     }
                 }, (error) => {
                     console.log(error)

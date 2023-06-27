@@ -10,6 +10,7 @@ const verificaIdPet = async () => {
         document.getElementById("btnCadCadastrar").disabled = true;
         document.getElementById("errorIdPet").style.cssText = 'color: red; border: 2px solid red; background: #fee; border-radius: 10px; padding: 10px;';
         idPetFormElement.style.cssText = 'color: red; border: 2px solid red;background: #fee;'
+        document.getElementById("resultadoPet").style.cssText = 'display: none;';
     }
 
     else {
@@ -32,6 +33,7 @@ const verificaIdPet = async () => {
                 document.getElementById("btnCadCadastrar").disabled = true;
                 document.getElementById("errorIdPet").style.cssText = 'color: red; border: 2px solid red; background: #fee; border-radius: 10px; padding: 10px;';
                 idPetFormElement.style.cssText = 'color: red; border: 2px solid red;background: #fee;'
+                document.getElementById("resultadoPet").style.cssText = 'display: none;';
             }
         }, (error) => {
             console.log(error)
