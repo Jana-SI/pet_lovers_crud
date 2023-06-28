@@ -65,5 +65,20 @@ const verificarData = async () => {
             nascFormElement.style.cssText = '';
             document.getElementById("btnCadCadastrar").disabled = true;
         }
+
+        // Verificar se ambos os campos estão válidos
+        const cpfFormElement = formCadastro['donosPet'];
+        const cpf = cpfFormElement.value;
+        const cpfValido = validarCPF(cpf, cpfFormElement);
+        const camposValidos = cpfValido && idade >= 0 && idade <= 100;
+
+        if (camposValidos) {
+            if(verificaCpf()){
+                document.getElementById("btnCadCadastrar").disabled = false;
+            }
+        } else {
+            // Desabilitar o botão de cadastrar
+            document.getElementById("btnCadCadastrar").disabled = true;
+        }
     }
 }

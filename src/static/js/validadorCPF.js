@@ -85,7 +85,14 @@ const verificaCpf = async () => {
                         document.getElementById("errorCPF").innerHTML = errorCPF;
                         document.getElementById("errorCPF").style.cssText = '';
                         cpfFormElement.style.cssText = '';
-                        document.getElementById("btnCadCadastrar").disabled = false;
+
+                        const telefoneFormElement = formCadastro['telefone'];
+                        const telefone = telefoneFormElement.value;
+                        const respTelefone = validarTelefone(telefone, telefoneFormElement);
+                        
+                        if(respTelefone){
+                            document.getElementById("btnCadCadastrar").disabled = false;
+                        }
                     }
                 }, (error) => {
                     console.log(error)

@@ -64,7 +64,7 @@
                     <img src="{{url_for('static', filename='/img/tipo-pet.png')}}">
                 </span>
                 <div class="form-floating">
-                    <input class="form-control" list="donos" id="idDono" name="idDono" placeholder="Digitar id da dupla" onfocusout="verificaIdDono()" oninput="setCustomValidity('')" autocomplete="off" required>
+                    <input class="form-control" list="donos" id="idDono" name="idDono" placeholder="Digitar id da dupla" onfocusout="verificaIdDono()" autocomplete="off" required>
                     <datalist id="donos">
                         {% if idDupla %}
                             {% for id in idDupla %}

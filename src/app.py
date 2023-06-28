@@ -43,7 +43,13 @@ class CadastroClienteForm(Form):
     cpf = StringField('CPF', validators=[InputRequired(message='Campo CPF é obrigatório.'), Length(min=14, max=14, message='CPF deve ter 14 caracteres.')])
     telefone = StringField('Contato', validators=[InputRequired(message='Campo contato é obrigatório.'), Length(min=14, max=15, message='Contato deve ter entre 14 e 15 caracteres.')])
 
-                            
+    def validate_cpf(self, field):
+      cpf_cliente = field.data
+      cpfInt = re.sub('[^0-9]', '', cpf_cliente)
+      # Verificar se o CPF já está cadastrado no sistema
+      if verificaCPFbanco(cpfInt):
+          raise ValidationError('CPF já cadastrado no sistema.')
+
 @app.route('/cadastro_cliente', methods=['POST'])
 def cadastrarCliente():
 

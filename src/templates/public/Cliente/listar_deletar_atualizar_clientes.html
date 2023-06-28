@@ -25,7 +25,7 @@
                     {{render_icon('search')}}
                 </span>
                 <div class="form-floating">
-                    <input class="form-control" list="listaCliente" id="cliente" name="cliente" placeholder="Digitar CPF do cliente" onfocusout="verificaCpf()" oninput="setCustomValidity(''); mascaraCPF(this)" maxlength="14" autocomplete="off" required>
+                    <input class="form-control" list="listaCliente" id="cliente" name="cliente" placeholder="Digitar CPF do cliente" onfocusout="verificaCpf()" oninput="mascaraCPF(this)" maxlength="14" autocomplete="off" required>
                     <datalist id="listaCliente">
                         {% if todosClientesOption %}
                             {% for cliente in todosClientesOption %}
@@ -163,7 +163,7 @@
                                         <span class="input-group-text">{{render_icon('telephone-fill')}}</span>
                                         <div class="form-floating">
                                             <input class="form-control" type="tel" id="telefone" name="telefone"
-                                                placeholder="(00) 00000-0000" onfocusout="verificaTelefone()" oninput="setCustomValidity('')" required>
+                                                placeholder="(00) 00000-0000" onfocusout="verificaTelefone()" required>
                                             <label for="telefone">Contato</label>
                                         </div>
                                     </div>

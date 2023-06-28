@@ -50,7 +50,7 @@
                     <div class="input-group">
                         <span class="input-group-text">{{render_icon('card-text')}}</span>
                         <div class="form-floating">
-                            <input class="form-control" type="text" id="cpf" name="cpf" placeholder="000.000.000-00" onblur="verificaCpf()" oninput="setCustomValidity(''); mascaraCPF(this)" maxlength="14" required>
+                            <input class="form-control" type="text" id="cpf" name="cpf" placeholder="000.000.000-00" onblur="verificaCpf()" oninput="mascaraCPF(this)" maxlength="14" required>
                             <label for="cpf">CPF (informe somente números)</label>
                         </div>
                     </div>
@@ -65,7 +65,7 @@
                         <span class="input-group-text">{{render_icon('telephone-fill')}}</span>
                         <div class="form-floating">
                             <input class="form-control" type="tel" id="telefone" name="telefone"
-                                placeholder="(00) 00000-0000" onblur="verificaTelefone()" oninput="setCustomValidity('')" required>
+                                placeholder="(00) 00000-0000" onblur="verificaTelefone(); " required>
                             <label for="telefone">Contato (informe somente números)</label>
                         </div>
                     </div>
@@ -77,7 +77,7 @@
             </div>
             
             <button class="btn" type="reset" id="btnCadApagar">Apagar</button>
-            <button class="btn float-end" type="submit" id="btnCadCadastrar" >Cadastrar</button>
+            <button class="btn float-end" type="submit" id="btnCadCadastrar" onclick="verificaCpf(); verificaTelefone();">Cadastrar</button>
 
         </form>
     </div>

@@ -81,12 +81,22 @@ const verificaCpf = async () => {
                     cpfFormElement.style.cssText = '';
                     document.getElementById("btnCadCadastrar").disabled = false;
 
+                    const nascimento = document.getElementById('nascimento').value;
+                    const idade = calcularIdade(nascimento);
+                    const camposValidos = idade >= 0 && idade <= 100;
+
+                    if (camposValidos) {
+                        document.getElementById("btnCadCadastrar").disabled = false;
+                    } else {
+                        document.getElementById("btnCadCadastrar").disabled = true;
+                    }
+
                 } else {
                     errorCPF = 'CPF não castrado!';
                     document.getElementById("errorCPF").innerHTML = errorCPF;
                     document.getElementById("btnCadCadastrar").disabled = true;
                     document.getElementById("errorCPF").style.cssText = 'color: red; border: 2px solid red; text-align: center; background: #fee; border-radius: 10px; padding: 10px;';
-                    cpfFormElement.style.cssText = 'color: red; border: 2px solid red;background: #fee;';
+                    cpfFormElement.style.cssText = 'color: red; border: 2px solid red;background: #fee;';                    
                 }
             }, (error) => {
                 console.log(error)

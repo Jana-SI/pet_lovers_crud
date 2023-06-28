@@ -25,7 +25,7 @@
                     {{render_icon('search')}}
                 </span>
                 <div class="form-floating">
-                    <input class="form-control" list="listaPets" id="idPet" name="idPet" placeholder="Digitar o nome do pet" onfocusout="verificaIdPet()" oninput="setCustomValidity('')" autocomplete="off" required>
+                    <input class="form-control" list="listaPets" id="idPet" name="idPet" placeholder="Digitar o nome do pet" onfocusout="verificaIdPet()" autocomplete="off" required>
                     <datalist id="listaPets">
                         {% if todosPetsOption %}
                             {% for pet in todosPetsOption %}

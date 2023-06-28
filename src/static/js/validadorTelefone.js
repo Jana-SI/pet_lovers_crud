@@ -60,8 +60,18 @@ const verificaTelefone = async () => {
             telefoneFormElement.style.cssText = '';
             errorTelefone = '';
             document.getElementById("errorTelefone").innerHTML = errorTelefone;
-            document.getElementById("errorTelefone").style.cssText = ''
-            document.getElementById("btnCadCadastrar").disabled = false;
+            document.getElementById("errorTelefone").style.cssText = '';
+
+            // Verifica se há erros no campo de CPF
+            const cpfFormElement = formCadastro['cpf'];
+            const cpf = cpfFormElement.value;
+            const respCPF = validarCPF(cpf, cpfFormElement);
+
+            if (respCPF) {
+                if(verificaCpf()){
+                    document.getElementById("btnCadCadastrar").disabled = false;
+                }
+            }
         }
     }
 }
