@@ -6,6 +6,7 @@
     <script defer src="{{ url_for('static', filename='js/exibirDonosPetsConsulta.js') }}"></script>
     <script defer src="{{ url_for('static', filename='js/validadorIdDonoPet.js') }}"></script>
     <script defer src="{{ url_for('static', filename='js/formataDataListaConsulta.js') }}"></script>
+    <script defer src="{{ url_for('static', filename='js/formataTipo.js') }}"></script>
 </head>
 
 
@@ -69,7 +70,7 @@
                         {% if idDupla %}
                             {% for id in idDupla %}
                                 <option value="{{id.0}}">
-                                    id da dupla: {{id.0}} - Dono: {{id.1}} - Pet: {{id.2}}, {{id.3}}
+                                    id da dupla: {{id.0}} - Dono: {{id.1}} - Pet: {{id.2}}, <span class="tipo">{{id.3}}</span>
                                 </option>
                             {% endfor %}
                         {% endif %}
