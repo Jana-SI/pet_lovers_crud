@@ -12,7 +12,7 @@ O site é composto por 3 seções:
 
 ---
 
-## 💻 Tecnologias utilizadas neste portifolio
+## 💻 Tecnologias utilizadas neste site
 
 <p align="center">
 <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white"/>
